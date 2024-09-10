@@ -2,11 +2,10 @@
  * Challenges
  * Simon Duchaine Morneau
  * 
- * HOW EMBARRASSING! I HAVE NO DESCRIPTION OF MY PROJECT!
- * PLEASE REMOVE A GRADE FROM MY WORK IF IT'S GRADED!
+ * flag
  */
 
-"use strict";
+"use strict"
 
 /**
  *Drawing a canvas
