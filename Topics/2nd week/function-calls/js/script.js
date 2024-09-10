@@ -1,9 +1,8 @@
 /**
- * Title of Project
- * Author Name
+ * function calls
+ * Simon Duchaine Morneau
  * 
- * HOW EMBARRASSING! I HAVE NO DESCRIPTION OF MY PROJECT!
- * PLEASE REMOVE A GRADE FROM MY WORK IF IT'S GRADED!
+ * 2nd week test
  */
 
 "use strict";
@@ -12,7 +11,7 @@
  * OH LOOK I DIDN'T DESCRIBE SETUP!!
 */
 function setup() {
-
+createCanvas(640, 640);
 }
 
 
@@ -20,5 +19,7 @@ function setup() {
  * OOPS I DIDN'T DESCRIBE WHAT MY DRAW DOES!
 */
 function draw() {
+background(255, 100, 100);
+rect(200, 200, 320, 240)
 
 }
