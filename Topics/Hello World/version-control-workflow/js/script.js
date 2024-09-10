@@ -25,24 +25,24 @@ function setup() {
  * at the position of the user's cursor
 */
 function draw() {
-    // Make the background black (specified as RGB)
-    background(100, 200, 300);
+    // Make the background blue (specified as RGB)
+    background(0, 0, 100);
 
     // Draw a pyramid
     // How many levels for the pyramid
-    const levels = 40;
+    const levels = 30;
     // Loop through every level (backwards)
     for (let level = levels; level > 0; level--) {
         // Draw this layer
         push();
         // Set the grey shade of the level based on its number
-        // e.g. level 1 will get a shade of 10 (dark gray), 
-        // level 10 will be 255(white)
-        const shade = map(level, 1, levels, 10, 255);
+        // e.g. level 1 will get a shade of 255 (white), 
+        // level 10 will be 0 (black)
+        const shade = map(level, 1, levels, 255, 0);
         // No line around the levels
         noStroke();
         // Set the fill colour to our shade (RGB)
-        fill(shade, shade, 0);
+        fill(shade, shade, 225);
         // Draw rectangles from the centre
         rectMode(CENTER);
         // Draw the rectangle in the centre of the canvas
@@ -57,8 +57,8 @@ function draw() {
     push();
     // No line around the shape
     noStroke();
-    // Make it red (RGB)
-    fill(255, 0, 0);
+    // Make it purple (RGB)
+    fill(150, 0, 1000);
     // Draw a 100x100 circle at the mouse position
     ellipse(mouseX, mouseY, 100, 100);
     pop();
