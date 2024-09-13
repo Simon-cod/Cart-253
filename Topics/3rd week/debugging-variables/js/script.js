@@ -8,21 +8,20 @@
 
 "use strict";
 
-let bgColor = "#87ceeb" ; // Sky blue
+const bgColor = "#87ceeb" ; // Sky blue
 
 // The bug
-let bug = {
+const bug = {
     // Position and dimensions
     x: 250,
     y: 0,
     w: 20,
-    width: 50,
-    height: 50,
+    h: 30,
     stroke: 2,
     // Movement
     velocity: {
-        x: -100,
-        y: -12, 
+        x: 0,
+        y: 12, 
         // Starts moving down
     },
     // Colour
@@ -42,38 +41,40 @@ function setup() {
  * Updates and draws the bug
 */
 function draw() {
-    background(bgColor);
+        background(bgColor);
 
-    console.log("drawBug called")
-
-    drawBug();
-    moveBug();
+        drawBug();
+        moveBug();
 }
 
 /**
  * Displays the bug with its six legs sticking out
  */
 function drawBug() {
-    // Body
-    push();
-    noStroke();
-    fill(bug.color);
-    ellipse(bug.x, bug.y, bug.width, bug.height);
-    pop();
 
-    // Legs
-    push();
-    stroke(bug.stroke);
-    // Thicken the legs a bit
-    strokeWeight(2);
-    // Three lines horizontally across the body at different heights for the legs
-    line(bug.x - bug.w, bug.y - bug.h / 4, bug.x + bug.w, bug.y - bug.h / 4);
-    line(bug.x - bug.w, bug.y, bug.x + bug.w, bug.y);
-    line(bug.x - bug.w, bug.y + bug.h / 4, bug.x + bug.w, bug.y + bug.h / 4);
-    pop();
+    console.log(bug.x, bug.y)
+        // Body
+        push();
+        noStroke();
+        fill(bug.color);
+        ellipse(bug.x, bug.y, bug.w, bug.h);
+        pop();
+
+        // Legs
+        push();
+        stroke(bug.stroke);
+        // Thicken the legs a bit
+        strokeWeight(2);
+        // Three lines horizontally across the body at different heights for the legs
+        line(bug.x - bug.w, bug.y - bug.h / 4, bug.x + bug.w, bug.y - bug.h / 4);
+        line(bug.x - bug.w, bug.y, bug.x + bug.w, bug.y);
+        line(bug.x - bug.w, bug.y + bug.h / 4, bug.x + bug.w, bug.y + bug.h / 4);
+        pop();
+
+    
 }
 
 function moveBug() {
-    bug.x += bug.velocity.x;
-    bug.y += bug.velocity.y;
+        bug.x += bug.velocity.x;
+        bug.y += bug.velocity.y;
 }
