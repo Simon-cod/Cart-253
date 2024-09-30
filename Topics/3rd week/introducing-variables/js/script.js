@@ -251,8 +251,6 @@ function drawBackground() {
       fill(0, 127.5, 127.5);
       ellipse(width/2, height/2, 50);
       pop();
-
-      
       
 }
 
