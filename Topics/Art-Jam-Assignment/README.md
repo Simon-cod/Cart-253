@@ -2,7 +2,7 @@
 
 Simon Duchaine Morneau
 
-[View this project online](https://github.com/Simon-cod/Cart-253/tree/main/Topics/Art-Jam-Assignment)
+[View this project online](https://Simon_cod.github.io/Cart-253/Topics/Art-Jam-Assignment/)
 
 ## Description
 
