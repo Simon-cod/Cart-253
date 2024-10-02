@@ -34,7 +34,7 @@ let circleSize = undefined;
 function setup() {
 
     // Creates the canvas
- createCanvas(1000, 1000);
+createCanvas(1000, 1000);
 
 }
 
@@ -177,19 +177,8 @@ function yellowCircle() {
  */
 function rotatingBackground() {
 
-    push();
-   
-   angleMode(DEGREES);
-
-   //Sets the origin to the center of the canvas
-   translate(width/2, height/2)
-
-    //maps the mouseY value to the rotating angle
-    let angle = map(mouseY, 0, width, 0, 360);;
-
-    //rotates the background
-    rotate(angle);
-
+    //Calls the function to rotate the background
+    rotate()
 
     //Draws a black background
     background(0);
@@ -285,6 +274,24 @@ function rotatingBackground() {
     fill(0, 127.5, 127.5);
     ellipse(0, 0, 50);
     pop();
-    pop()
 }
+
+/**
+ * Creates a rotating angle that has it's origin at the middle of the canvas
+ */
+function rotate() {
+
+    push();
+    angleMode(DEGREES);
+
+    //Sets the origin to the center of the canvas
+    translate(width/2, height/2)
+
+    //maps the mouseY value to the rotating angle
+    let angle = map(mouseY, 0, width, 0, 360);;
+
+    rotate(angle);
+    pop();
+}
+
     
