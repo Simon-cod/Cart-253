@@ -19,7 +19,7 @@
 const frog = {
     // The frog's body has a position and size
     body: {
-        x: 320,
+        x: 75,
         y: 520,
         size: 150
     },
@@ -57,7 +57,7 @@ function draw() {
     background("#87ceeb");
     moveFly();
     drawFly();
-    moveFrog();
+    // moveFrog();
     moveTongue();
     drawFrog();
     checkTongueFlyOverlap();
@@ -98,9 +98,9 @@ function resetFly() {
 /**
  * Moves the frog to the mouse position on x
  */
-function moveFrog() {
-    frog.body.x = mouseX;
-}
+// function moveFrog() {
+//     frog.body.x = mouseX;
+// }
 
 /**
  * Handles moving the tongue based on its state
@@ -112,23 +112,25 @@ function moveTongue() {
     if (frog.tongue.state === "idle") {
         // Do nothing
     }
-    // If the tongue is outbound, it moves up
-    else if (frog.tongue.state === "outbound") {
-        frog.tongue.y += -frog.tongue.speed;
-        // The tongue bounces back if it hits the top
-        if (frog.tongue.y <= 0) {
-            frog.tongue.state = "inbound";
-        }
-    }
-    // If the tongue is inbound, it moves down
-    else if (frog.tongue.state === "inbound") {
-        frog.tongue.y += frog.tongue.speed;
-        // The tongue stops if it hits the bottom
-        if (frog.tongue.y >= height) {
-            frog.tongue.state = "idle";
-        }
-    }
-}
+    
+  }
+
+    // // If the tongue is outbound, it moves up
+    // else if (frog.tongue.state === "outbound") {
+    //     frog.tongue.y += -frog.tongue.speed;
+    //     // The tongue bounces back if it hits the top
+    //     if (frog.tongue.y <= 0) {
+    //         frog.tongue.state = "inbound";
+    //     }
+    // }
+    // // If the tongue is inbound, it moves down
+    // else if (frog.tongue.state === "inbound") {
+    //     frog.tongue.y += frog.tongue.speed;
+    //     // The tongue stops if it hits the bottom
+    //     if (frog.tongue.y >= height) {
+    //         frog.tongue.state = "idle";
+    //     }
+    // }
 
 /**
  * Displays the tongue (tip and line connection) and the frog (body)
@@ -175,8 +177,16 @@ function checkTongueFlyOverlap() {
 /**
  * Launch the tongue on click (if it's not launched yet)
  */
-function mousePressed() {
-    if (frog.tongue.state === "idle") {
-        frog.tongue.state = "outbound";
-    }
+function keyPressed() {
+    // if (frog.tongue.state === "idle") {
+    //     frog.tongue.state = "outbound";
+    if (keyCode === UP_ARROW) {
+        frog.tongue.dir(0, -1); //moves 0 along x and -1 (up) along y axis
+  } else if (keyCode === DOWN_ARROW) {
+    frog.tongue.dir(0, 1);
+  } else if (keyCode === RIGHT_ARROW) {
+    frog.tongue.dir(1, 0);
+  } else if (keyCode === LEFT_ARROW) {
+    frog.tongue.dir(-1, 0);
+}
 }
