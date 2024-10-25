@@ -15,6 +15,10 @@
 
 "use strict";
 
+let segments = []
+
+let direction = "none"
+
 // Our frog
 const frog = {
     // The frog's body has a position and size
@@ -28,12 +32,17 @@ const frog = {
         x: 75,
         y: 480,
         size: 20,
-        speed: 20,
+        speed: 5,
         // Determines how the tongue moves each frame
-        state: "idle" // State can be: idle, outbound, inbound
+        state: "idle", // State can be: idle, outbound, inbound
+        direction: "none",
+        head: {
+            x: 75,
+            y: 480
+        },
     }
 };
-
+console.log(frog.tongue.head.x)
 // Our fly
 // Has a position, size, and speed of horizontal movement
 const fly = {
@@ -61,6 +70,7 @@ function draw() {
     moveTongue();
     drawFrog();
     checkTongueFlyOverlap();
+    // tongueSegments()
 }
 
 /**
@@ -105,23 +115,114 @@ function resetFly() {
 /**
  * Handles moving the tongue based on its state
  */
-function moveTongue() {
-    // Tongue matches the frog's x
-    frog.tongue.x = frog.body.x;
-    // If the tongue is idle, it doesn't do anything
-    if (frog.tongue.state === "idle") {
-        // Do nothing
-    }
-    // If the tongue is outbound, it moves up
-    else if (frog.tongue.state === "outbound") {
-        frog.tongue.y += -frog.tongue.speed;
+// function moveTongue() {
+//     // Tongue matches the frog's x
+//     frog.tongue.x = frog.body.x;
+//     // If the tongue is idle, it doesn't do anything
+    
+//     // If the tongue is outbound, it moves up
+//     if (frog.tongue.direction === "none") {
+//         //Do nothing
+//     }
+//     else if (frog.tongue.direction === "up") {
+//         frog.tongue.y += -frog.tongue.speed;
+//     }
+//     else if (frog.tongue.direction === "right") {
+//         frog.tongue.x += frog.tongue.speed;
+//     }
 
+//     if (frog.tongue.state === "idle") {
+//             // Do nothing
+//         }
+//         // The tongue bounces back if it hits the top
+//         else if (frog.tongue.y <= 0) {
+//             frog.tongue.state = "inbound";
+        
+//         }
+//     // If the tongue is inbound, it moves down
+//     else if (frog.tongue.state === "inbound") {
+//         frog.tongue.y += frog.tongue.speed;
+//         // The tongue stops if it hits the bottom
+//         if (frog.tongue.y >= height) {
+//             frog.tongue.state = "idle";
+//         }
+//     }
+// }
+
+/**
+ * Creates an Array for the tongue
+ */
+function tongueSegments() {
+
+    //apply the speed to the tongue's head
+frog.tongue.head.x += frog.tongue.speed;
+
+//create a vector with the moving tongue head and the tongue y (NOT DRAWN YET)
+let segmentPosition = createVector(frog.tongue.head.x, frog.tongue.head.y);
+
+// add it to the beginning of the array
+segments.unshift(segmentPosition);
+
+}
+
+
+console.log(frog.tongue.head.x)
+
+/**
+ * Displays the tongue (tip and line connection) and the frog (body)
+ */
+function drawFrog() {
+    // Draw the tongue tip
+    push();
+    fill("#ff0000");
+    noStroke();
+    ellipse(frog.tongue.head.x, frog.tongue.head.y, frog.tongue.size);
+    pop();
+
+    // Draw the rest of the tongue
+    push();
+    stroke("#ff0000");
+    strokeWeight(frog.tongue.size);
+    line(frog.tongue.head.x, frog.tongue.head.y, frog.body.x, frog.body.y);
+    pop();
+
+    // Draw the frog's body
+    push();
+    fill("#00ff00");
+    noStroke();
+    ellipse(frog.body.x, frog.body.y, frog.body.size);
+    pop();
+}
+
+function moveTongue() {
+    
+    // If the tongue direction is none, it doesn't do anything
+
+    if (frog.tongue.direction === "none") {
+        // Tongue matches the frog's x
+    frog.tongue.head.x = frog.body.x;
+    }
+    else if (frog.tongue.direction === "up") {
+        frog.tongue.head.y -= frog.tongue.speed;
+    }
+    else if (frog.tongue.direction === "right") {
+        frog.tongue.head.x += frog.tongue.speed;
+    }
+    else if (frog.tongue.direction === "left") {
+        frog.tongue.head.x -= frog.tongue.speed 
+    }
+    else if (frog.tongue.direction === "down") {
+        frog.tongue.head.y += frog.tongue.speed
+    }
+
+    if (frog.tongue.state === "idle") {
+            // Do nothing
+        }
         // The tongue bounces back if it hits the top
-        if (frog.tongue.y <= 0) {
+        else if (frog.tongue.y <= 0) {
             frog.tongue.state = "inbound";
         
         }
-    }
     // If the tongue is inbound, it moves down
     else if (frog.tongue.state === "inbound") {
         frog.tongue.y += frog.tongue.speed;
@@ -132,33 +233,28 @@ function moveTongue() {
     }
 }
 
+// function drawFrog() {
+//     // Draw the tongue tip
+//     push();
+//     fill("#ff0000");
+//     noStroke();
+//     ellipse(frog.tongue.x, frog.tongue.y, frog.tongue.size);
+//     pop();
 
+//     // Draw the rest of the tongue
+//     push();
+//     stroke("#ff0000");
+//     strokeWeight(frog.tongue.size);
+//     line(frog.tongue.x, frog.tongue.y, frog.body.x, frog.body.y);
+//     pop();
 
-/**
- * Displays the tongue (tip and line connection) and the frog (body)
- */
-function drawFrog() {
-    // Draw the tongue tip
-    push();
-    fill("#ff0000");
-    noStroke();
-    ellipse(frog.tongue.x, frog.tongue.y, frog.tongue.size);
-    pop();
-
-    // Draw the rest of the tongue
-    push();
-    stroke("#ff0000");
-    strokeWeight(frog.tongue.size);
-    line(frog.tongue.x, frog.tongue.y, frog.body.x, frog.body.y);
-    pop();
-
-    // Draw the frog's body
-    push();
-    fill("#00ff00");
-    noStroke();
-    ellipse(frog.body.x, frog.body.y, frog.body.size);
-    pop();
-}
+//     // Draw the frog's body
+//     push();
+//     fill("#00ff00");
+//     noStroke();
+//     ellipse(frog.body.x, frog.body.y, frog.body.size);
+//     pop();
+// }
 
 /**
  * Handles the tongue overlapping the fly
@@ -183,13 +279,13 @@ function keyPressed() {
     // if (frog.tongue.state === "idle") {
     //     frog.tongue.state = "outbound";
     if (keyCode === UP_ARROW) {
-        frog.tongue.state = "outbound"; //moves 0 along x and -1 (up) along y axis
+        frog.tongue.direction = "up"; //moves 0 along x and -1 (up) along y axis
   } else if (keyCode === DOWN_ARROW) {
-    frog.tongue.state = "none";
+    frog.tongue.direction = "down";
   } else if (keyCode === RIGHT_ARROW) {
-    frog.tongue.x += 1;
+    frog.tongue.direction = "right";
   } else if (keyCode === LEFT_ARROW) {
-    frog.tongue.x -= 1;
+    frog.tongue.direction = "left"
 }
 }
-console.log(frog.tongue.state)
+console.log(frog.tongue.state, frog.tongue.direction)
