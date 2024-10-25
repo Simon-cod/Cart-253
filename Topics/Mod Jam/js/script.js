@@ -38,7 +38,7 @@ const frog = {
         direction: "none",
         head: {
             x: 75,
-            y: 480
+            y: 565
         },
     }
 };
@@ -183,7 +183,7 @@ function drawFrog() {
     push();
     stroke("#ff0000");
     strokeWeight(frog.tongue.size);
-    line(frog.tongue.head.x, frog.tongue.head.y, frog.body.x, frog.body.y);
+    line(frog.tongue.head.x, frog.tongue.head.y, frog.body.x, (frog.body.y - frog.body.size/2) );
     pop();
 
     // Draw the frog's body
@@ -201,6 +201,7 @@ function moveTongue() {
     if (frog.tongue.direction === "none") {
         // Tongue matches the frog's x
     frog.tongue.head.x = frog.body.x;
+    frog.tongue.head.y = 565;
     }
     else if (frog.tongue.direction === "up") {
         frog.tongue.head.y -= frog.tongue.speed;
@@ -286,6 +287,9 @@ function keyPressed() {
     frog.tongue.direction = "right";
   } else if (keyCode === LEFT_ARROW) {
     frog.tongue.direction = "left"
+  } else if (keyCode === 32) {
+    frog.tongue.direction = "none"
+  }
 }
-}
+
 console.log(frog.tongue.state, frog.tongue.direction)
