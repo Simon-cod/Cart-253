@@ -35,7 +35,7 @@ let frog = {
     // The frog's tongue has a position, size, speed, and state
     tongue: {
         x: 75,
-        y: 480,
+        y: 445,
         size: 20,
         speed: 5,
         // Determines how the tongue moves each frame
@@ -70,16 +70,16 @@ function setup() {
     console.log(tongueHeadCoordinates)
 
     //Creates a vector with the tongue origins (that will be changing)
-    changedTongueOrigin = createVector(frog.body.x, frog.body.y)
+    changedTongueOrigin = createVector(frog.body.x, (frog.body.y - frog.body.size/2))
 }
-
+console.log(changedTongueOrigin.y)
 function draw() {
     background("#87ceeb");
     moveFly();
     drawFly();
     // moveFrog();
     moveTongue();
-    drawTongue()
+    drawTongue();
     drawFrog();
     checkTongueFlyOverlap();
     // tongueSegments()
@@ -195,7 +195,13 @@ function drawTongue() {
      point(tongueHeadCoordinates)
      pop();
      // Draw the rest of the tongue
-   
+    push();
+    stroke("#ff0000");
+    strokeWeight(frog.tongue.size);
+    line(tongueHeadCoordinates.x, tongueHeadCoordinates.y, changedTongueOrigin.x, changedTongueOrigin.y);
+    pop();
+    console.log("Head Coordinates =" + tongueHeadCoordinates, "Origins =" + changedTongueOrigin)
+
 }
 
 
@@ -257,6 +263,7 @@ function drawFrog() {
 //     pop();
 // }
 console.log(segments[0])
+
 function moveTongue() {
     
     // //copy the first pixel of the snake to the tongueHead variables
@@ -269,7 +276,7 @@ function moveTongue() {
     if (frog.tongue.direction === "none") {
         // Tongue matches the frog's x
     tongueHeadCoordinates.x = frog.body.x;
-    tongueHeadCoordinates.y = 565;
+    tongueHeadCoordinates.y = (frog.body.y - frog.body.size/2);
     }
     else if (frog.tongue.direction === "up") {
         tongueHeadCoordinates.y -= frog.tongue.speed;
