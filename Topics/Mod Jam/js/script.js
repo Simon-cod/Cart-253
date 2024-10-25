@@ -15,7 +15,7 @@
 
 "use strict";
 
-let segments = []
+let segments = [];
 
 let direction = "none"
 
@@ -154,6 +154,9 @@ function resetFly() {
  */
 function tongueSegments() {
 
+    //start with an empty array of segment
+ segments = [];
+
     //apply the speed to the tongue's head
 for (let tongueHeadX = frog.tongue.head.x; tongueHeadX > 800; tongueHeadX += frog.tongue.speed) {
 
@@ -178,9 +181,10 @@ function drawFrog() {
      push();
      fill("#ff0000");
      noStroke();
+     beginShape()
      for (let segment of segments)
      vertex(frog.tongue.head.x, frog.tongue.head.y, frog.tongue.size);
-
+     endShape()
      pop();
     // Draw the tongue tip
     push();
@@ -230,10 +234,10 @@ console.log(segments[0])
 function moveTongue() {
     
     //copy the first pixel of the snake to the tongueHead variables
-    let tongueHead = segments[0];
+    let tongueHeadX = segments[0];
 
     //inserts the new tongueHead at the beginning of the segments array
-    segments.unshift(tongueHead);
+    segments.unshift(tongueHeadX);
 
     // If the tongue direction is none, it doesn't do anything
     if (frog.tongue.direction === "none") {
@@ -242,16 +246,16 @@ function moveTongue() {
     frog.tongue.head.y = 565;
     }
     else if (frog.tongue.direction === "up") {
-        tongueHead.y -= frog.tongue.speed;
+        frog.tongue.head.y -= frog.tongue.speed;
     }
     else if (frog.tongue.direction === "right") {
-        tongueHead.x += frog.tongue.speed;
+        tongueHeadX += frog.tongue.speed;
     }
     else if (frog.tongue.direction === "left") {
-        tongueHead.x -= frog.tongue.speed 
+        tongueHeadX -= frog.tongue.speed 
     }
     else if (frog.tongue.direction === "down") {
-        tongueHead.y += frog.tongue.speed
+        frog.tongue.head.y += frog.tongue.speed
     }
 
     if (frog.tongue.state === "idle") {
