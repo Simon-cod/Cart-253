@@ -70,7 +70,7 @@ function draw() {
     moveTongue();
     drawFrog();
     checkTongueFlyOverlap();
-    // tongueSegments()
+    tongueSegments()
 }
 
 /**
@@ -155,23 +155,33 @@ function resetFly() {
 function tongueSegments() {
 
     //apply the speed to the tongue's head
-frog.tongue.head.x += frog.tongue.speed;
+for (let tongueHeadX = frog.tongue.head.x; tongueHeadX > 800; tongueHeadX += frog.tongue.speed) {
 
 //create a vector with the moving tongue head and the tongue y (NOT DRAWN YET)
-let segmentPosition = createVector(frog.tongue.head.x, frog.tongue.head.y);
+let segmentPosition = createVector(tongueHeadX, frog.tongue.head.y);
 
 // add it to the beginning of the array
 segments.unshift(segmentPosition);
 
 }
+// console.log(tongueHeadX)
+}
 
 
-console.log(frog.tongue.head.x)
+
 
 /**
  * Displays the tongue (tip and line connection) and the frog (body)
  */
 function drawFrog() {
+     // Draw the tongue segments
+     push();
+     fill("#ff0000");
+     noStroke();
+     for (let segment of segments)
+     vertex(frog.tongue.head.x, frog.tongue.head.y, frog.tongue.size);
+
+     pop();
     // Draw the tongue tip
     push();
     fill("#ff0000");
@@ -194,26 +204,54 @@ function drawFrog() {
     pop();
 }
 
+// function drawFrog() {
+//     // Draw the tongue tip
+//     push();
+//     fill("#ff0000");
+//     noStroke();
+//     ellipse(frog.tongue.head.x, frog.tongue.head.y, frog.tongue.size);
+//     pop();
+
+//     // Draw the rest of the tongue
+//     push();
+//     stroke("#ff0000");
+//     strokeWeight(frog.tongue.size);
+//     line(frog.tongue.head.x, frog.tongue.head.y, frog.body.x, (frog.body.y - frog.body.size/2) );
+//     pop();
+
+//     // Draw the frog's body
+//     push();
+//     fill("#00ff00");
+//     noStroke();
+//     ellipse(frog.body.x, frog.body.y, frog.body.size);
+//     pop();
+// }
+console.log(segments[0])
 function moveTongue() {
     
-    // If the tongue direction is none, it doesn't do anything
+    //copy the first pixel of the snake to the tongueHead variables
+    let tongueHead = segments[0];
 
+    //inserts the new tongueHead at the beginning of the segments array
+    segments.unshift(tongueHead);
+
+    // If the tongue direction is none, it doesn't do anything
     if (frog.tongue.direction === "none") {
         // Tongue matches the frog's x
     frog.tongue.head.x = frog.body.x;
     frog.tongue.head.y = 565;
     }
     else if (frog.tongue.direction === "up") {
-        frog.tongue.head.y -= frog.tongue.speed;
+        tongueHead.y -= frog.tongue.speed;
     }
     else if (frog.tongue.direction === "right") {
-        frog.tongue.head.x += frog.tongue.speed;
+        tongueHead.x += frog.tongue.speed;
     }
     else if (frog.tongue.direction === "left") {
-        frog.tongue.head.x -= frog.tongue.speed 
+        tongueHead.x -= frog.tongue.speed 
     }
     else if (frog.tongue.direction === "down") {
-        frog.tongue.head.y += frog.tongue.speed
+        tongueHead.y += frog.tongue.speed
     }
 
     if (frog.tongue.state === "idle") {
@@ -234,28 +272,6 @@ function moveTongue() {
     }
 }
 
-// function drawFrog() {
-//     // Draw the tongue tip
-//     push();
-//     fill("#ff0000");
-//     noStroke();
-//     ellipse(frog.tongue.x, frog.tongue.y, frog.tongue.size);
-//     pop();
-
-//     // Draw the rest of the tongue
-//     push();
-//     stroke("#ff0000");
-//     strokeWeight(frog.tongue.size);
-//     line(frog.tongue.x, frog.tongue.y, frog.body.x, frog.body.y);
-//     pop();
-
-//     // Draw the frog's body
-//     push();
-//     fill("#00ff00");
-//     noStroke();
-//     ellipse(frog.body.x, frog.body.y, frog.body.size);
-//     pop();
-// }
 
 /**
  * Handles the tongue overlapping the fly
