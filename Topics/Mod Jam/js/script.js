@@ -15,12 +15,17 @@
 
 "use strict";
 
-let segments = [];
+let tongueSegments = [];
 
 let direction = "none"
 
+let tongueHeadCoordinates
+
+//Create a variable to change the topngue Origin (define later)
+let changedTongueOrigin 
+
 // Our frog
-const frog = {
+let frog = {
     // The frog's body has a position and size
     body: {
         x: 75,
@@ -60,6 +65,12 @@ function setup() {
 
     // Give the fly its first random position
     resetFly();
+    //Creates a vector with the tongue head coordinates
+    tongueHeadCoordinates = createVector(frog.tongue.head.x, frog.tongue.head.y);
+    console.log(tongueHeadCoordinates)
+
+    //Creates a vector with the tongue origins (that will be changing)
+    changedTongueOrigin = createVector(frog.body.x, frog.body.y)
 }
 
 function draw() {
@@ -68,9 +79,11 @@ function draw() {
     drawFly();
     // moveFrog();
     moveTongue();
+    drawTongue()
     drawFrog();
     checkTongueFlyOverlap();
-    tongueSegments()
+    // tongueSegments()
+    console.log(tongueHeadCoordinates.x)
 }
 
 /**
@@ -152,25 +165,38 @@ function resetFly() {
 /**
  * Creates an Array for the tongue
  */
-function tongueSegments() {
+// function tongueSegments() {
 
-    //start with an empty array of segment
- segments = [];
+//     //start with an empty array of segment
+//  segments = [];
 
-    //apply the speed to the tongue's head
-for (let tongueHeadX = frog.tongue.head.x; tongueHeadX > 800; tongueHeadX += frog.tongue.speed) {
+//     //apply the speed to the tongue's head
+// for (let tongueHeadX = frog.tongue.head.x; tongueHeadX > 800; tongueHeadX += frog.tongue.speed) {
 
-//create a vector with the moving tongue head and the tongue y (NOT DRAWN YET)
-let segmentPosition = createVector(tongueHeadX, frog.tongue.head.y);
+// //create a vector with the moving tongue head and the tongue y (NOT DRAWN YET)
+// let segmentPosition = createVector(tongueHeadX, frog.tongue.head.y);
 
-// add it to the beginning of the array
-segments.unshift(segmentPosition);
+// // add it to the beginning of the array
+// segments.unshift(segmentPosition);
 
+// }
+// // console.log(tongueHeadX)
+// }
+
+/**
+ * Draws the tongue as a vector
+ */
+function drawTongue() {
+
+//Draws the tongue vector
+    push();
+     stroke(255, 0, 100);
+     strokeWeight(frog.tongue.size)
+     point(tongueHeadCoordinates)
+     pop();
+     // Draw the rest of the tongue
+   
 }
-// console.log(tongueHeadX)
-}
-
-
 
 
 /**
@@ -178,27 +204,27 @@ segments.unshift(segmentPosition);
  */
 function drawFrog() {
      // Draw the tongue segments
-     push();
-     fill("#ff0000");
-     noStroke();
-     beginShape()
-     for (let segment of segments)
-     vertex(frog.tongue.head.x, frog.tongue.head.y, frog.tongue.size);
-     endShape()
-     pop();
+    //  push();
+    //  fill("#ff0000");
+    //  noStroke();
+    //  beginShape()
+    //  for (let segment of segments)
+    //  vertex(frog.tongue.head.x, frog.tongue.head.y, frog.tongue.size);
+    //  endShape()
+    //  pop();
     // Draw the tongue tip
-    push();
-    fill("#ff0000");
-    noStroke();
-    ellipse(frog.tongue.head.x, frog.tongue.head.y, frog.tongue.size);
-    pop();
+    // push();
+    // fill("#ff0000");
+    // noStroke();
+    // ellipse(frog.tongue.head.x, frog.tongue.head.y, frog.tongue.size);
+    // pop();
 
-    // Draw the rest of the tongue
-    push();
-    stroke("#ff0000");
-    strokeWeight(frog.tongue.size);
-    line(frog.tongue.head.x, frog.tongue.head.y, frog.body.x, (frog.body.y - frog.body.size/2) );
-    pop();
+    // // Draw the rest of the tongue
+    // push();
+    // stroke("#ff0000");
+    // strokeWeight(frog.tongue.size);
+    // line(frog.tongue.head.x, frog.tongue.head.y, frog.body.x, (frog.body.y - frog.body.size/2) );
+    // pop();
 
     // Draw the frog's body
     push();
@@ -233,29 +259,29 @@ function drawFrog() {
 console.log(segments[0])
 function moveTongue() {
     
-    //copy the first pixel of the snake to the tongueHead variables
-    let tongueHeadX = segments[0];
+    // //copy the first pixel of the snake to the tongueHead variables
+    // let tongueHeadX = segments[0];
 
-    //inserts the new tongueHead at the beginning of the segments array
-    segments.unshift(tongueHeadX);
+    // //inserts the new tongueHead at the beginning of the segments array
+    // segments.unshift(tongueHeadX);
 
     // If the tongue direction is none, it doesn't do anything
     if (frog.tongue.direction === "none") {
         // Tongue matches the frog's x
-    frog.tongue.head.x = frog.body.x;
-    frog.tongue.head.y = 565;
+    tongueHeadCoordinates.x = frog.body.x;
+    tongueHeadCoordinates.y = 565;
     }
     else if (frog.tongue.direction === "up") {
-        frog.tongue.head.y -= frog.tongue.speed;
+        tongueHeadCoordinates.y -= frog.tongue.speed;
     }
     else if (frog.tongue.direction === "right") {
-        tongueHeadX += frog.tongue.speed;
+        tongueHeadCoordinates.x += frog.tongue.speed;
     }
     else if (frog.tongue.direction === "left") {
-        tongueHeadX -= frog.tongue.speed 
+        tongueHeadCoordinates.x -= frog.tongue.speed 
     }
     else if (frog.tongue.direction === "down") {
-        frog.tongue.head.y += frog.tongue.speed
+        tongueHeadCoordinates.y += frog.tongue.speed
     }
 
     if (frog.tongue.state === "idle") {
@@ -311,5 +337,5 @@ function keyPressed() {
     frog.tongue.direction = "none"
   }
 }
-
+console.log(tongueHeadCoordinates)
 console.log(frog.tongue.state, frog.tongue.direction)
