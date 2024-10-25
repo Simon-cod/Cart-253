@@ -25,12 +25,12 @@ const frog = {
     },
     // The frog's tongue has a position, size, speed, and state
     tongue: {
-        x: undefined,
+        x: 75,
         y: 480,
         size: 20,
         speed: 20,
         // Determines how the tongue moves each frame
-        state: "idle" // State can be: idle, outbound, inbound
+        // state: "idle" // State can be: idle, outbound, inbound
     }
 };
 
@@ -112,16 +112,18 @@ function moveTongue() {
     if (frog.tongue.state === "idle") {
         // Do nothing
     }
-    
-  }
+    // If the tongue is outbound, it moves up
+    else if (frog.tongue.state === "outbound") {
+        frog.tongue.y += -frog.tongue.speed;
 
-    // // If the tongue is outbound, it moves up
-    // else if (frog.tongue.state === "outbound") {
-    //     frog.tongue.y += -frog.tongue.speed;
-    //     // The tongue bounces back if it hits the top
-    //     if (frog.tongue.y <= 0) {
-    //         frog.tongue.state = "inbound";
-    //     }
+        // The tongue bounces back if it hits the top
+        if (frog.tongue.y <= 0) {
+            frog.tongue.state = "inbound";
+        
+        }
+        
+}
+}
     // }
     // // If the tongue is inbound, it moves down
     // else if (frog.tongue.state === "inbound") {
@@ -170,7 +172,7 @@ function checkTongueFlyOverlap() {
         // Reset the fly
         resetFly();
         // Bring back the tongue
-        frog.tongue.state = "inbound";
+        // frog.tongue.state = "inbound";
     }
 }
 
@@ -181,12 +183,12 @@ function keyPressed() {
     // if (frog.tongue.state === "idle") {
     //     frog.tongue.state = "outbound";
     if (keyCode === UP_ARROW) {
-        frog.tongue.dir(0, -1); //moves 0 along x and -1 (up) along y axis
+        frog.tongue.y -= 1; //moves 0 along x and -1 (up) along y axis
   } else if (keyCode === DOWN_ARROW) {
-    frog.tongue.dir(0, 1);
+    frog.tongue.y += 1;
   } else if (keyCode === RIGHT_ARROW) {
-    frog.tongue.dir(1, 0);
+    frog.tongue.x += 1;
   } else if (keyCode === LEFT_ARROW) {
-    frog.tongue.dir(-1, 0);
+    frog.tongue.x -= 1;
 }
 }
