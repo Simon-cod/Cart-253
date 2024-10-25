@@ -30,7 +30,7 @@ const frog = {
         size: 20,
         speed: 20,
         // Determines how the tongue moves each frame
-        // state: "idle" // State can be: idle, outbound, inbound
+        state: "idle" // State can be: idle, outbound, inbound
     }
 };
 
@@ -121,18 +121,18 @@ function moveTongue() {
             frog.tongue.state = "inbound";
         
         }
-        
+    }
+    // If the tongue is inbound, it moves down
+    else if (frog.tongue.state === "inbound") {
+        frog.tongue.y += frog.tongue.speed;
+        // The tongue stops if it hits the bottom
+        if (frog.tongue.y >= height) {
+            frog.tongue.state = "idle";
+        }
+    }
 }
-}
-    // }
-    // // If the tongue is inbound, it moves down
-    // else if (frog.tongue.state === "inbound") {
-    //     frog.tongue.y += frog.tongue.speed;
-    //     // The tongue stops if it hits the bottom
-    //     if (frog.tongue.y >= height) {
-    //         frog.tongue.state = "idle";
-    //     }
-    // }
+
+
 
 /**
  * Displays the tongue (tip and line connection) and the frog (body)
@@ -183,12 +183,13 @@ function keyPressed() {
     // if (frog.tongue.state === "idle") {
     //     frog.tongue.state = "outbound";
     if (keyCode === UP_ARROW) {
-        frog.tongue.y -= 1; //moves 0 along x and -1 (up) along y axis
+        frog.tongue.state = "outbound"; //moves 0 along x and -1 (up) along y axis
   } else if (keyCode === DOWN_ARROW) {
-    frog.tongue.y += 1;
+    frog.tongue.state = "none";
   } else if (keyCode === RIGHT_ARROW) {
     frog.tongue.x += 1;
   } else if (keyCode === LEFT_ARROW) {
     frog.tongue.x -= 1;
 }
 }
+console.log(frog.tongue.state)
