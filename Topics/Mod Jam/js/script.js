@@ -25,9 +25,11 @@ let direction = "none"
 let tongueHeadCoordinates
 
 //Create a variable to change the tongue Origin (define later)
-let changedTongueOrigin 
+let changedTongueOrigin
 
-let newTongueOrigins
+let newTongueOrigin
+
+const newTongueOrigins = undefined
 
 // Our frog
 let frog = {
@@ -77,12 +79,12 @@ function setup() {
 
     //Creates a vector with the tongue origins (that will be changing)
     changedTongueOrigin = createVector(frog.body.x, (frog.body.y - frog.body.size/2))
-    background("#87ceeb");
+   
 }
 
 console.log(changedTongueOrigin.y)
 function draw() {
-   
+    background("#87ceeb");
     moveFly();
     drawFly();
     // moveFrog();
@@ -203,13 +205,13 @@ function drawTongue() {
      point(tongueHeadCoordinates)
      pop();
 
-//    // Draw the body of the tongue (that follows the tongue's)
-//     push();
-//     stroke("#ff0000");
-//     strokeWeight(frog.tongue.size);
-//     line(tongueHeadCoordinates.x, tongueHeadCoordinates.y, changedTongueOrigin.x, changedTongueOrigin.y);
-//     pop();
-//     console.log("Head Coordinates =" + tongueHeadCoordinates, "Origins =" + changedTongueOrigin)
+   // Draw the body of the tongue (that follows the tongue's)
+    push();
+    stroke("#ff0000");
+    strokeWeight(frog.tongue.size);
+    line(tongueHeadCoordinates.x, tongueHeadCoordinates.y, changedTongueOrigin.x, changedTongueOrigin.y);
+    pop();
+    console.log("Head Coordinates =" + tongueHeadCoordinates, "Origins =" + changedTongueOrigin)
 }
 
 
@@ -286,6 +288,11 @@ function moveTongue() {
     // //inserts the new tongueHead at the beginning of the segments array
     // segments.unshift(tongueHeadX);
 
+    const newTongueOrigin = {
+        x: tongueHeadCoordinates.x,
+        y: tongueHeadCoordinates.y,           
+    } 
+
     // If the tongue direction is none, it doesn't do anything
     if (frog.tongue.direction === "none") {
         // Tongue matches the frog's x
@@ -298,17 +305,15 @@ function moveTongue() {
     }
     else if (frog.tongue.direction === "right") {
        
-        const newTongueOrigin = {
-            x: tongueHeadCoordinates.x,
-            y: tongueHeadCoordinates.y,           
-        } 
-    newTongueOrigins = createVector(newTongueOrigin.x, newTongueOrigin.y)
-     console.log("newTongueOrigins = " + newTongueOrigins)
+       
+
+    // newTongueOrigins = createVector(newTongueOrigin.x, newTongueOrigin.y)
+     console.log("newTongueOrigin.x = " + newTongueOrigin.x)
         tongueHeadCoordinates.x += frog.tongue.speed;
         push();
         stroke("#ff0000");
         strokeWeight(frog.tongue.size);
-        line(tongueHeadCoordinates.x, tongueHeadCoordinates.y, newTongueOrigins.x, newTongueOrigins.y);
+        line(tongueHeadCoordinates.x, tongueHeadCoordinates.y, newTongueOrigin.x, newTongueOrigin.y);
         pop();
     }
     else if (frog.tongue.direction === "left") {
@@ -343,6 +348,8 @@ function moveTongue() {
 function checkTongueFlyOverlap() {
     // Get distance from tongue to fly
     const d = dist(frog.tongue.x, frog.tongue.y, fly.x, fly.y);
+
+    console.log("d" + d)
     // Check if it's an overlap
     const eaten = (d < frog.tongue.size/2 + fly.size/2);
     if (eaten) {
