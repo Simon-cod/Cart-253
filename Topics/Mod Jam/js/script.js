@@ -15,14 +15,19 @@
 
 "use strict";
 
-let tongueSegments = [];
+//Creates an array for the tongue bodys
+let tongueBodySegments = [];
 
+//Creates a variable for the tongue's direction
 let direction = "none"
 
+//Creates a variable for the tongue Head x & y coordinates
 let tongueHeadCoordinates
 
-//Create a variable to change the topngue Origin (define later)
+//Create a variable to change the tongue Origin (define later)
 let changedTongueOrigin 
+
+let newTongueOrigins
 
 // Our frog
 let frog = {
@@ -40,7 +45,8 @@ let frog = {
         speed: 5,
         // Determines how the tongue moves each frame
         state: "idle", // State can be: idle, outbound, inbound
-        direction: "none",
+        direction: "none", //Direction can be: none, up, down, left, right
+       //Specifies the tongue's head coordinates
         head: {
             x: 75,
             y: 565
@@ -71,10 +77,12 @@ function setup() {
 
     //Creates a vector with the tongue origins (that will be changing)
     changedTongueOrigin = createVector(frog.body.x, (frog.body.y - frog.body.size/2))
+    background("#87ceeb");
 }
+
 console.log(changedTongueOrigin.y)
 function draw() {
-    background("#87ceeb");
+   
     moveFly();
     drawFly();
     // moveFrog();
@@ -194,14 +202,14 @@ function drawTongue() {
      strokeWeight(frog.tongue.size)
      point(tongueHeadCoordinates)
      pop();
-     // Draw the rest of the tongue
-    push();
-    stroke("#ff0000");
-    strokeWeight(frog.tongue.size);
-    line(tongueHeadCoordinates.x, tongueHeadCoordinates.y, changedTongueOrigin.x, changedTongueOrigin.y);
-    pop();
-    console.log("Head Coordinates =" + tongueHeadCoordinates, "Origins =" + changedTongueOrigin)
 
+//    // Draw the body of the tongue (that follows the tongue's)
+//     push();
+//     stroke("#ff0000");
+//     strokeWeight(frog.tongue.size);
+//     line(tongueHeadCoordinates.x, tongueHeadCoordinates.y, changedTongueOrigin.x, changedTongueOrigin.y);
+//     pop();
+//     console.log("Head Coordinates =" + tongueHeadCoordinates, "Origins =" + changedTongueOrigin)
 }
 
 
@@ -264,6 +272,12 @@ function drawFrog() {
 // }
 console.log(segments[0])
 
+function createArray() {
+    tongueBodySegments = []
+
+
+}
+
 function moveTongue() {
     
     // //copy the first pixel of the snake to the tongueHead variables
@@ -279,10 +293,23 @@ function moveTongue() {
     tongueHeadCoordinates.y = (frog.body.y - frog.body.size/2);
     }
     else if (frog.tongue.direction === "up") {
+
         tongueHeadCoordinates.y -= frog.tongue.speed;
     }
     else if (frog.tongue.direction === "right") {
+       
+        const newTongueOrigin = {
+            x: tongueHeadCoordinates.x,
+            y: tongueHeadCoordinates.y,           
+        } 
+    newTongueOrigins = createVector(newTongueOrigin.x, newTongueOrigin.y)
+     console.log("newTongueOrigins = " + newTongueOrigins)
         tongueHeadCoordinates.x += frog.tongue.speed;
+        push();
+        stroke("#ff0000");
+        strokeWeight(frog.tongue.size);
+        line(tongueHeadCoordinates.x, tongueHeadCoordinates.y, newTongueOrigins.x, newTongueOrigins.y);
+        pop();
     }
     else if (frog.tongue.direction === "left") {
         tongueHeadCoordinates.x -= frog.tongue.speed 
