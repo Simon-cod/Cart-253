@@ -57,6 +57,7 @@ console.log(frog.tongue.head.x)
 // ?Our fly
 // Has a position, size, and speed of horizontal movement
 const fly = {
+    // x: 0,
     x: 0,
     y: 200, // Will be random
     size: 10,
@@ -93,7 +94,7 @@ function draw() {
     drawFrog();
     checkTongueFlyOverlap();
     // tongueSegments()
-    console.log(tongueHeadCoordinates.x)
+    // console.log(tongueHeadCoordinates.x)
 }
 
 /**
@@ -147,7 +148,7 @@ function drawTongue() {
     strokeWeight(frog.tongue.size);
     line(tongueHeadCoordinates.x, tongueHeadCoordinates.y, changedTongueOrigin.x, changedTongueOrigin.y);
     pop();
-    console.log("Head Coordinates =" + tongueHeadCoordinates, "Origins =" + changedTongueOrigin)
+    // console.log("Head Coordinates =" + tongueHeadCoordinates, "Origins =" + changedTongueOrigin)
 }
 
 
@@ -254,9 +255,9 @@ function moveTongue() {
  */
 function checkTongueFlyOverlap() {
     // Get distance from tongue to fly
-    const d = dist(frog.tongue.x, frog.tongue.y, fly.x, fly.y);
+    const d = dist(tongueHeadCoordinates.x, tongueHeadCoordinates.y, fly.x, fly.y);
 
-    // console.log("d" + d)
+    console.log("d" + d)
     // Check if it's an overlap
     const eaten = (d < frog.tongue.size/2 + fly.size/2);
     if (eaten) {
