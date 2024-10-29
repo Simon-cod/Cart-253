@@ -29,7 +29,7 @@ let changedTongueOrigin
 
 let newTongueOrigin
 
-const newTongueOrigins = undefined
+let newTongueOrigins = undefined
 
 // Our frog
 let frog = {
@@ -69,7 +69,7 @@ const fly = {
  * Creates the canvas and initializes the fly
  */
 function setup() {
-    createCanvas(640, 480);
+    createCanvas(640, 1000);
 
     // Give the fly its first random position
     resetFly();
@@ -79,7 +79,7 @@ function setup() {
 
     //Creates a vector with the tongue origins (that will be changing)
     changedTongueOrigin = createVector(frog.body.x, (frog.body.y - frog.body.size/2))
-   
+    
 }
 
 console.log(changedTongueOrigin.y)
@@ -135,42 +135,6 @@ function resetFly() {
 //     frog.body.x = mouseX;
 // }
 
-/**
- * Handles moving the tongue based on its state
- */
-// function moveTongue() {
-//     // Tongue matches the frog's x
-//     frog.tongue.x = frog.body.x;
-//     // If the tongue is idle, it doesn't do anything
-    
-//     // If the tongue is outbound, it moves up
-//     if (frog.tongue.direction === "none") {
-//         //Do nothing
-//     }
-//     else if (frog.tongue.direction === "up") {
-//         frog.tongue.y += -frog.tongue.speed;
-//     }
-//     else if (frog.tongue.direction === "right") {
-//         frog.tongue.x += frog.tongue.speed;
-//     }
-
-//     if (frog.tongue.state === "idle") {
-//             // Do nothing
-//         }
-//         // The tongue bounces back if it hits the top
-//         else if (frog.tongue.y <= 0) {
-//             frog.tongue.state = "inbound";
-        
-//         }
-//     // If the tongue is inbound, it moves down
-//     else if (frog.tongue.state === "inbound") {
-//         frog.tongue.y += frog.tongue.speed;
-//         // The tongue stops if it hits the bottom
-//         if (frog.tongue.y >= height) {
-//             frog.tongue.state = "idle";
-//         }
-//     }
-// }
 
 /**
  * Creates an Array for the tongue
@@ -219,28 +183,6 @@ function drawTongue() {
  * Displays the tongue (tip and line connection) and the frog (body)
  */
 function drawFrog() {
-     // Draw the tongue segments
-    //  push();
-    //  fill("#ff0000");
-    //  noStroke();
-    //  beginShape()
-    //  for (let segment of segments)
-    //  vertex(frog.tongue.head.x, frog.tongue.head.y, frog.tongue.size);
-    //  endShape()
-    //  pop();
-    // Draw the tongue tip
-    // push();
-    // fill("#ff0000");
-    // noStroke();
-    // ellipse(frog.tongue.head.x, frog.tongue.head.y, frog.tongue.size);
-    // pop();
-
-    // // Draw the rest of the tongue
-    // push();
-    // stroke("#ff0000");
-    // strokeWeight(frog.tongue.size);
-    // line(frog.tongue.head.x, frog.tongue.head.y, frog.body.x, (frog.body.y - frog.body.size/2) );
-    // pop();
 
     // Draw the frog's body
     push();
@@ -250,28 +192,6 @@ function drawFrog() {
     pop();
 }
 
-// function drawFrog() {
-//     // Draw the tongue tip
-//     push();
-//     fill("#ff0000");
-//     noStroke();
-//     ellipse(frog.tongue.head.x, frog.tongue.head.y, frog.tongue.size);
-//     pop();
-
-//     // Draw the rest of the tongue
-//     push();
-//     stroke("#ff0000");
-//     strokeWeight(frog.tongue.size);
-//     line(frog.tongue.head.x, frog.tongue.head.y, frog.body.x, (frog.body.y - frog.body.size/2) );
-//     pop();
-
-//     // Draw the frog's body
-//     push();
-//     fill("#00ff00");
-//     noStroke();
-//     ellipse(frog.body.x, frog.body.y, frog.body.size);
-//     pop();
-// }
 console.log(segments[0])
 
 function createArray() {
@@ -288,10 +208,6 @@ function moveTongue() {
     // //inserts the new tongueHead at the beginning of the segments array
     // segments.unshift(tongueHeadX);
 
-    const newTongueOrigin = {
-        x: tongueHeadCoordinates.x,
-        y: tongueHeadCoordinates.y,           
-    } 
 
     // If the tongue direction is none, it doesn't do anything
     if (frog.tongue.direction === "none") {
@@ -301,19 +217,25 @@ function moveTongue() {
     }
     else if (frog.tongue.direction === "up") {
 
+       //removes a y value so it goes up
         tongueHeadCoordinates.y -= frog.tongue.speed;
     }
     else if (frog.tongue.direction === "right") {
        
-       
+        //creates a constant to take the current value of the head's coordinate
+        // const newTongueOriginx =  tongueHeadCoordinates.x
+                      
+        // const newTongueOriginy = tongueHeadCoordinates.y
 
-    // newTongueOrigins = createVector(newTongueOrigin.x, newTongueOrigin.y)
-     console.log("newTongueOrigin.x = " + newTongueOrigin.x)
+    //  newTongueOrigins = createVector(newTongueOriginx, newTongueOriginy)
+
+     console.log("newTongueOriginx = " + newTongueOriginx, "newTongueOriginy = " + newTongueOriginy)
+
         tongueHeadCoordinates.x += frog.tongue.speed;
         push();
         stroke("#ff0000");
         strokeWeight(frog.tongue.size);
-        line(tongueHeadCoordinates.x, tongueHeadCoordinates.y, newTongueOrigin.x, newTongueOrigin.y);
+        line(tongueHeadCoordinates.x, tongueHeadCoordinates.y, newTongueOriginx, newTongueOriginy);
         pop();
     }
     else if (frog.tongue.direction === "left") {
@@ -349,7 +271,7 @@ function checkTongueFlyOverlap() {
     // Get distance from tongue to fly
     const d = dist(frog.tongue.x, frog.tongue.y, fly.x, fly.y);
 
-    console.log("d" + d)
+    // console.log("d" + d)
     // Check if it's an overlap
     const eaten = (d < frog.tongue.size/2 + fly.size/2);
     if (eaten) {
