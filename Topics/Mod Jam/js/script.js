@@ -15,48 +15,46 @@
 
 "use strict";
 
-//Creates an array for the tongue bodys
-let tongueBodySegments = [];
 
-//Creates a variable for the tongue's direction
+
+//?Creates a variable for the tongue's direction
 let direction = "none"
 
-//Creates a variable for the tongue Head x & y coordinates
+//?Creates a variable for the tongue Head x & y coordinates
 let tongueHeadCoordinates
 
-//Create a variable to change the tongue Origin (define later)
+//?Create a variable to change the tongue Origin (define later)
 let changedTongueOrigin
 
-let newTongueOrigin
 
-let newTongueOrigins = undefined
-
-// Our frog
+// ?Our frog
 let frog = {
     // The frog's body has a position and size
     body: {
-        x: 75,
-        y: 520,
+        x: 300,
+        y: 1800,
         size: 150
     },
     // The frog's tongue has a position, size, speed, and state
     tongue: {
-        x: 75,
-        y: 445,
+        x: 300,
+        y: 1800,
         size: 20,
-        speed: 5,
+        speed: 4,
         // Determines how the tongue moves each frame
         state: "idle", // State can be: idle, outbound, inbound
+        stateSpeed: "normal", //stateSpeed can be normal & fast
         direction: "none", //Direction can be: none, up, down, left, right
-       //Specifies the tongue's head coordinates
+       //Specifies the tongue's head coordinatesy
         head: {
             x: 75,
             y: 565
         },
     }
-};
+}
+
 console.log(frog.tongue.head.x)
-// Our fly
+// ?Our fly
 // Has a position, size, and speed of horizontal movement
 const fly = {
     x: 0,
@@ -66,10 +64,10 @@ const fly = {
 };
 
 /**
- * Creates the canvas and initializes the fly
+ * ?Creates the canvas and initializes the fly
  */
 function setup() {
-    createCanvas(640, 1000);
+    createCanvas(600, 2000);
 
     // Give the fly its first random position
     resetFly();
@@ -82,7 +80,9 @@ function setup() {
     
 }
 
-console.log(changedTongueOrigin.y)
+/**
+ * ?Draws the frog, move it's tongue and moves the fly
+ */
 function draw() {
     background("#87ceeb");
     moveFly();
@@ -97,8 +97,8 @@ function draw() {
 }
 
 /**
- * Moves the fly according to its speed
- * Resets the fly if it gets all the way to the right
+ * !Moves the fly according to its speed
+ * !Resets the fly if it gets all the way to the right
  */
 function moveFly() {
     // Move the fly
@@ -110,7 +110,7 @@ function moveFly() {
 }
 
 /**
- * Draws the fly as a black circle
+ * TODO Draws the fly as a black circle
  */
 function drawFly() {
     push();
@@ -121,57 +121,29 @@ function drawFly() {
 }
 
 /**
- * Resets the fly to the left with a random y
+ * !Resets the fly to the left with a random y
  */
 function resetFly() {
     fly.x = 0;
-    fly.y = random(0, 300);
+    fly.y = random(200, 300);
 }
 
-/**
- * Moves the frog to the mouse position on x
- */
-// function moveFrog() {
-//     frog.body.x = mouseX;
-// }
 
 
 /**
- * Creates an Array for the tongue
- */
-// function tongueSegments() {
-
-//     //start with an empty array of segment
-//  segments = [];
-
-//     //apply the speed to the tongue's head
-// for (let tongueHeadX = frog.tongue.head.x; tongueHeadX > 800; tongueHeadX += frog.tongue.speed) {
-
-// //create a vector with the moving tongue head and the tongue y (NOT DRAWN YET)
-// let segmentPosition = createVector(tongueHeadX, frog.tongue.head.y);
-
-// // add it to the beginning of the array
-// segments.unshift(segmentPosition);
-
-// }
-// // console.log(tongueHeadX)
-// }
-
-/**
- * Draws the tongue as a vector
+ * ?Draws the tongue as a vector
  */
 function drawTongue() {
-
 //Draws the tongue vector
     push();
-     stroke(255, 0, 100);
+     stroke(150, 0, 250);
      strokeWeight(frog.tongue.size)
      point(tongueHeadCoordinates)
      pop();
 
    // Draw the body of the tongue (that follows the tongue's)
     push();
-    stroke("#ff0000");
+    stroke(150, 50, 250);
     strokeWeight(frog.tongue.size);
     line(tongueHeadCoordinates.x, tongueHeadCoordinates.y, changedTongueOrigin.x, changedTongueOrigin.y);
     pop();
@@ -180,39 +152,65 @@ function drawTongue() {
 
 
 /**
- * Displays the tongue (tip and line connection) and the frog (body)
+ * ?Displays the frog (body)
  */
 function drawFrog() {
 
     // Draw the frog's body
     push();
-    fill("#00ff00");
-    noStroke();
+    fill(50, 150, 250);
+    stroke(0, 0, 200);
     ellipse(frog.body.x, frog.body.y, frog.body.size);
+    pop();
+
+    //Draw spots
+    push();
+    fill(0, 0, 200);
+    noStroke();
+    ellipse(frog.body.x - 45, frog.body.y, 60);
+    pop();
+
+    push();
+    fill(0, 0, 200);
+    noStroke();
+    ellipse(frog.body.x + 30, frog.body.y - 35, 60);
+    pop();
+
+    push();
+    fill(0, 0, 200);
+    noStroke();
+    ellipse(frog.body.x - 20, frog.body.y - 45, 30);
+    pop();
+    
+    push();
+    fill(0, 0, 200);
+    noStroke();
+    ellipse(frog.body.x + 10, frog.body.y + 20, 30);
+    pop();
+
+    push();
+    fill(0, 0, 200);
+    noStroke();
+    ellipse(frog.body.x + 60, frog.body.y + 2, 20);
     pop();
 }
 
-console.log(segments[0])
-
-function createArray() {
-    tongueBodySegments = []
-
-
-}
-
+/**
+ * ?Moves the tongue with the keypad
+ */
 function moveTongue() {
     
-    // //copy the first pixel of the snake to the tongueHead variables
-    // let tongueHeadX = segments[0];
-
-    // //inserts the new tongueHead at the beginning of the segments array
-    // segments.unshift(tongueHeadX);
-
+    if (frog.tongue.stateSpeed === "fast") {
+        frog.tongue.speed = 10;
+    } 
+    else {
+        frog.tongue.speed = 4;
+    }
 
     // If the tongue direction is none, it doesn't do anything
     if (frog.tongue.direction === "none") {
         // Tongue matches the frog's x
-    tongueHeadCoordinates.x = frog.body.x;
+        tongueHeadCoordinates.x = frog.body.x;
     tongueHeadCoordinates.y = (frog.body.y - frog.body.size/2);
     }
     else if (frog.tongue.direction === "up") {
@@ -222,21 +220,8 @@ function moveTongue() {
     }
     else if (frog.tongue.direction === "right") {
        
-        //creates a constant to take the current value of the head's coordinate
-        // const newTongueOriginx =  tongueHeadCoordinates.x
-                      
-        // const newTongueOriginy = tongueHeadCoordinates.y
-
-    //  newTongueOrigins = createVector(newTongueOriginx, newTongueOriginy)
-
-     console.log("newTongueOriginx = " + newTongueOriginx, "newTongueOriginy = " + newTongueOriginy)
-
         tongueHeadCoordinates.x += frog.tongue.speed;
-        push();
-        stroke("#ff0000");
-        strokeWeight(frog.tongue.size);
-        line(tongueHeadCoordinates.x, tongueHeadCoordinates.y, newTongueOriginx, newTongueOriginy);
-        pop();
+
     }
     else if (frog.tongue.direction === "left") {
         tongueHeadCoordinates.x -= frog.tongue.speed 
@@ -265,7 +250,7 @@ function moveTongue() {
 
 
 /**
- * Handles the tongue overlapping the fly
+ * !Handles the tongue overlapping the fly
  */
 function checkTongueFlyOverlap() {
     // Get distance from tongue to fly
@@ -283,7 +268,7 @@ function checkTongueFlyOverlap() {
 }
 
 /**
- * Launch the tongue on click (if it's not launched yet)
+ * ? Changes tongue state when you press on the keypad
  */
 function keyPressed() {
     // if (frog.tongue.state === "idle") {
@@ -296,9 +281,20 @@ function keyPressed() {
     frog.tongue.direction = "right";
   } else if (keyCode === LEFT_ARROW) {
     frog.tongue.direction = "left"
-  } else if (keyCode === 32) {
+  } //Resets the direction to none if spacebar is pressed
+  else if (keyCode === 32) {
     frog.tongue.direction = "none"
-  }
+  } //Changes the tongue speed to fast when the shift key is pressed
+  else if (keyCode === 16) {
+    frog.tongue.stateSpeed = "fast"
+  } 
 }
-console.log(tongueHeadCoordinates)
-console.log(frog.tongue.state, frog.tongue.direction)
+
+/**
+ * ? Removes the speed effect when you release the shift key
+ */
+function keyReleased() {
+    if (keyCode === 16) {
+    frog.tongue.stateSpeed = "normal"
+}
+}
