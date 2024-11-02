@@ -103,11 +103,17 @@ function draw() {
     checkTongueFlyOverlap();
     // tongueSegments()
     // console.log(tongueHeadCoordinates.x)
+    drawsNewCrazyFly()
+    
+}
 
-    for (let crazyFly of buggyFlies) {
-        moveCrazyFlies(crazyFly);
-        newCrazyFly();
-    }
+//creates a function that draws a new Crazy Fly (Buggy Fly)
+function drawsNewCrazyFly() {
+//reatributes the buggyFlies array to another name for the loop and creates a loop the adds fly coordinates to the array and makes  / it move
+for (let crazyFly of buggyFlies) {
+    moveCrazyFlies(crazyFly);
+    newCrazyFly();
+}
 }
 
 /**
@@ -145,7 +151,7 @@ function moveCrazyFlies(crazyFly) {
     //Draws the provided fly to the canvas
     push();
     noStroke();
-    fill(0);
+    fill(crazyFly.r, crazyFly.g, crazyFly.b);
     ellipse(x, y, crazyFly.size);
     pop();
     
@@ -157,10 +163,11 @@ function newCrazyFly() {
     let crazyFly = {
         x: random(0, width),
         y: random(0, height),
-        size: random(0, 10),
-        buzziness: random(20, 50),
-        r: random(0,255),
-        b: random(0,255)
+        size: random(10, 15),
+        buzziness: 500,
+        r: 0,
+        g: 0,
+        b: 255
     }; 
 // returns the values of the coordinates we just created
     return crazyFly;
@@ -202,10 +209,12 @@ function checkTongueFlyOverlap() {
     // Check if it's an overlap
     const eaten = (d < frog.tongue.size/2 + initialFly.size/2);
     if (eaten) {
+        //Creates a Buggy Fly
+        addsCrazyFlyToTheArray();
         // Reset the fly
         resetFly();
         // Bring back the tongue
-        // frog.tongue.state = "inbound";
+        frog.tongue.direction= "none";
     }
 }
 
@@ -360,7 +369,7 @@ function keyReleased() {
     }
 }
 
-function mousePressed() {
+function addsCrazyFlyToTheArray() {
     let randomFly = newCrazyFly();
     buggyFlies.push(randomFly)
     }
