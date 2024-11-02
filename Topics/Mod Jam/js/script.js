@@ -15,16 +15,17 @@
 
 "use strict";
 
-
+// //!Creates an array for the fly
+// let flies = [];
 
 //?Creates a variable for the tongue's direction
-let direction = "none"
+let direction = "none";
 
 //?Creates a variable for the tongue Head x & y coordinates
-let tongueHeadCoordinates
+let tongueHeadCoordinates;
 
 //?Create a variable to change the tongue Origin (define later)
-let changedTongueOrigin
+let changedTongueOrigin;
 
 
 // ?Our frog
@@ -54,15 +55,22 @@ let frog = {
 }
 
 console.log(frog.tongue.head.x)
-// ?Our fly
+// ?Our initial fly
 // Has a position, size, and speed of horizontal movement
-const fly = {
+//Creates coordinate for the inital fly that will always reset
+const initialFly = {
     // x: 0,
     x: 0,
     y: 200, // Will be random
     size: 10,
     speed: 3
 };
+
+//creates a variable for the borders
+let border = undefined
+
+//Creates an empty array for the buggyFlies
+let buggyFlies = []
 
 /**
  * ?Creates the canvas and initializes the fly
@@ -95,41 +103,111 @@ function draw() {
     checkTongueFlyOverlap();
     // tongueSegments()
     // console.log(tongueHeadCoordinates.x)
-}
 
-/**
- * !Moves the fly according to its speed
- * !Resets the fly if it gets all the way to the right
- */
-function moveFly() {
-    // Move the fly
-    fly.x += fly.speed;
-    // Handle the fly going off the canvas
-    if (fly.x > width) {
-        resetFly();
+    for (let crazyFly of buggyFlies) {
+        moveCrazyFlies(crazyFly);
+        newCrazyFly();
     }
 }
 
 /**
- * TODO Draws the fly as a black circle
+ * ?Moves the fly according to its speed
+ * ?Resets the fly if it gets all the way to the right
+ */
+function moveFly() {
+    // Move the fly
+    initialFly.x += initialFly.speed;
+    // Handle the fly going off the canvas
+    if (initialFly.x > width) {
+        resetFly();
+    }
+}
+
+function moveCrazyFlies(crazyFly) {
+    let border = {
+        left: 0,
+        right: width,
+        up: 0,
+        down: height
+    }
+    
+    let firstX = border.left + (crazyFly.size/2);
+    let secondX = border.right - (crazyFly.size/2);
+    let firstY = border.up + (crazyFly.size/2);
+    let secondY = border.down - (crazyFly.size/2);
+
+    let x = constrain(crazyFly.x, firstX, secondX);
+    let y = constrain(crazyFly.y, firstY, secondY);
+
+    x += random(-crazyFly.buzziness, crazyFly.buzziness);
+    y += random(-crazyFly.buzziness, crazyFly.buzziness);
+
+    //Draws the provided fly to the canvas
+    push();
+    noStroke();
+    fill(0);
+    ellipse(x, y, crazyFly.size);
+    pop();
+    
+}
+
+function newCrazyFly() {
+   
+    //creates random coordinates and buzziness for each buggyFly 
+    let crazyFly = {
+        x: random(0, width),
+        y: random(0, height),
+        size: random(0, 10),
+        buzziness: random(20, 50),
+        r: random(0,255),
+        b: random(0,255)
+    }; 
+// returns the values of the coordinates we just created
+    return crazyFly;
+}
+//     }
+// }
+
+/**
+ * ?Draws the fly as a black circle
  */
 function drawFly() {
+    
+    // flies.push = (
     push();
     noStroke();
     fill("#000000");
-    ellipse(fly.x, fly.y, fly.size);
+    ellipse(initialFly.x, initialFly.y, initialFly.size);
     pop();
+    
 }
 
 /**
- * !Resets the fly to the left with a random y
+ * ?Resets the fly to the left with a random y
  */
 function resetFly() {
-    fly.x = 0;
-    fly.y = random(200, 300);
+    initialFly.x = 0;
+    initialFly.y = random(200, 300);
 }
 
 
+
+/**
+ * ?Handles the tongue overlapping the fly
+ */
+function checkTongueFlyOverlap() {
+    // Get distance from tongue to fly
+    const d = dist(tongueHeadCoordinates.x, tongueHeadCoordinates.y, initialFly.x, initialFly.y);
+
+    // Check if it's an overlap
+    const eaten = (d < frog.tongue.size/2 + initialFly.size/2);
+    if (eaten) {
+        // Reset the fly
+        resetFly();
+        // Bring back the tongue
+        // frog.tongue.state = "inbound";
+    }
+}
 
 /**
  * ?Draws the tongue as a vector
@@ -251,24 +329,6 @@ function moveTongue() {
 
 
 /**
- * !Handles the tongue overlapping the fly
- */
-function checkTongueFlyOverlap() {
-    // Get distance from tongue to fly
-    const d = dist(tongueHeadCoordinates.x, tongueHeadCoordinates.y, fly.x, fly.y);
-
-    console.log("d" + d)
-    // Check if it's an overlap
-    const eaten = (d < frog.tongue.size/2 + fly.size/2);
-    if (eaten) {
-        // Reset the fly
-        resetFly();
-        // Bring back the tongue
-        // frog.tongue.state = "inbound";
-    }
-}
-
-/**
  * ? Changes tongue state when you press on the keypad
  */
 function keyPressed() {
@@ -297,5 +357,11 @@ function keyPressed() {
 function keyReleased() {
     if (keyCode === 16) {
     frog.tongue.stateSpeed = "normal"
+    }
 }
-}
+
+function mousePressed() {
+    let randomFly = newCrazyFly();
+    buggyFlies.push(randomFly)
+    }
+
