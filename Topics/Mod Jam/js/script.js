@@ -50,6 +50,41 @@ let frog = {
         },
     }
 }
+
+// !Creates an Array for the three lily pads
+let lilyPads = [
+    {
+        x: 600,
+        y: 406,
+        size: 130,
+        speed: 2,
+        direction: "left",
+        r: 20, 
+        g: 220,
+        b: 120
+    },
+    {
+        x: 0,
+        y: 812,
+        size: 150,
+        speed: 5,
+        direction: "right",
+        r: 0, 
+        g: 210,
+        b: 150
+    },
+    {
+        x: 600,
+        y: 1218,
+        size: 100,
+        speed: 3,
+        direction: "left",
+        r: 0, 
+        g: 190,
+        b: 150
+    },
+];
+
 // TODO Our initial fly
 // Has a position, size, and speed of horizontal movement
 //Creates coordinate for the inital fly that will always reset
@@ -96,8 +131,57 @@ function draw() {
     drawFrog();
     checkTongueFlyOverlap();
     drawsNewCrazyFly()
+    createLilyPads()
     
 }
+
+/**
+ * !Draws and moves the lilypads
+ */
+function createLilyPads() {
+   
+    for (let lilyPad of lilyPads) {
+        drawLilyPads(lilyPad)
+        movelilyPads(lilyPad)
+    };
+}
+
+/**
+ * !Draws the lilypads
+ */
+function drawLilyPads(lilyPad) {
+    //Draws the lily pads
+    push();
+    fill(lilyPad.r, lilyPad.g, lilyPad.b);
+    stroke(0, 0, 200);
+    ellipse(lilyPad.x, lilyPad.y, lilyPad.size);
+    pop();
+}
+
+/**
+ * !Moves the lilypads
+ */
+function movelilyPads(lilyPad) {
+
+    //Assign a direction to the right if the lily pad goes too far left
+    if (lilyPad.x < 0) {
+    lilyPad.direction = "right"
+    } //Assigns a direction to the left if the lily pad goes too far right
+    else if (lilyPad.x > width) {
+    lilyPad.direction = "left"
+    };
+   
+    //makes the lilypads go to the right (adds an x value every frame)
+    if (lilyPad.direction === "right") {
+        lilyPad.x += lilyPad.speed;
+    } else 
+    //makes the lilypads go to the left (removes an x value every frame)
+    if (lilyPad.direction === "left") {
+        lilyPad.x -= lilyPad.speed;
+    }
+ }
+
+
 
 /**
  * ?Draws the tongue as a vector
