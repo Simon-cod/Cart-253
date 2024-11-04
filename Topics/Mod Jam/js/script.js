@@ -381,49 +381,6 @@ function drawsNewCrazyFly() {
         
         frog.tongue.direction = "goingBack";
 
-       
-
-        // if (tongueHeadCoordinates.x < (width/2)) {
-        //     // Bring back the tongue
-        //     for (let i = tongueHeadCoordinates.x; i < 300; i += 1) {
-        //     tongueHeadCoordinates.x += 1
-
-        //     //Draws the tongue vector
-        //     push();
-        //     stroke(150, 0, 250);
-        //     strokeWeight(frog.tongue.size)
-        //     point(tongueHeadCoordinates)
-        //     pop();
-
-        //     // Draw the body of the tongue (that follows the tongue's)
-        //      push();
-        //     stroke(150, 50, 250);
-        //     strokeWeight(frog.tongue.size);
-        //     line(tongueHeadCoordinates.x, tongueHeadCoordinates.y, changedTongueOrigin.x, changedTongueOrigin.y);
-        //     pop();
-            
-        //     }
-        // } else if (tongueHeadCoordinates.x > (width/2)) {
-        //     for (let i = tongueHeadCoordinates.x; i > 300; i -= 1) {
-        //     tongueHeadCoordinates.x -= 1
-
-        //     //Draws the tongue vector
-        //     push();
-        //     stroke(150, 0, 250);
-        //     strokeWeight(frog.tongue.size)
-        //     point(tongueHeadCoordinates)
-        //     pop();
-
-        //     // Draw the body of the tongue (that follows the tongue's)
-        //      push();
-        //     stroke(150, 50, 250);
-        //     strokeWeight(frog.tongue.size);
-        //     line(tongueHeadCoordinates.x, tongueHeadCoordinates.y, changedTongueOrigin.x, changedTongueOrigin.y);
-        //     pop();
-            
-        //     }
-        // }
-        // frog.tongue.direction = "goingBack";
     }
     /** 
      * TODO Adds a new buggy Fly coordinates to the biggyFlies Array
