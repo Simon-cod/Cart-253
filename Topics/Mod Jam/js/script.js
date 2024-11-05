@@ -136,6 +136,17 @@ function setup() {
  * ?Draws the frog, move it's tongue and moves the fly
  */
 function draw() {
+    
+    if (gameState === "titleScreen") {
+        title();
+    }else if (gameState === "start") {
+        startGame();
+    } else if (gameState === "gameOver") {
+        gameOver();
+    }
+}
+
+function startGame() {
     background("#87ceeb");
     moveFly();
     drawFly();
@@ -145,8 +156,84 @@ function draw() {
     checkTongueFlyOverlap();
     drawsNewCrazyFly()
     createLilyPads()
-    
 }
+function mousePressed() {
+    gameState = "gameOver"
+}
+
+function title() {
+    background(100, 0, 200);
+    push();
+    textSize(110);
+    textAlign(CENTER, TOP);
+    fill(0, 255, 255);
+    text("Venomous", width/2, 330);
+    pop();
+
+    push();
+    textSize(100);
+    textAlign(CENTER, TOP);
+    fill(0, 255, 255);
+    text("Frog", width/2, 450);
+    pop();
+
+    push();
+    textSize(28);
+    textAlign(CENTER, TOP);
+    fill(200, 255, 255);
+    text("Try to catch as many flies as possible", width/2, 580);
+    pop();
+
+    push();
+    textSize(28);
+    textAlign(CENTER, TOP);
+    fill(200, 255, 255);
+    text("but don't touch the lily pads!", width/2, 620);
+    pop();
+    
+    push();
+    textSize(50);
+    textAlign(CENTER, TOP);
+    fill(0, 255, 255);
+    text("Controls:", width/2, 750);
+    pop();
+
+    push();
+    textSize(30);
+    textAlign(CENTER, TOP);
+    fill(200, 255, 255);
+    text("Keypad controls the tongue", width/2, 925);
+    pop();
+
+    push();
+    textSize(30);
+    textAlign(CENTER, TOP);
+    fill(200, 255, 255);
+    text("Shift = Speed boost", width/2, 1075);
+    pop();
+
+    push();
+    textSize(30);
+    textAlign(CENTER, TOP);
+    fill(200, 255, 255);
+    text("Space-bar = Reset", width/2, 1225);
+    pop();
+
+    push();
+    textSize(30);
+    textAlign(CENTER, TOP);
+    fill(0, 255, 255);
+    text("PRESS SPACE-BAR TO START", width/2, 1425);
+    pop();
+
+    push();
+    textSize(22);
+    textAlign(CENTER, TOP);
+    fill(200, 255, 255);
+    text("Created by Simon Duchaine Morneau", width/2, 1580);
+    pop();
+
+    }
 
 /**
  * !Draws and moves the lilypads
@@ -160,6 +247,7 @@ function createLilyPads() {
     };
 
 }
+
 
 
 /**
@@ -380,9 +468,12 @@ function drawTongue() {
         } else if (keyCode === LEFT_ARROW && frog.tongue.direction !== "goingBack") {
         frog.tongue.direction = "left"
         } //Resets the direction to none if spacebar is pressed
-        else if (keyCode === 32) {
+        else if (keyCode === 32 && gameState === "start") {
         frog.tongue.direction = "goingBack"
-        } //Changes the tongue speed to fast when the shift key is pressed
+        } else if (keyCode === 32 && gameState === "titleScreen") {
+            gameState = "start"
+        }
+        //Changes the tongue speed to fast when the shift key is pressed
         else if (keyCode === 16 && frog.tongue.direction !== "goingBack") {
         frog.tongue.stateSpeed = "fast"
          } 
@@ -536,22 +627,27 @@ function drawsNewCrazyFly() {
 }
 
 function gameOver() {
-    
-    if (gameState = "over") {
-        background(0, 0, 255);
-        push();
-        textSize(50);
-        textAlign(Center, Top);
-        fill("white");
-        text("Game Over", width/2, height/2);
-        pop();
+    background(100, 0, 200);
+    push();
+    textSize(100);
+    textAlign(CENTER, TOP);
+    fill(0, 255, 255);
+    text("Game Over", width/2, height/2);
+    pop();
 
-        push();
-        textSize(25);
-        textAlign(Center, Top);
-        fill("white");
-        text("The venimous frog contaminated the ecosystem", width/2, (height/2 + 50));
-        pop();
-    }
+    push();
+    textSize(30);
+    textAlign(CENTER, TOP);
+    fill(200, 255, 255);
+    text("The venomous frog contaminated", width/2, (height/2 + 135));
+    pop();
+
+    push();
+    textSize(30);
+    textAlign(CENTER, TOP);
+    fill(200, 255, 255);
+    text("the healthy ecosystem", width/2, (height/2 + 185));
+    pop();
+    
 }
 
