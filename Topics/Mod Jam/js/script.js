@@ -24,6 +24,7 @@ let tongueHeadCoordinates;
 //?Create a variable to change the tongue Origin (define later)
 let changedTongueOrigin;
 
+let gameState = "titleScreen"
 
 // ?Our frog
 let frog = {
@@ -403,6 +404,7 @@ function drawTongue() {
 function drawsNewCrazyFly() {
     //reatributes the buggyFlies array to another name for the loop and creates a loop the adds fly coordinates to the array and makes  / it move
     for (let crazyFly of buggyFlies) {
+       
         moveCrazyFlies(crazyFly);
         newCrazyFly();
     }
@@ -439,7 +441,10 @@ function drawsNewCrazyFly() {
     
         let x = constrain(crazyFly.x, firstX, secondX);
         let y = constrain(crazyFly.y, firstY, secondY);
+
+        let numbersOfCrazyFlies = crazyFly.length;
     
+        console.log(crazyFly.length)
         x += random(-crazyFly.buzziness, crazyFly.buzziness);
         y += random(-crazyFly.buzziness, crazyFly.buzziness);
     
@@ -450,6 +455,10 @@ function drawsNewCrazyFly() {
         ellipse(x, y, crazyFly.size);
         pop();
         
+        console.log(numbersOfCrazyFlies)
+        if (numbersOfCrazyFlies >= 3) {
+            gameState = "over"
+        }
     }
     
     /**
@@ -524,5 +533,25 @@ function drawsNewCrazyFly() {
     function addsCrazyFlyToTheArray() {
     let randomFly = newCrazyFly();
     buggyFlies.push(randomFly)
+}
+
+function gameOver() {
+    
+    if (gameState = "over") {
+        background(0, 0, 255);
+        push();
+        textSize(50);
+        textAlign(Center, Top);
+        fill("white");
+        text("Game Over", width/2, height/2);
+        pop();
+
+        push();
+        textSize(25);
+        textAlign(Center, Top);
+        fill("white");
+        text("The venimous frog contaminated the ecosystem", width/2, (height/2 + 50));
+        pop();
+    }
 }
 
