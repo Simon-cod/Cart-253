@@ -361,11 +361,10 @@ function movelilyPads(lilyPad) {
 //  arrayCopy(lilyPad, 0, distance, 0, lilyPad.length);
 //  print(distance)
 
-for (let i = 0; i < lilyPad.length + 1; i += 1) {
-    distance.unshift(lilyPad[i])
+for (let i = 0; i < lilyPads.length + 1; i += 1) {
+    distance.unshift(lilyPads[i])
 }
 // distance.unshift(lilyPads[2])
-console.log(distance)
 
     // Get distance from tongue to fly
     for (let di of distance) {
@@ -374,7 +373,7 @@ console.log(distance)
     
 
     // Check if it's an overlap
-    const hit = (di < frog.tongue.size/2 + lilyPad.size);
+    const hit = (di < frog.tongue.size/2 + lilyPad.size/2);
     if (hit) {
         frog.tongue.direction = "goingBack"
     }
@@ -708,7 +707,6 @@ function drawsNewCrazyFly() {
 
            
         }
-        console.log(frog.tongue.direction)
     }
     
 
