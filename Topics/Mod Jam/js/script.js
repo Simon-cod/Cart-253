@@ -59,9 +59,12 @@ let lilyPads = [
         size: 130,
         speed: 2,
         direction: "left",
-        r: 20, 
-        g: 220,
-        b: 120
+        rotationSpeed: -2,
+        slipSize: 22,
+        angle: 0,
+        r: 0, 
+        g: 215,
+        b: 150,
     },
     {
         x: 0,
@@ -69,8 +72,11 @@ let lilyPads = [
         size: 150,
         speed: 5,
         direction: "right",
+        angle: 120,
+        rotationSpeed: 1.2,
+        slipSize: 9,
         r: 0, 
-        g: 210,
+        g: 200,
         b: 150
     },
     {
@@ -79,8 +85,11 @@ let lilyPads = [
         size: 100,
         speed: 3,
         direction: "left",
+        angle: 210,
+        rotationSpeed:-2.6,
+        slipSize: 12,
         r: 0, 
-        g: 190,
+        g: 175,
         b: 150
     },
 ];
@@ -147,14 +156,32 @@ function createLilyPads() {
 }
 
 /**
- * !Draws the lilypads
+ * !Draws the lilypads and makes them the roate
  */
 function drawLilyPads(lilyPad) {
     //Draws the lily pads
     push();
     fill(lilyPad.r, lilyPad.g, lilyPad.b);
-    stroke(0, 0, 200);
+    stroke(lilyPad.r - 80, lilyPad.g - 80, lilyPad.b - 80);
+    strokeWeight(2)
     ellipse(lilyPad.x, lilyPad.y, lilyPad.size);
+    pop();
+    
+    //Creates a slip in the lily pads
+    push();
+    //Changes the origins to the center of the lily pad
+    translate(lilyPad.x, lilyPad.y);
+    //Changes the angle mode to degrees
+    angleMode(DEGREES);
+    //rotates each lily pad in a different angle
+    rotate(lilyPad.angle);
+    //rotates each lily pad at a different speed
+    rotate(frameCount * lilyPad.rotationSpeed);
+    //Draws lines with different colors depending on the lily pad
+    stroke(lilyPad.r - 80, lilyPad.g - 80, lilyPad.b - 80);
+    strokeWeight(2);
+    line(0, 0, lilyPad.size/2,0);
+    line(0, 0, lilyPad.size/2, lilyPad.slipSize);
     pop();
 }
 
