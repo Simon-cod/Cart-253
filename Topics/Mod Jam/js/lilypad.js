@@ -13,6 +13,21 @@ let lilyPads = [
         g: 215,
         b: 150,
     },
+
+    {
+        x: 200,
+        y: 620,
+        size: 60,
+        speed: 2,
+        direction: "right",
+        rotationSpeed: -3,
+        slipSize: 12,
+        angle: 25,
+        r: 0, 
+        g: 190,
+        b: 150,
+    },
+
     {
         x: 0,
         y: 812,
@@ -25,6 +40,19 @@ let lilyPads = [
         r: 0, 
         g: 200,
         b: 150
+    },
+    {
+        x: 450,
+        y: 1060,
+        size: 60,
+        speed: 6,
+        direction: "left",
+        rotationSpeed: -3,
+        slipSize: 8,
+        angle: 75,
+        r: 0, 
+        g: 165,
+        b: 150,
     },
     {
         x: 600,

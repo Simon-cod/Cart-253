@@ -9,7 +9,7 @@ const initialFly = {
     size: 15,
     speed: 3
 };
-let maxPoisonnedFlies = 2
+let maxPoisonnedFlies = 5
 
 let maxNumberOfCrazyFlies = 200
 
