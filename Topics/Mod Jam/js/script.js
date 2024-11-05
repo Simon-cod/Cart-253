@@ -708,7 +708,6 @@ function drawsNewCrazyFly() {
            
         }
     }
-    
 
     function returnsTongue() {
         
