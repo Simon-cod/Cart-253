@@ -108,12 +108,13 @@ const initialFly = {
 };
 
 // TODO creates a variable for the borders
-let border = undefined
+let border = undefined;
 
 // TODO Creates an empty array for the buggyFlies
-let buggyFlies = []
+let buggyFlies = [];
 
-let distance = []
+let distance = [];
+
 
 /**
  * ?Creates the canvas and initializes the fly
@@ -129,6 +130,7 @@ function setup() {
 
     //Creates a vector with the tongue origins (that will be changing)
     changedTongueOrigin = createVector(frog.body.x, (frog.body.y - frog.body.size/2))
+
     
 }
 
@@ -141,12 +143,13 @@ function draw() {
         title();
     }else if (gameState === "start") {
         startGame();
-    } else if (gameState === "gameOver") {
+    } else if (gameState === "over") {
         gameOver();
     }
 }
 
 function startGame() {
+
     background("#87ceeb");
     moveFly();
     drawFly();
@@ -156,9 +159,7 @@ function startGame() {
     checkTongueFlyOverlap();
     drawsNewCrazyFly()
     createLilyPads()
-}
-function mousePressed() {
-    gameState = "gameOver"
+    score()
 }
 
 function title() {
@@ -181,7 +182,7 @@ function title() {
     textSize(28);
     textAlign(CENTER, TOP);
     fill(200, 255, 255);
-    text("Try to catch as many flies as possible", width/2, 580);
+    text("Try to catch as many flies as possible,", width/2, 580);
     pop();
 
     push();
@@ -235,6 +236,57 @@ function title() {
 
     }
 
+    function score() {
+        
+        let score = buggyFlies.length;
+    
+        push();
+        textSize(40);
+        textAlign(CENTER, TOP);
+        fill(0);
+        text("score = ", 100, 50);
+        pop();
+    
+        push();
+        textSize(40);
+        textAlign(CENTER, TOP);
+        fill(0, 0, 255);
+        text(score, 190, 50);
+        pop();
+    }
+    
+    function gameOver() {
+        background(100, 0, 200);
+        push();
+        textSize(100);
+        textAlign(CENTER, TOP);
+        fill(0, 255, 255);
+        text("Game Over", width/2, height/2);
+        pop();
+    
+        push();
+        textSize(30);
+        textAlign(CENTER, TOP);
+        fill(200, 255, 255);
+        text("The venomous frog contaminated", width/2, (height/2 + 135));
+        pop();
+    
+        push();
+        textSize(30);
+        textAlign(CENTER, TOP);
+        fill(200, 255, 255);
+        text("the healthy ecosystem", width/2, (height/2 + 185));
+        pop();
+
+        push();
+        textSize(30);
+        textAlign(CENTER, TOP);
+        fill(0, 255, 255);
+        text("PRESS SPACE-BAR TO RETRY", width/2, 1425);
+        pop();
+        
+    }
+    
 /**
  * !Draws and moves the lilypads
  */
@@ -304,12 +356,22 @@ function movelilyPads(lilyPad) {
  }
 
  function checkTongueLilyPadsOverlap(lilyPad) {
+    
+    
+//  arrayCopy(lilyPad, 0, distance, 0, lilyPad.length);
+//  print(distance)
+
+for (let i = 0; i < lilyPad.length + 1; i += 1) {
+    distance.unshift(lilyPad[i])
+}
+// distance.unshift(lilyPads[2])
+console.log(distance)
+
     // Get distance from tongue to fly
     for (let di of distance) {
-
-    di = dist(tongueHeadCoordinates.x, tongueHeadCoordinates.y, lilyPad.x, lilyPad.x, lilyPad.y);
     
-    console.log(di)
+    di = dist(tongueHeadCoordinates.x, tongueHeadCoordinates.y, lilyPad.x, lilyPad.y);
+    
 
     // Check if it's an overlap
     const hit = (di < frog.tongue.size/2 + lilyPad.size);
@@ -317,7 +379,6 @@ function movelilyPads(lilyPad) {
         frog.tongue.direction = "goingBack"
     }
 }
-    console.log(frog.tongue.direction)
 }
 
 
@@ -393,6 +454,10 @@ function drawTongue() {
      */
     function moveTongue() {
     
+        //Creates a variable that calculates the number of flies eaten
+        let numbersOfCrazyFlies = buggyFlies.length;
+
+        //Makes the tongue move faster
         if (frog.tongue.stateSpeed === "fast") {
         frog.tongue.speed = 10;
         } 
@@ -410,27 +475,41 @@ function drawTongue() {
        //removes a y value so it goes up
         tongueHeadCoordinates.y -= frog.tongue.speed;
         }
+        //adds an x value so it goes right
         else if (frog.tongue.direction === "right" && tongueHeadCoordinates.y < (frog.body.y - frog.body.size/2)) {
        
         tongueHeadCoordinates.x += frog.tongue.speed;
 
         }
+        //removes an x value so it goes left
         else if (frog.tongue.direction === "left" && tongueHeadCoordinates.y < (frog.body.y - frog.body.size/2)) {
         tongueHeadCoordinates.x -= frog.tongue.speed 
         }
+        //adds a y value so it goes down
         else if (frog.tongue.direction === "down" && tongueHeadCoordinates.y < (frog.body.y - frog.body.size/2)) {
         tongueHeadCoordinates.y += frog.tongue.speed
         }
+        //makes the tongue quickly go back to the frog's body x coordinates
         else if (frog.tongue.direction === "goingBack" && tongueHeadCoordinates.x < (width/2) - 4) {
                 tongueHeadCoordinates.x += 10
+        //makes the tongue quickly go back to the frog's body x coordinates
         } else if ( frog.tongue.direction === "goingBack" && tongueHeadCoordinates.x > (width/2) + 4) {
             tongueHeadCoordinates.x -= 10
         }
+        //makes the tongue quickly go back to the frog's body y coordinates
         else if (frog.tongue.direction === "goingBack" && tongueHeadCoordinates.x <= (width/2) + 4 && tongueHeadCoordinates.x >= (width/2) - 4  ) {
-        
+            
             if (tongueHeadCoordinates.y < frog.body.y) {
                 tongueHeadCoordinates.y += 30
-            } else {
+            } 
+            //calculates when the tongue is back to the frog's body x and y coordinates
+            else {
+            //ends when 5 flies have been eaten
+                if (numbersOfCrazyFlies === 5) {
+                
+                    gameState = "over"
+                    // gameState = "end"
+                }
                 frog.tongue.direction = "none"
             }
         }
@@ -453,6 +532,8 @@ function drawTongue() {
         }
     }
 
+    
+
      /**
      * ?Changes the tongue state when you press on the keypad
      */
@@ -472,6 +553,8 @@ function drawTongue() {
         frog.tongue.direction = "goingBack"
         } else if (keyCode === 32 && gameState === "titleScreen") {
             gameState = "start"
+        } else if (keyCode === 32 && gameState === "over") {
+            gameState = "titleScreen"
         }
         //Changes the tongue speed to fast when the shift key is pressed
         else if (keyCode === 16 && frog.tongue.direction !== "goingBack") {
@@ -498,6 +581,18 @@ function drawsNewCrazyFly() {
        
         moveCrazyFlies(crazyFly);
         newCrazyFly();
+
+        // if (gameState = "end") {
+            
+        //     for (let i = 0; i < 25; i += 1) {
+        //     i = 0
+        //     moveCrazyFlies(crazyFly);
+        //     newCrazyFly()
+        //     addsCrazyFlyToTheArray()
+        //     }
+        //     gameState = "over"
+        // }
+
     }
     }
     
@@ -533,9 +628,9 @@ function drawsNewCrazyFly() {
         let x = constrain(crazyFly.x, firstX, secondX);
         let y = constrain(crazyFly.y, firstY, secondY);
 
-        let numbersOfCrazyFlies = crazyFly.length;
+        
     
-        console.log(crazyFly.length)
+        console.log(buggyFlies)
         x += random(-crazyFly.buzziness, crazyFly.buzziness);
         y += random(-crazyFly.buzziness, crazyFly.buzziness);
     
@@ -546,10 +641,8 @@ function drawsNewCrazyFly() {
         ellipse(x, y, crazyFly.size);
         pop();
         
-        console.log(numbersOfCrazyFlies)
-        if (numbersOfCrazyFlies >= 3) {
-            gameState = "over"
-        }
+       
+        
     }
     
     /**
@@ -601,6 +694,8 @@ function drawsNewCrazyFly() {
         // Get distance from tongue to fly
         const d = dist(tongueHeadCoordinates.x, tongueHeadCoordinates.y, initialFly.x, initialFly.y);
     
+        
+
         // Check if it's an overlap
         const eaten = (d < frog.tongue.size/2 + initialFly.size/2);
         if (eaten) {
@@ -610,8 +705,12 @@ function drawsNewCrazyFly() {
             resetFly();
             
             returnsTongue();
+
+           
         }
+        console.log(frog.tongue.direction)
     }
+    
 
     function returnsTongue() {
         
@@ -624,30 +723,5 @@ function drawsNewCrazyFly() {
     function addsCrazyFlyToTheArray() {
     let randomFly = newCrazyFly();
     buggyFlies.push(randomFly)
-}
-
-function gameOver() {
-    background(100, 0, 200);
-    push();
-    textSize(100);
-    textAlign(CENTER, TOP);
-    fill(0, 255, 255);
-    text("Game Over", width/2, height/2);
-    pop();
-
-    push();
-    textSize(30);
-    textAlign(CENTER, TOP);
-    fill(200, 255, 255);
-    text("The venomous frog contaminated", width/2, (height/2 + 135));
-    pop();
-
-    push();
-    textSize(30);
-    textAlign(CENTER, TOP);
-    fill(200, 255, 255);
-    text("the healthy ecosystem", width/2, (height/2 + 185));
-    pop();
-    
 }
 
