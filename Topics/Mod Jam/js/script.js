@@ -51,6 +51,7 @@ let frog = {
     }
 }
 
+
 // !Creates an Array for the three lily pads
 let lilyPads = [
     {
@@ -111,6 +112,8 @@ let border = undefined
 // TODO Creates an empty array for the buggyFlies
 let buggyFlies = []
 
+let distance = []
+
 /**
  * ?Creates the canvas and initializes the fly
  */
@@ -152,8 +155,11 @@ function createLilyPads() {
     for (let lilyPad of lilyPads) {
         drawLilyPads(lilyPad)
         movelilyPads(lilyPad)
+        checkTongueLilyPadsOverlap(lilyPad)
     };
+
 }
+
 
 /**
  * !Draws the lilypads and makes them the roate
@@ -207,6 +213,25 @@ function movelilyPads(lilyPad) {
         lilyPad.x -= lilyPad.speed;
     }
  }
+
+ function checkTongueLilyPadsOverlap(lilyPad) {
+    // Get distance from tongue to fly
+    for (let di of distance) {
+
+    di = dist(tongueHeadCoordinates.x, tongueHeadCoordinates.y, lilyPad.x, lilyPad.x, lilyPad.y);
+    
+    console.log(di)
+
+    // Check if it's an overlap
+    const hit = (di < frog.tongue.size/2 + lilyPad.size);
+    if (hit) {
+        frog.tongue.direction = "goingBack"
+    }
+}
+    console.log(frog.tongue.direction)
+}
+
+
 
 
 
