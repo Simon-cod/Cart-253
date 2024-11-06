@@ -1,4 +1,4 @@
-# Pseudocode for Frogfrogfrog
+# Pseudocode for Poisonous frog
 
 ```
 frog
@@ -7,11 +7,11 @@ frog
         y: 480 // Bottom of a 640x480 canvas
         size: 100 // Diameter of the frog circle
     tongue
-        x: undefined // Will always match the body
+        x: 320 //Center of canvas
         y: 480 // At the bottom (important to draw it BEHIND the frog)
         size: 20 // The tip of the tongue
         speed: 20 // Speed the tongue movies in pixels/second
-        state: idle // At the start the tongue hasn't been launched
+        direction: none // At the start the tongue hasn't been launched
 
 fly
     x: 0 // The left
@@ -29,7 +29,9 @@ draw()
     moveFrog()
     moveTongue()
     drawFrog()
+    drawTongue()
     checkTongueFlyOverlap()
+    addscrazyFly()
 
 moveFly()
     add fly speed to fly x
@@ -40,33 +42,45 @@ moveFly()
 drawFly()
     Draw a black circle at the fly's position with its size
 
-moveFrog()
-    Set the frog's x to the mouse x
-
 moveTongue()
     Set tongue x to frog x
-    if (tongue state is idle)
+    if (tongue direction is none)
         Do nothing
-    else if (tongue state is outbound)
+    else if (tongue direction is up)
         move the tongue up by its speed
-        if (tongue hit the top)
-            set the tongue state to inbound
-    else if (tongue state is inbound)
+         else if (tongue direction is down)
+        move the tongue down by its speed
+         else if (tongue direction is right)
+        move the tongue right by its speed
+         else if (tongue direction is left)
+        move the tongue left by its speed
+    else if (tongue state is reset)
         move the tongue down by its speed
         if (tongue hit the bottom)
-            set the tongue state to idle
+            set the tongue state to none
+
+drawTongue()
+    Draw a purple circle at the tongue position with its size
+    Draw a purple line from the tongue position to the frog position
 
 drawFrog()
-    Draw a red circle at the tongue position with its size
-    Draw a red line from the tongue position to the frog position
-    Draw a green circle at the frog position with its size
+    
+    Draw a blue circle at the frog position with its size
+    Draw a bunch of tiny dark blue circle on the frog's body
 
 checkTongueFlyOverlap()
     if (tongue circle overlaps the fly)
         Move the fly back to the left at a random y
-        set the tongue state to inbound
+        set the tongue state to reset
+        add a crazy fly
 
-mousePressed()
-    if (tongue state is idle)
-        set tongue state to outbound
+keyPressed()
+    if (keycode is up)
+        set tongue state to up
+        else if (keycode is right)
+        set tongue state to right
+        else if (keycode is left)
+        set tongue state to left
+        else if (keycode is down)
+        set tongue state to down
 ```

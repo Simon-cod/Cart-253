@@ -10,33 +10,33 @@ The initial idea:
 
 The experience:
 
-> The user controls a frog at the bottom of the screen, they can shoot out the frog's tongue and catch a fly which is moving on the screen. If the tongue hits the fly it gets eaten.
+> The user controls the tongue of the frog with the keypad. They infect the flies everytime and ruin the ecosystem
 
 ## Breaking it down
 
 Basic things to do:
 
-- Draw the frog (image? a circle?)
+- Draw the frog
 - Draw the tongue...
-- Move the frog (how? mouse? keyboard? breathing?)
-- Move the fly (in line? buzzing around? random?)
-- Figure out if the tongue hits the fly?
+- Move the frog (through keyboard)
+- Move the fly (in line and in diagonal)
+- Figure out if the tongue infects the fly?
 
 Questions:
 
-- What does the frog look like?
-    - Circles!
-- How does the user control the frog?
-    - User controls frog with the mouse position, just to the left and right
-    - User launches the tongue with a mouse click
-- How does the fly move?
-    - The fly starts on the left at a random y position, and moves to the right in a line
-- What does the tongue look like?
-    - A red line coming out of the frog...
-- What happens if the user doesn't catch the fly?
-    - If the fly goes off the right side, it just resets to a new random y on the left
-- What does it all look like on the screen? Layout?
-    - Frog at the bottom, fly moving across, tongue shooting out of frog
+- what does the frog look like?
+Circle with spots (looks dangerous)
+- what happens when the fly becomes infected?
+It goes crazy and moves in a weird way almost like a bug
+What happens when the tongue hits an obstacle?
+It comes back
+What could be the obstacles?
+Lily pads? It's kind of on the same theme. or fishes coming oput of the water?
+How do you win?
+You cannot
+How do you lose?
+You eat  too many flies and it ruins the ecosystem
+- 
 
 ## The program starts to form....
 
@@ -80,27 +80,29 @@ What happens in this project?
     - Move and draw the fly
         - Add the fly's speed to it x
         - Draw a circle at the fly's position with its size (black)
-    - Move and draw the frog
-        - Move the frog to the mouse's x position
-        - Draw a green circle at the frog's position with its size
+    - Draw the frog
+        - Draws the frog (a green circle at the frog's position with its size)
     - Move and draw the tongue
         - Move the tongue
             - If the tongue isn't launched, just do nothing... don't draw it
-            - If the tongue is launched, move it up (by its speed)
+            - If the tongue is goign up, move it up (by its speed)
+            - If the tongue is goign right, left or down (with keypads), move it to the same direction (by its speed)
             - If the tongue is coming back, move it down (by its speed)
-            - If the tongue hits the top, send it back down
             - If the tongue gets back to the frog, then stop it
         - Draw the tongue
-            - Draw a line from the frog to the tongue position
+            - Draw a purple line from the frog to the tongue position
             - Draw a circle at the end of the tongue
     - Check if the tongue hit the fly
         - Check if tongue circle and fly circle overlap
         - If they do, then reset the fly
-        - If they don't.... nothing... just keep being a tongue
+        - If they do create a buggy fly that moves in a crazy way
+        - If they don't.... it doesnt do anything
 
 Events
 
-- If the user clicks the mouse
+- If the user clicks the keypad
     - If the tongue is still inside the frog's mouth
-        - Launch the tongue
+        - Launch the tongue and moves it at the corresponding direction
+
+- Game over when 5 or 10 flies are infected
 
