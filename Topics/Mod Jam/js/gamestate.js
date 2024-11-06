@@ -1,27 +1,27 @@
 
-//?Creates a variable to vhange the game State (titleScreen, start, over)
+//?Creates a variable to change the game State (titleScreen, start, over)
 let gameState = "titleScreen"
 
 /**
- * !Starts the game
+ * !Runs the game
  */
-function runsGame() {
+function runGame() {
 
     background("#87ceeb");
-    moveFly();
-    drawFly();
+    drawHealthyFly();
+    moveHealthyFly();
+    checkTongueFlyOverlap();
+    showNewInfectedFly();
+    checkInfectedFlies()
     moveTongue();
     drawTongue();
     drawFrog();
-    checkTongueFlyOverlap();
-    drawsNewCrazyFly()
-    createLilyPads()
-    drawScore()
-    checkCrazyFlies()
+    createLilyPads();
+    drawScore();
 }
 
 /**
- * !Title page (with controls)
+ * ! Creates a Title page (with controls)
  */
 function title() {
     background(100, 0, 200);
@@ -98,17 +98,18 @@ function title() {
     }
 
     /**
-    * !Keeps a score (number of flies eaten)
+    * !Draws a score (number of flies eaten)
     */
     function drawScore() {
-
+        //adds the text "score ="
         push();
         textSize(40);
         textAlign(CENTER, TOP);
         fill(0);
         text("score = ", 100, 50);
         pop();
-    
+        
+        //adds the score
         push();
         textSize(40);
         textAlign(CENTER, TOP);
@@ -117,12 +118,14 @@ function title() {
         pop();
     }
     /**
-     * !Title page that appears when you lose the game
+     * !Creates a page that appears when you lose the game
      */
     function gameOver() {
         
+        //Creates a score that keeps going up, making it look like the flies keep infecting each other and that you completely ruined the ecosystem
         score += 1
         
+        //Draws the game over text
         background(100, 0, 200);
         push();
         textSize(100);
@@ -159,7 +162,8 @@ function title() {
         fill(200, 255, 255);
         text("Score = ", width/2 - 20, (height/2 + 385));
         pop();
-
+        
+        //Shows the score (that keeps increasing)
         push();
         textSize(30);
         textAlign(CENTER, TOP);

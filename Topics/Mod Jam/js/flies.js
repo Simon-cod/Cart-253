@@ -1,57 +1,55 @@
 
-// TODO Our initial fly
+// TODO Our healthy fly
 // Has a position, size, and speed of horizontal movement
-//Creates coordinate for the inital fly that will always reset
-const initialFly = {
-    // x: 0,
+// Creates a coordinate for the healthy fly that will always reset (at a diferent y)
+const healthyFly = {
     x: 0,
     y: 200, // Will be random
-    size: 15,
+    size: 12,
     speed: 3
 };
-let maxPoisonnedFlies = 5
+// TODO creates a variable for the maximum of poisonned flies allowed (before the game ends)
+let maxInfectedFlies = 5
 
-let maxNumberOfCrazyFlies = 200
+// TODO creates a variable for the maximum number of crazy flies that swarms before the game crashes and ends
+let maxNumberOfCrazyFlies = 650
 
-// TODO creates a variable for the borders
-let border = undefined;
-
-// TODO Creates an empty array for the buggyFlies
-let buggyFlies = [];
+// TODO Creates an empty array for the infectedFlies
+let infectedFlies = [];
 
 
 /**
- * TODO creates a function that draws a new Crazy Fly (Buggy Fly)
+ * TODO creates a function that draws and moves a new Infected Fly
  */
-function drawsNewCrazyFly() {
-    //reatributes the buggyFlies array to another name for the loop and creates a loop the adds fly coordinates to the array and makes  / it move
-    for (let crazyFly of buggyFlies) {
+function showNewInfectedFly() {
+    //reatributes the infectedFlies array to another name for the loop and creates a loop that adds fly coordinates to the array and makes it move
+    for (let infectedFly of infectedFlies) {
        
-        moveCrazyFlies(crazyFly);
-        drawCrazyFly(crazyFly);
-        newCrazyFly();
+        moveInfectedFlies(infectedFly);
+        drawInfectedFly(infectedFly);
+        newInfectedFly();
 
     }
-
-    }
+}
     
     /**
-     * TODO Moves the fly according to its speed
-     * TODO Resets the fly if it gets all the way to the right
+     * TODO Moves the healthy fly according to its speed
+     * TODO Resets the healthy fly if it gets all the way to the right
      */
-    function moveFly() {
+    function moveHealthyFly() {
         // Move the fly
-        initialFly.x += initialFly.speed;
+        healthyFly.x += healthyFly.speed;
         // Handle the fly going off the canvas
-        if (initialFly.x > width) {
-            resetFly();
+        if (healthyFly.x > width) {
+            resetHealthyFly();
         }
     }
     
     /**
-     * TODO Makes the buggy Fly move in a crazy way
+     * TODO Makes the infected flies move in a crazy way
      */
-    function moveCrazyFlies(crazyFly) {
+    function moveInfectedFlies(infectedFly) {
+        //defines a variable for the borders of the canvas (easier to read)
         let border = {
             left: 0,
             right: width,
@@ -59,57 +57,73 @@ function drawsNewCrazyFly() {
             down: height
         }
         
-        let firstX = border.left + (crazyFly.size/2);
-        let secondX = border.right - (crazyFly.size/2);
-        let firstY = border.up + (crazyFly.size/2);
-        let secondY = border.down - (crazyFly.size/2);
+        //calculates the x and y coordinates where the fly body touches the border of the canvas
+        let firstX = border.left + (infectedFly.size/2);
+        let secondX = border.right - (infectedFly.size/2);
+        let firstY = border.up + (infectedFly.size/2);
+        let secondY = border.down - (infectedFly.size/2);
     
-        console.log(buggyFlies)
-        crazyFly.x += random(-crazyFly.buzziness, crazyFly.buzziness);
-        crazyFly.y += random(-crazyFly.buzziness, crazyFly.buzziness);
+        //calculates a random coordinates for the infected fly to appear and move to
+        infectedFly.x += random(-infectedFly.buzziness, infectedFly.buzziness);
+        infectedFly.y += random(-infectedFly.buzziness, infectedFly.buzziness);
     
-        crazyFly.x = constrain(crazyFly.x, firstX, secondX);
-        crazyFly.y = constrain(crazyFly.y, firstY, secondY);
+        //constrains the infected fly coordinates between the borders of the canvas
+        infectedFly.x = constrain(infectedFly.x, firstX, secondX);
+        infectedFly.y = constrain(infectedFly.y, firstY, secondY);
     }
 
-    function drawCrazyFly(crazyFly) {
-    //Draws the provided fly to the canvas
-    push();
-    noStroke();
-    fill(crazyFly.r, crazyFly.g, crazyFly.b);
-    ellipse(crazyFly.x, crazyFly.y, crazyFly.size);
-    pop();
-    }
     
     /**
-     * TODO Creates the coordinate for a new buggy Fly
+     * TODO Creates the coordinate for a new infected Fly
      */
-    function newCrazyFly() {
+    function newInfectedFly() {
        
-        //creates random coordinates and buzziness for each buggyFly 
-        let crazyFly = {
+        //creates random coordinates, size and buzziness for each infectedFly 
+        let infectedFly = {
             x: random(0, width),
             y: random(0, height),
-            size: random(15, 20),
-            buzziness: 50,
+            size: random(12, 15),
+            buzziness: random(10, 20),
             r: 0,
             g: 0,
             b: 255
         }; 
     // returns the values of the coordinates we just created
-        return crazyFly;
+        return infectedFly;
     }
-    
-    /**
-     * TODO Draws the initial fly as a black circle
+
+    /** 
+     * TODO Adds a new buggy Fly coordinates to the biggyFlies Array
      */
-    function drawFly() {
+    function addsInfectedFlyToTheArray() {
+    
+    infectedFlies.push(newInfectedFly())
+    score += 1
+    
+    }
+
+    /**
+     * TODO Draws the infected fly
+     */
+    function drawInfectedFly(infectedFly) {
+        //Draws the provided infected fly to the canvas
+        push();
+        noStroke();
+        fill(infectedFly.r, infectedFly.g, infectedFly.b);
+        ellipse(infectedFly.x, infectedFly.y, infectedFly.size);
+        pop();
+        }
+
+    /**
+     * TODO Draws the healthy fly as a black circle
+     */
+    function drawHealthyFly() {
         
-        // flies.push = (
+        //Draws the healthy fly
         push();
         noStroke();
         fill("#000000");
-        ellipse(initialFly.x, initialFly.y, initialFly.size);
+        ellipse(healthyFly.x, healthyFly.y, healthyFly.size);
         pop();
         
     }
@@ -117,54 +131,44 @@ function drawsNewCrazyFly() {
     /**
      * TODO Resets the initial fly to the left with a random y
      */
-    function resetFly() {
-        initialFly.x = 0;
-        initialFly.y = random(200, 300);
+    function resetHealthyFly() {
+        //resets the healthy fly x coordinates to the left of the canvas
+        healthyFly.x = 0;
+        //resets the healthy fly y coordinates to a random y between 200 and 300 (at the top of the canvas)
+        healthyFly.y = random(200, 300);
     }
     
-    
     /**
-     * TODO Handles the tongue overlapping the fly and creates a new buggy fly everytume it overlaps, as well as resetting the initial fly location
+     * TODO Handles the tongue overlapping the healthy fly and creates a new infected fly everytime it overlaps, as well as resetting the healthy fly location
      */
     function checkTongueFlyOverlap() {
-        // Get distance from tongue to fly
-        const d = dist(tongueHeadCoordinates.x, tongueHeadCoordinates.y, initialFly.x, initialFly.y);
+        
+        // Get the distance from the tongue head to the healthy fly and apply it to a new variable
+        const distance = dist(tongueHeadCoordinates.x, tongueHeadCoordinates.y, healthyFly.x, healthyFly.y);
     
-
-        // Check if it's an overlap
-        const eaten = (d < frog.tongue.size/2 + initialFly.size/2);
+        // Creates a variable that is only true if the tongue overlaps the fly
+        const eaten = (distance < frog.tongue.size/2 + healthyFly.size/2);
+        //Check if the variable is true/if it's an overlap
         if (eaten) {
-            //Creates a Buggy Fly
-            addsCrazyFlyToTheArray();
-            // Reset the fly
-            resetFly();
-            
+            //Creates a new infected Fly
+            addsInfectedFlyToTheArray();
+            // Reset the normal fly position
+            resetHealthyFly();
+            // Returns the tongue to the frog's body
             returnsTongue();
-
-           
         }
     }
 
 
 /**
- * TODO checks the number of crazy flies and decides to enter the ending ohase or to show the game over page
+ * TODO checks the number of crazy flies and decides to enter the ending phase or to show the game over page
  */ 
-function checkCrazyFlies() {
-    let numberOfCrazyFlies = buggyFlies.length;
+function checkInfectedFlies() {
+    let numberOfInfectedFlies = infectedFlies.length;
 
-    if (numberOfCrazyFlies >= maxNumberOfCrazyFlies) {
+    if (numberOfInfectedFlies >= maxNumberOfCrazyFlies) {
         gameState = "over"
-    } else if (numberOfCrazyFlies >= maxPoisonnedFlies){
-        addsCrazyFlyToTheArray()
+    } else if (numberOfInfectedFlies >= maxInfectedFlies){
+        addsInfectedFlyToTheArray()
      }
-}
-
-/** 
-     * TODO Adds a new buggy Fly coordinates to the biggyFlies Array
-     */
-    
-function addsCrazyFlyToTheArray() {
-    let randomFly = newCrazyFly();
-    buggyFlies.push(randomFly)
-    score += 1
 }
