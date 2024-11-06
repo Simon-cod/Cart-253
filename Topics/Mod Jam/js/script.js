@@ -1,5 +1,5 @@
 /**
- * Poisonnous Frog
+ * Poisonous Frog
  * Simon Duchaine Morneau
  * 
  * A game that consists of catching flies with your venomous frog's tongue. You need to avoid the lily pads and catch as many fly as you can. 

@@ -26,38 +26,38 @@ function runGame() {
 function title() {
     background(100, 0, 200);
     push();
-    textSize(110);
+    textSize(115);
     textAlign(CENTER, TOP);
     fill(0, 255, 255);
-    text("Venomous", width/2, 330);
+    text("Poisonous", width/2, 315);
     pop();
 
     push();
-    textSize(100);
+    textSize(105);
     textAlign(CENTER, TOP);
     fill(0, 255, 255);
-    text("Frog", width/2, 450);
+    text("Frog", width/2, 445);
     pop();
 
     push();
     textSize(28);
     textAlign(CENTER, TOP);
     fill(200, 255, 255);
-    text("Try to catch as many flies as possible,", width/2, 580);
+    text("Try to catch as many flies as possible,", width/2, 620);
     pop();
 
     push();
     textSize(28);
     textAlign(CENTER, TOP);
     fill(200, 255, 255);
-    text("but don't touch the lily pads!", width/2, 620);
+    text("but don't touch the lily pads!", width/2, 660);
     pop();
     
     push();
     textSize(50);
     textAlign(CENTER, TOP);
     fill(0, 255, 255);
-    text("Controls:", width/2, 750);
+    text("Controls:", width/2, 800);
     pop();
 
     push();
@@ -117,6 +117,7 @@ function title() {
         text(score, 190, 50);
         pop();
     }
+
     /**
      * !Creates a page that appears when you lose the game
      */
@@ -128,24 +129,24 @@ function title() {
         //Draws the game over text
         background(100, 0, 200);
         push();
-        textSize(100);
+        textSize(105);
         textAlign(CENTER, TOP);
         fill(0, 255, 255);
-        text("Game Over", width/2, height/2);
+        text("Game Over", width/2, height/2 - 200);
         pop();
     
         push();
         textSize(30);
         textAlign(CENTER, TOP);
         fill(200, 255, 255);
-        text("The venomous frog contaminated", width/2, (height/2 + 135));
+        text("The poisonous frog contaminated", width/2, (height/2 + 55));
         pop();
     
         push();
         textSize(30);
         textAlign(CENTER, TOP);
         fill(200, 255, 255);
-        text("the healthy ecosystem", width/2, (height/2 + 185));
+        text("the healthy ecosystem", width/2, (height/2 + 105));
         pop();
 
         push();
