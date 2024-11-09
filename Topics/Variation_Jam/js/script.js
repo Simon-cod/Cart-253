@@ -14,7 +14,7 @@
 
 let cube = {
     x: 20,
-    y: 850,
+    y: 150,
     size: 50,
     speed: {
         x: 5,
@@ -22,12 +22,14 @@ let cube = {
     },
     jump: {
         state: "no",
+        direction: "none",
         speed: 3,
-        maxY: 0
+        y: 0,
+        maxY: 30
     },
     deceleration: {
-        x: 0.05,
-        y: 0.05
+        x: 0.1,
+        y: 0.1
     },
     direction: "none",
     action: "walking",
@@ -35,7 +37,7 @@ let cube = {
 
 function setup() {
 
-    createCanvas(1000, 1000)
+    createCanvas(1000, 300)
 }
 
 
@@ -53,8 +55,11 @@ console.log(cube.state)
 
 function drawCube() {
 
+    push();
     fill(0, 100, 200);
+    noStroke();
     square (cube.x, cube.y, cube.size);
+    pop();
 
 }
 
@@ -79,23 +84,36 @@ function moveCube() {
 function cubeJump() {
     if (cube.jump.state === "active") {
 
-        if (cube.jump.maxY <= 59 ) {
+        
+        console.log(cube.jump.y)
+        console.log(cube.jump.speed)
+        
+        if (cube.jump.y < cube.jump.maxY && cube.jump.direction === "none" || cube.jump.y < cube.jump.maxY && cube.jump.direction === "up") {
     
-            cube.jump.maxY += 1;
+            cube.jump.y += 1
+            cube.jump.direction = "up"
             cube.jump.speed -= cube.deceleration.y 
             cube.y -= cube.jump.speed;
+            
     
-        } else if (cube.jump.maxY >= 60 && cube.jump.maxY < 119) {
+        } else if (cube.jump.y === cube.jump.maxY) {
+            
+            cube.jump.y -= 1
+            cube.jump.direction = "down"
+            
+            
     
-            cube.jump.maxY +=1;
+        } else if (cube.jump.y < cube.jump.maxY && cube.jump.direction === "down" && cube.jump.y !== 0) {
+
+            cube.jump.y -= 1
             cube.jump.speed += cube.deceleration.y 
             cube.y += cube.jump.speed;
-    
-        } else if (cube.jump.maxY === 119) {
             
-            cube.jump.maxY = 0
+        } else if (cube.jump.y === 0 &&  cube.jump.direction === "down") {
+            
             cube.jump.state = "no"
-    
+            cube.jump.direction = "none"
+            cube.jump.speed = 3
         }       
     } 
 }
@@ -103,8 +121,8 @@ function cubeJump() {
 
 function drawGround(){
     push();
-    strokeWeight(3);
-    line(0, 900, 1000, 900);
+    // strokeWeight(3);
+    line(0, 200, 1000, 200);
     pop();
 }
 
@@ -123,7 +141,6 @@ function keyPressed() {
     } else if (keyCode === 38) { //up arrow
         cube.jump.state = "active";
     }
-console.log(keyCode)
 }
 
 function keyReleased() {
