@@ -21,14 +21,15 @@ let cube = {
         y: 1,
     },
     jump: {
-        speed: 2,
+        state: "no",
+        speed: 3,
         maxY: 0
     },
-    acceleration: {
-        x: 2,
-        y: 2
+    deceleration: {
+        x: 0.05,
+        y: 0.05
     },
-    state: "none",
+    direction: "none",
     action: "walking",
 }
 
@@ -46,6 +47,7 @@ background(0, 50, 100)
 drawCube();
 drawGround();
 moveCube();
+cubeJump();
 console.log(cube.state)
 }
 
@@ -57,33 +59,47 @@ function drawCube() {
 }
 
 function moveCube() {
-if (cube.action === "walking") {
-    
-    if (cube.state === "none") {
-        cube.x = cube.x //nothing
-    } else if (cube.state === "right") {
-        cube.x += cube.speed.x;
-    } else if (cube.state === "left") {
-        cube.x -= cube.speed.x;
-  
-    }
-} else if (cube.action === "jump") {
 
-        if (cube.jump.maxY < 40 ) {
-        cube.jump.maxY += 1;
-        cube.y -= cube.jump.speed;
-    } else if (cube.jump.maxY >= 40 && cube.jump.maxY < 80) {
-        cube.jump.maxY +=1;
-        cube.y += cube.jump.speed;
-    } else if (cube.jump.maxY === 80) {
+    
+    if (cube.direction === "none") {
         
-        cube.jump.maxY = 0
-        cube.action = "walking"
-        
+        cube.x = cube.x //nothing
+
+    } else if (cube.direction === "right") {
+
+        cube.x += cube.speed.x;
+
+    } else if (cube.direction === "left") {
+
+        cube.x -= cube.speed.x;
+    }
+
+}
+
+function cubeJump() {
+    if (cube.jump.state === "active") {
+
+        if (cube.jump.maxY <= 59 ) {
+    
+            cube.jump.maxY += 1;
+            cube.jump.speed -= cube.deceleration.y 
+            cube.y -= cube.jump.speed;
+    
+        } else if (cube.jump.maxY >= 60 && cube.jump.maxY < 119) {
+    
+            cube.jump.maxY +=1;
+            cube.jump.speed += cube.deceleration.y 
+            cube.y += cube.jump.speed;
+    
+        } else if (cube.jump.maxY === 119) {
+            
+            cube.jump.maxY = 0
+            cube.jump.state = "no"
+    
+        }       
     } 
 }
 
-}
 
 function drawGround(){
     push();
@@ -95,15 +111,25 @@ function drawGround(){
 function keyPressed() {
     
     if (keyCode === 39) { //right arrow
-        cube.state = "right";
+        cube.direction = "right";
     } else if (keyCode === 37) { //left arrow
-        cube.state = "left";
+        cube.direction = "left";
+    } else if (keyCode === 38 && keyCode === 39) { //up & right
+        cube.jump.state = "active";
+        cube.direction = "right";
+    } else if (keyCode === 38 && keyCode === 37) { //up & left
+        cube.jump.state = "active";
+        cube.direction = "left";
     } else if (keyCode === 38) { //up arrow
-        cube.action = "jump";
+        cube.jump.state = "active";
     }
 console.log(keyCode)
 }
 
 function keyReleased() {
-    cube.state = "none"
+    if (keyCode == 37 && keyCode !== 39) {
+    cube.direction = "none"
+    } else if (keyCode == 39 && keyCode !== 37) {
+    cube.direction = "none"
+    }
 }
