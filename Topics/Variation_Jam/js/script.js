@@ -16,8 +16,20 @@ let cube = {
     x: 20,
     y: 850,
     size: 50,
-    speed: 5,
+    speed: {
+        x: 5,
+        y: 1,
+    },
+    jump: {
+        speed: 2,
+        maxY: 0
+    },
+    acceleration: {
+        x: 2,
+        y: 2
+    },
     state: "none",
+    action: "walking",
 }
 
 function setup() {
@@ -34,6 +46,7 @@ background(0, 50, 100)
 drawCube();
 drawGround();
 moveCube();
+console.log(cube.state)
 }
 
 function drawCube() {
@@ -44,13 +57,32 @@ function drawCube() {
 }
 
 function moveCube() {
+if (cube.action === "walking") {
+    
     if (cube.state === "none") {
         cube.x = cube.x //nothing
     } else if (cube.state === "right") {
-        cube.x += cube.speed;
+        cube.x += cube.speed.x;
     } else if (cube.state === "left") {
-        cube.x -= cube.speed;
+        cube.x -= cube.speed.x;
+  
     }
+} else if (cube.action === "jump") {
+
+        if (cube.jump.maxY < 40 ) {
+        cube.jump.maxY += 1;
+        cube.y -= cube.jump.speed;
+    } else if (cube.jump.maxY >= 40 && cube.jump.maxY < 80) {
+        cube.jump.maxY +=1;
+        cube.y += cube.jump.speed;
+    } else if (cube.jump.maxY === 80) {
+        
+        cube.jump.maxY = 0
+        cube.action = "walking"
+        
+    } 
+}
+
 }
 
 function drawGround(){
@@ -61,14 +93,16 @@ function drawGround(){
 }
 
 function keyPressed() {
-    if (keyCode === 39) {
+    
+    if (keyCode === 39) { //right arrow
         cube.state = "right";
-    } else if (keyCode === 37){
+    } else if (keyCode === 37) { //left arrow
         cube.state = "left";
+    } else if (keyCode === 38) { //up arrow
+        cube.action = "jump";
     }
 console.log(keyCode)
 }
-console.log(cube.state)
 
 function keyReleased() {
     cube.state = "none"
