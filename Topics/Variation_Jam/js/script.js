@@ -23,9 +23,9 @@ let cube = {
     jump: {
         state: "no",
         direction: "none",
-        speed: 3,
+        speed: 4,
         y: 0,
-        maxY: 30
+        maxY: 40
     },
     deceleration: {
         x: 0.1,
@@ -113,7 +113,7 @@ function cubeJump() {
             
             cube.jump.state = "no"
             cube.jump.direction = "none"
-            cube.jump.speed = 3
+            cube.jump.speed = 4
         }       
     } 
 }
