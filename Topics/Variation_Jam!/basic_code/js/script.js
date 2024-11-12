@@ -25,7 +25,7 @@ let cube = {
         direction: "none",
         speed: 4,
         y: 0,
-        maxY: 40
+        maxY: 40 
     },
     deceleration: {
         x: 0.1,
@@ -103,7 +103,7 @@ function cubeJump() {
             
             
     
-        } else if (cube.jump.y < cube.jump.maxY && cube.jump.direction === "down" && cube.jump.y !== 0) {
+        } else if (cube.jump.y < cube.jump.maxY && cube.jump.direction === "down" && cube.jump.y != 0) {
 
             cube.jump.y -= 1
             cube.jump.speed += cube.deceleration.y 
@@ -113,7 +113,7 @@ function cubeJump() {
             
             cube.jump.state = "no"
             cube.jump.direction = "none"
-            cube.jump.speed = 4
+            
         }       
     } 
 }
