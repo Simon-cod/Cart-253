@@ -14,7 +14,7 @@
 
 let cube = {
     x: 20,
-    y: 150,
+    y: 750,
     size: 50,
     speed: {
         x: 5,
@@ -23,9 +23,9 @@ let cube = {
     jump: {
         state: "no",
         direction: "none",
-        speed: 4,
+        speed: 10,
         y: 0,
-        maxY: 40 
+        maxY: 100 
     },
     deceleration: {
         x: 0.1,
@@ -37,7 +37,7 @@ let cube = {
 
 function setup() {
 
-    createCanvas(1000, 300)
+    createCanvas(1000, 1000)
 }
 
 
@@ -79,6 +79,12 @@ function moveCube() {
         cube.x -= cube.speed.x;
     }
 
+    if (cube.x > width) {
+        cube.x = 0 ;
+    } else if (cube.x < 0) {
+        cube.x = width
+    }
+
 }
 
 function cubeJump() {
@@ -113,7 +119,7 @@ function cubeJump() {
             
             cube.jump.state = "no"
             cube.jump.direction = "none"
-            
+            cube.jump.speed = 10
         }       
     } 
 }
@@ -122,7 +128,7 @@ function cubeJump() {
 function drawGround(){
     push();
     // strokeWeight(3);
-    line(0, 200, 1000, 200);
+    line(0, 800, 1000, 800);
     pop();
 }
 
