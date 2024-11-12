@@ -14,8 +14,8 @@
 
 //Our main character
 let cube = {
-    x: 20,
-    y: 750,
+    x: 50,
+    y: 775,
     size: 50,
     //the cube's speed
     speed: {
@@ -38,6 +38,9 @@ let cube = {
 function setup() {
 
     createCanvas(1000, 1000)
+
+    //sets that all the x and y coordinates for rectangles and cubes determine the position of the center of the shape
+    rectMode(CENTER)
 }
 
 
@@ -57,6 +60,7 @@ console.log(cube.state)
  * Draws the hero
 */
 function drawCube() {
+    
 
     push();
     fill(0, 0, 0);
