@@ -8,6 +8,24 @@ Author Name
 
 This description should help the reader understand what the program is, what any controls do, and perhaps what the desired experience it.
 
+Rough idea
+
+All variations happen in the same room.
+
+Each variation you play a different character.
+
+You start as the hero, trying to slay the monsters and finish the level?
+
+Then, you become the monster, trying to survive the attack of the hero. (it replays a ghost of how you played as the hero) And maybe you try to kill the hero instead
+
+Then, you become the clouds, just moving around, as a npc.
+
+Then, you become the sun. And if you move off screen, the whole game becomes black, until you come back.
+
+Then, you become the lava, and if you increase the flow of the lava, you can burn the hero.
+
+Then, so many possibilities.
+
 ## Credits
 
 This bit should describe what tools were used. For example:
