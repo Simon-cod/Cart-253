@@ -108,7 +108,48 @@ function moveCube() {
 /**
  * makes the hero jump
 */
+
 function cubeJump() {
+    if (cube.jump.state === "active") {
+
+        console.log(cube.jump.y);
+        console.log(cube.jump.speed);
+        
+        // modified the if statement (no need for the "up" state: we are already in the "none" state, you can't be in both at once)
+        if (
+            cube.jump.direction === "none" 
+            && cube.jump.y < cube.jump.maxY 
+        ) {
+    
+            cube.jump.y += 1;
+            cube.jump.speed -= cube.deceleration.y;
+            cube.y -= cube.jump.speed;
+            
+    
+        } else if (cube.jump.y === cube.jump.maxY) {
+            
+            cube.jump.y -= 1
+            cube.jump.direction = "down"
+            
+            
+    
+        } else if (cube.jump.y < cube.jump.maxY && cube.jump.direction === "down" && cube.jump.y != 0) {
+
+            cube.jump.y -= 1
+            cube.jump.speed += cube.deceleration.y 
+            cube.y += cube.jump.speed;
+            
+        } else if (cube.jump.y === 0 &&  cube.jump.direction === "down") {
+            // Main change:
+            cube.jump.speed = 9;
+            cube.jump.state = "no"
+            cube.jump.direction = "none"
+            console.log("end");
+        }       
+    } 
+}
+
+function cubJump() {
     // console.log(cube.jump.state, cube.jump.direction, cube.jump.speed, cube.jump)
     // console.log("cube.y " + cube.y)
     if (cube.jump.state === "active") {

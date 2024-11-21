@@ -44,27 +44,43 @@ for(let rect1 of rectangles) {
 */
 function checkOverlapGroundHero(rect1) {
     // checking if each side of the rectangles overlap/touch
-    if (
-       rect1.y + rect1.height / 2 >= cube.y - cube.h / 2 && // rect1 bottom and cube top
-       rect1.y - rect1.height / 2 <= cube.y + cube.h / 2 &&   // rect1 top and cube bottom
-       rect1.x + rect1.width / 2 >= cube.x - cube.w / 2 && // rect1 right and cube left
-       rect1.x - rect1.width / 2 <= cube.x + cube.w / 2 // rect1 left and cube right 
-       ){
-           rect1.b = 255;
-           // cube.direction = "none";
-           cube.jump.state = "no";
-           cube.jump.direction = "none";
-           cube.jump.speed = 9;
-           cube.jump.y = 0;
-           cube.y = rect1.y - rect1.height/2 - cube.size/2;
-       } 
-   else if (cube.y === rect1.y - rect1.height/2 - cube.size/2 && cube.jump.state === "no"){
-      fallingOff();
-       rect1.b = 0;
-   } else {
-       rect1.b = 0;
-   }
-   }
+   
+
+    let distance = dist(cube.x, cube.y, rect1.x, rect1.y);
+
+    console.log(distance)
+    if (distance < cube.size/2 + rect1.size/2) {
+        
+        rect1.b = 255;
+        cube.direction = "none";
+        cube.jump.state = "no";
+        cube.jump.direction = "none";
+        cube.jump.speed = 9;
+        cube.jump.y = 0;
+        cube.y = rect1.y - rect1.height/2 - cube.size/2;
+    }
+}
+//     if (
+//        rect1.y + rect1.height / 2 >= cube.y - cube.h / 2 && // rect1 bottom and cube top
+//        rect1.y - rect1.height / 2 <= cube.y + cube.h / 2 &&   // rect1 top and cube bottom
+//        rect1.x + rect1.width / 2 >= cube.x - cube.w / 2 && // rect1 right and cube left
+//        rect1.x - rect1.width / 2 <= cube.x + cube.w / 2 // rect1 left and cube right 
+//        ){
+//            rect1.b = 255;
+//            // cube.direction = "none";
+//         //    cube.jump.state = "no";
+//            cube.jump.direction = "none";
+//            cube.jump.speed = 9;
+//            cube.jump.y = 0;
+//            cube.y = rect1.y - rect1.height/2 - cube.size/2;
+//        } 
+//    else if (cube.y === rect1.y - rect1.height/2 - cube.size/2 && cube.jump.state === "no"){
+//       fallingOff();
+//        rect1.b = 0;
+//    } else {
+//        rect1.b = 0;
+//    }
+//    }
 
    /**
  * what happens if a hero falls off from a platform
