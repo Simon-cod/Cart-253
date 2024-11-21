@@ -122,7 +122,7 @@ function cubeJump() {
             cube.jump.speed += cube.deceleration.y 
             cube.y += cube.jump.speed;
             
-        } else if (cube.y > (rect1.y - cube.size/2) &&  cube.jump.direction === "down") {
+        } else if (cube.y > (ground.y - cube.size) &&  cube.jump.direction === "down") {
             
             cube.jump.state = "no"
             cube.jump.direction = "none"
