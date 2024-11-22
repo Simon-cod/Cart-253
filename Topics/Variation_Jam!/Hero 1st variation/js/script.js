@@ -22,6 +22,7 @@ let cube = {
     size: 30,
     //the cube's speed
     speed: {
+        state: "normal",
         x: 5,
     },
     jump: {
@@ -80,7 +81,12 @@ function drawCube() {
 */
 function moveCube() {
 
-    
+    if (cube.speed.state === "fast") {
+        cube.speed.x = 8;
+    } else {
+        cube.speed.x = 5;
+    }
+
     if (cube.direction === "none") {
         
         cube.x = cube.x //nothing
@@ -95,11 +101,11 @@ function moveCube() {
     }
 
     //resets the hero the other side of the screen if it goes offscreen
-    if (cube.x > width) {
-        cube.x = 0 ;
-    } else if (cube.x < 0) {
-        cube.x = width
-    }
+    //if (cube.x > width) {
+   //     cube.x = 0 ;
+    //} else if (cube.x < 0) {
+    //    cube.x = width
+    //}
 
 }
 
@@ -227,6 +233,8 @@ function keyPressed() {
         cube.direction = "left";
     } else if (keyCode === 38) { //up arrow
         cube.jump.state = "active";
+    } else if (keyCode === 16) { //shift key
+        cube.speed.state = "fast"
     }
     console.log(cube.jump.state)
 }
@@ -236,5 +244,9 @@ function keyReleased() {
     cube.direction = "none"
     } else if (keyCode == 39 && keyCode !== 37) {
     cube.direction = "none"
+    } 
+    
+    if (keycode === 16) {
+        cube.speed.state = "normal"
     }
 }
