@@ -56,10 +56,12 @@ function setup() {
  * OOPS I DIDN'T DESCRIBE WHAT MY DRAW DOES!
 */
 function draw() {
-background(170, 0, 0)
+background(100, 0, 0)
 drawHero();
 createWalls();
 createPlatforms();
+drawPoolofLava();
+deadlyLava();
 moveHero();
 heroJump();
 
