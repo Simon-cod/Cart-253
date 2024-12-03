@@ -14,7 +14,7 @@
 
 
 //Our main character
-let cube = {
+let hero = {
     x: 40,
     y: 785,
     w: 30,
@@ -29,7 +29,9 @@ let cube = {
         state: "no",
         direction: "none",
         speed: 9,
+        //variable to calculate the jump's height
         y: 0,
+        //the maximum height of the jump
         maxY: 30 
     },
     deceleration: { //gravity
@@ -55,11 +57,11 @@ function setup() {
 */
 function draw() {
 background(170, 0, 0)
-drawCube();
+drawHero();
 createWalls();
-createRectangles();
-moveCube();
-cubeJump();
+createPlatforms();
+moveHero();
+heroJump();
 
 }
 
@@ -67,49 +69,51 @@ cubeJump();
 /**
  * Draws the hero
 */
-function drawCube() {
+function drawHero() {
     
 
     push();
     fill(0, 0, 0);
     noStroke();
-    square (cube.x, cube.y, cube.size);
+    square (hero.x, hero.y, hero.size);
     pop();
 
 }
 
 /**
- * moves the hero (left to right)
+ * moves the hero (left to right, fast or slow)
 */
-function moveCube() {
+function moveHero() {
 
-
-    if (cube.speed.state === "fast") {
-        cube.speed.x = 7;
+    //changes the hero speed depending on it's state
+    if (hero.speed.state === "fast") {
+        hero.speed.x = 7;
     } else {
-        cube.speed.x = 5;
+        hero.speed.x = 5;
     }
 
-    if (cube.direction === "none") {
+    //moves the hero left to right
+    if (hero.direction === "none") {
         
-        cube.x = cube.x //nothing
+        hero.x = hero.x //nothing
 
-    } else if (cube.direction === "right") {
+    } else if (hero.direction === "right") {
 
-        cube.x += cube.speed.x; //goes right
+        hero.x += hero.speed.x; //goes right
 
-    } else if (cube.direction === "left") {
+    } else if (hero.direction === "left") {
 
-        cube.x -= cube.speed.x; //goes left
+        hero.x -= hero.speed.x; //goes left
     }
 
     
-    // resets the hero the other side of the screen if it goes offscreen
-    
-    if (cube.x > width - cube.size/2) {
-       cube.x = width - cube.size/2 ;
-    } else if (cube.x < 0 + cube.size/2) {
-       cube.x = 0 + cube.size/2
+    //constrains the hero to go off the canvas on the right
+    if (hero.x > width - hero.size/2) {
+        hero.x = width - hero.size/2 ;
+    } 
+    //constrains the hero to go off the canvas on the left
+    else if (hero.x < 0 + hero.size/2) {
+        hero.x = 0 + hero.size/2
     }
 
 }
@@ -119,140 +123,72 @@ function moveCube() {
 /**
  * makes the hero jump
 */
-
-function cubeJump() {
-    if (cube.jump.state === "active") {
-
-        console.log(cube.jump.y);
-        console.log(cube.jump.speed);
+function heroJump() {
+    if (hero.jump.state === "active") {
         
-        // modified the if statement (no need for the "up" state: we are already in the "none" state, you can't be in both at once)
+        
         if (
-            cube.jump.direction === "none" 
-            && cube.jump.y < cube.jump.maxY 
-        ) {
-    
-            cube.jump.y += 1;
-            cube.jump.speed -= cube.deceleration.y;
-            cube.y -= cube.jump.speed;
+            hero.jump.direction === "none" 
+            && hero.jump.y < hero.jump.maxY
+        ) { //starts the jump
+            hero.jump.y += 1;
+            //gravity
+            hero.jump.speed -= hero.deceleration.y;
+            hero.y -= hero.jump.speed;
             
     
-        } else if (cube.jump.y === cube.jump.maxY) {
+        } else if (hero.jump.y === hero.jump.maxY) { //attains the apex of the jump 
             
-            cube.jump.y -= 1
-            cube.jump.direction = "down"
-            
-            
-    
-        } else if (cube.jump.y < cube.jump.maxY && cube.jump.direction === "down" && cube.jump.y != 0) {
+            hero.jump.y -= 1
+            //sets the direction of the jump to down/falling
+            hero.jump.direction = "down"
+        
+        } else if (hero.jump.y < hero.jump.maxY && hero.jump.direction === "down" && hero.jump.y != 0) { //the hero is still falliing and has not touched the ground 
 
-            cube.jump.y -= 1
-            cube.jump.speed += cube.deceleration.y 
-            cube.y += cube.jump.speed;
+            hero.jump.y -= 1
+            //gravity
+            hero.jump.speed += hero.deceleration.y 
+            hero.y += hero.jump.speed;
             
-        } else if (cube.jump.y === 0 &&  cube.jump.direction === "down") {
-            // Main change:
-            cube.jump.speed = 9;
-            cube.jump.state = "no"
-            cube.jump.direction = "none"
-            cube.deceleration.y = 0.3
-            console.log("end");
+        } else if (hero.jump.y === 0 && hero.jump.direction === "down") {
+            // Resets everything to normal
+            hero.jump.speed = 9;
+            hero.jump.state = "no";
+            hero.jump.direction = "none";
+            hero.deceleration.y = 0.3
         }       
     } 
 }
 
-// function cubJump() {
-//     // console.log(cube.jump.state, cube.jump.direction, cube.jump.speed, cube.jump)
-//     // console.log("cube.y " + cube.y)
-//     if (cube.jump.state === "active") {
-
-        
-        
-//         // console.log(cube.jump.speed)
-//         // console.log(cube.y)
-        
-        
-//         if (cube.jump.y < cube.jump.maxY && cube.jump.direction === "none" || cube.jump.y < cube.jump.maxY && cube.jump.direction === "up") {
-            
-//             //moves the hero upwards
-
-//             cube.jump.y += 1
-//             cube.jump.direction = "up"
-//             cube.jump.speed -= cube.deceleration.y 
-//             cube.y -= cube.jump.speed;
-            
-    
-//         } else if (cube.jump.y === cube.jump.maxY) {
-            
-//             //stops the hero at the apex of his jump
-
-//             cube.jump.y -= 1
-//             cube.jump.direction = "down"
-            
-//         } else if (cube.jump.direction === "down" && cube.y < (rect1.y - cube.size/2)) {
-
-//             //moves the hero downwards
-
-            
-//             cube.jump.speed += cube.deceleration.y 
-//             cube.y += cube.jump.speed;
-
-//             console.log(cube.y)
-
-//         }  else if (cube.y >= (rect1.y - cube.size/2) && cube.jump.direction === "down") {
-            
-            
-//             cube.jump.speed = 9;
-//             cube.jump.y = 0;
-//             // rect1.b = 255;
-//             cube.y = (curentGround.y - cube.size/2);
-//             cube.jump.direction = "none";
-//             cube.jump.state = "no";
-//         }       
-//     // } else if (cube.jump.state === "no") {
-//     //     // cube.y = (ground.y - cube.size)
-        
-//     }     
-//     } 
-
-/**
-//  * draws the ground
-// */
-// function drawGround(){
-//     push();
-//     // strokeWeight(3);
-//     line(0, 800, 1000, 800);
-//     pop();
-// }
-
+//when the keys are pressed
 function keyPressed() {
     
     if (keyCode === 39) { //right arrow
-        cube.direction = "right";
+        hero.direction = "right";
     } else if (keyCode === 37) { //left arrow
-        cube.direction = "left";
+        hero.direction = "left";
     } else if (keyCode === 38 && keyCode === 39) { //up & right
-        cube.jump.state = "active";
-        cube.direction = "right";
+        hero.jump.state = "active";
+        hero.direction = "right";
     } else if (keyCode === 38 && keyCode === 37) { //up & left
-        cube.jump.state = "active";
-        cube.direction = "left";
+        hero.jump.state = "active";
+        hero.direction = "left";
     } else if (keyCode === 38) { //up arrow
-        cube.jump.state = "active";
+        hero.jump.state = "active";
     } else if (keyCode === 16) { //shift key
-        cube.speed.state = "fast"
+        hero.speed.state = "fast"
     }
-    console.log(cube.jump.state)
 }
 
+//when the keys are released
 function keyReleased() {
-    if (keyCode == 37 && keyCode !== 39) {
-    cube.direction = "none"
-    } else if (keyCode == 39 && keyCode !== 37) {
-    cube.direction = "none"
+    if (keyCode == 37 ) { //left arrow
+        hero.direction = "none"
+    } else if (keyCode == 39) { //right arrow
+        hero.direction = "none"
     } 
-    
-    if (keyCode === 16) {
-        cube.speed.state = "normal"
+
+    if (keyCode === 16) { //shift key
+        hero.speed.state = "normal"
     }
 }

@@ -1,8 +1,10 @@
 
+//Creates an array for the walls of the rectangles/ground/platform
 let walls = [ 
     {
         x: 697,
         y: 740,
+        //the amount of green of the walls
         g: 50,
         width: 8,
         height: 118
@@ -26,18 +28,20 @@ let walls = [
         y: 390,
         g: 50,
         width: 8,
-        height: 29 
+        height: 29
     }
    
 ]
 
-//Creates an array for the rectangles (grounds)
-let rectangles = [
+//Creates an array for the platforms
+let platforms = [
 
     {
         x: 500,
         y: 900,
+        //the amount of blue of the platform
         b: 0,
+        //the amount of red of the platform 
         r: 0,
         width: 1000,
         height: 200 
@@ -75,15 +79,22 @@ let rectangles = [
         height: 30 }
 ];
 
-//Creates the rectangles
-function createRectangles() {
-for(let rect1 of rectangles) {
-    checkOverlapGroundHero(rect1);
-    drawRectangle(rect1);
+/**
+ * Creates the platforms
+*/
+function createPlatforms() {
+//creates a loop with the variable platform (that changes vallues depending on the array)
+    for(let platform of platforms) {
+    checkOverlapPlatformHero(platform);
+    drawPlatform(platform);
 }
 }
 
+/**
+ * Creates the walls
+*/
 function createWalls() {
+    //creates a loop with the variable wall (that changes vallues depending on the array)
     for( let wall of walls) {
         checkOverlapWallHero(wall)
         drawWall(wall)
@@ -91,81 +102,101 @@ function createWalls() {
 }
 
 /**
- * check if the hero overlaps with the second ground (rectangle 1)
+ * Check if the hero overlaps with the platforms
 */
-function checkOverlapGroundHero(rect1) {
-    // checking if each side of the rectangles overlap/touch
-    console.log(cube.x, cube.y)
-    if (
-       rect1.y + rect1.height / 2 >= cube.y - cube.h / 2 && // rect1 bottom and cube top
-       rect1.y - rect1.height / 2 <= cube.y + cube.h / 2 &&   // rect1 top and cube bottom
-       rect1.x + rect1.width / 2 >= cube.x - cube.w / 2 && // rect1 right and cube left
-       rect1.x - rect1.width / 2 <= cube.x + cube.w / 2 // rect1 left and cube right 
-       ){
-           rect1.b = 255;
-           rect1.r = 0;
-           // cube.direction = "none";
-            //cube.jump.state = "no";//
-           //cube.jump.direction = "none";
-           cube.jump.y = 0;
-           cube.jump.speed = 9;
-           cube.y = rect1.y - rect1.height/2 - cube.size/2;
-       } 
-       //if the cube jumps off the platform
-       else if (cube.y === rect1.y - rect1.height/2 - cube.size/2 && cube.jump.state === "active"){
-      jumpingOff();
-       rect1.b = 0;
-       rect1.r = 255;
-       //if the cube falls off the platform
-   } else if (cube.y === rect1.y - rect1.height/2 - cube.size/2 && cube.jump.state !== "active"){
-        fallingOff();
-       rect1.b = 255;
-       rect1.r = 255;
-   } else {
-    rect1.b = 0;
-    rect1.r = 0;
-   }
-   }
-
-   function checkOverlapWallHero(wall) {
-    // checking if each side of the rectangles overlap/touch
-    console.log(cube.x, cube.y)
+function checkOverlapPlatformHero(platform) {
     
-    if (cube.x > wall.x) {
-
+    // if each side of the platform overlap/touch
     if (
-       wall.y + wall.height / 2 >= cube.y - cube.h / 2 && // rect1 bottom and cube top
-       wall.y - wall.height / 2 <= cube.y + cube.h / 2 &&   // rect1 top and cube bottom
-       wall.x + wall.width / 2 >= cube.x - cube.w / 2 && // rect1 right and cube left
-       wall.x - wall.width / 2 <= cube.x + cube.w / 2 // rect1 left and cube right 
+       platform.y + platform.height / 2 >= hero.y - hero.h / 2 && // platform bottom and hero top
+       platform.y - platform.height / 2 <= hero.y + hero.h / 2 &&   // platform top and hero bottom
+       platform.x + platform.width / 2 >= hero.x - hero.w / 2 && // platform right and hero left
+       platform.x - platform.width / 2 <= hero.x + hero.w / 2 // platform1 left and hero right 
        ){
+
+        //colors of the platform change (it becomes blue)
+        platform.b = 255;
+        platform.r = 0;
+
+        //resets to the noraml values
+        hero.jump.y = 0;
+        hero.jump.speed = 9;
+        //sets the hero.y to the top of the platform
+        hero.y = platform.y - platform.height/2 - hero.size/2;
+       } 
+       //if the hero jumps off the platform
+       else if (hero.y === platform.y - platform.height/2 - hero.size/2 && hero.jump.state === "active"){
+      jumpingOff();
+      //the color of the platform becomes red
+      platform.b = 0;
+      platform.r = 255;
+      
+      //if the hero falls off the platform
+   } else if (hero.y === platform.y - platform.height/2 - hero.size/2 && hero.jump.state !== "active"){
+        fallingOff();
+        //the color of the platforms becomes pink
+        platform.b = 255;
+        platform.r = 255;
+   } else { //if the hero is not on the platform
+    //the platform becomes black
+    platform.b = 0;
+    platform.r = 0;
+   }
+   }
+
+  /**
+  * Check if the hero overlaps with the walls of the platforms
+  */
+   function checkOverlapWallHero(wall) {
+    
+    //if the hero is at the right of the wall
+    if (hero.x > wall.x) {
+
+         // checking if each side of the platforms overlap with the hero
+        if (
+       wall.y + wall.height / 2 >= hero.y - hero.h / 2 && // rect1 bottom and hero top
+       wall.y - wall.height / 2 <= hero.y + hero.h / 2 &&   // rect1 top and hero bottom
+       wall.x + wall.width / 2 >= hero.x - hero.w / 2 && // rect1 right and hero left
+       wall.x - wall.width / 2 <= hero.x + hero.w / 2 // rect1 left and hero right 
+       ){
+        // changes the color of the wall to green
            wall.g = 200;
-           cube.x = wall.x + wall.width/2 + cube.size/2;
+           //sets the hero outside of the wall 
+           hero.x = wall.x + wall.width/2 + hero.size/2;
            
-           if (cube.jump.state === "active"){
+           //if the hero is jumping while touching the wall, call jumpingOff()
+           if (hero.jump.state === "active"){
             jumpingOff();
         }
 
-       }  else {
+       }  else { //if the hero does not touch the wall
+        //the wall colors becomes a dark green
         wall.g = 50
        }
 
-    } else if (cube.x < wall.x){
+    //if the hero is at the left of the wall
+    } else if (hero.x < wall.x) {
 
+        // checking if each side of the platforms overlap with the hero
         if (
-            wall.y + wall.height / 2 >= cube.y - cube.h / 2 && // rect1 bottom and cube top
-            wall.y - wall.height / 2 <= cube.y + cube.h / 2 &&   // rect1 top and cube bottom
-            wall.x + wall.width / 2 >= cube.x - cube.w / 2 && // rect1 right and cube left
-            wall.x - wall.width / 2 <= cube.x + cube.w / 2 // rect1 left and cube right 
+            wall.y + wall.height / 2 >= hero.y - hero.h / 2 && // rect1 bottom and hero top
+            wall.y - wall.height / 2 <= hero.y + hero.h / 2 &&   // rect1 top and hero bottom
+            wall.x + wall.width / 2 >= hero.x - hero.w / 2 && // rect1 right and hero left
+            wall.x - wall.width / 2 <= hero.x + hero.w / 2 // rect1 left and hero right 
             ){
-                wall.g = 200;
-                cube.x = wall.x - wall.width/2 - cube.size/2;
 
-                if (cube.jump.state === "active"){
+                //changes the color of the wall to green
+                wall.g = 200;
+                //sets the hero outside of the wall
+                hero.x = wall.x - wall.width/2 - hero.size/2;
+
+                //if the hero is jumping while touching the wall, call jumpingOff()
+                if (hero.jump.state === "active"){
                     jumpingOff();
                 }
                
-            }  else {
+            }  else {  //if the hero does not touch the wall
+                //the wall colors becomes a dark green
              wall.g = 50
             }
 
@@ -173,11 +204,12 @@ function checkOverlapGroundHero(rect1) {
    }
 
     /**
-    * what happens if a hero jumps off from a platform
+    * What happens if the hero jumps off from a platform
     */
 function jumpingOff() {
-    cube.jump.y = cube.jump.maxY - 1
-    cube.jump.direction = "down"
+    //sets the hero to the same state than the fall of a jump
+    hero.jump.y = hero.jump.maxY - 1
+    hero.jump.direction = "down"
    
 }
 
@@ -185,23 +217,27 @@ function jumpingOff() {
     * what happens if a hero falls off from a platform
     */
 function fallingOff() {
-    cube.jump.state = "active";
-    cube.deceleration.y = 0.55
-    cube.jump.y = cube.jump.maxY
-    cube.jump.speed = 0.3
+    //sets the hero to the same state than the fall of a jump but with a smaller starting speed
+    hero.jump.state = "active";
+    hero.deceleration.y = 0.55
+    hero.jump.y = hero.jump.maxY
+    hero.jump.speed = 0.3
    
 }
    /**
- * draws the rectacngle that serves as a second ground
+ * draws the platforns
 */
-function drawRectangle(rect1) {
+function drawPlatform(platform) {
 
     push();
-    fill(rect1.r, 0, rect1.b);
-    rect(rect1.x, rect1.y, rect1.width, rect1.height);
+    fill(platform.r, 0, platform.b);
+    rect(platform.x, platform.y, platform.width, platform.height);
     pop();
 };
 
+/**
+ * draws the walls
+*/
 function drawWall(wall) {
     push();
     fill(0, wall.g, 0);
