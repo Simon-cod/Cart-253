@@ -46,6 +46,7 @@ function setup() {
 
     //sets that all the x and y coordinates for rectangles and cubes determine the position of the center of the shape
     rectMode(CENTER)
+
 }
 
 
@@ -53,8 +54,9 @@ function setup() {
  * OOPS I DIDN'T DESCRIBE WHAT MY DRAW DOES!
 */
 function draw() {
-background(100, 0, 0)
+background(170, 0, 0)
 drawCube();
+createWalls();
 createRectangles();
 moveCube();
 cubeJump();
@@ -81,8 +83,9 @@ function drawCube() {
 */
 function moveCube() {
 
+
     if (cube.speed.state === "fast") {
-        cube.speed.x = 8;
+        cube.speed.x = 7;
     } else {
         cube.speed.x = 5;
     }
@@ -100,12 +103,14 @@ function moveCube() {
         cube.x -= cube.speed.x; //goes left
     }
 
-    //resets the hero the other side of the screen if it goes offscreen
-    //if (cube.x > width) {
-   //     cube.x = 0 ;
-    //} else if (cube.x < 0) {
-    //    cube.x = width
-    //}
+    
+    // resets the hero the other side of the screen if it goes offscreen
+    
+    if (cube.x > width - cube.size/2) {
+       cube.x = width - cube.size/2 ;
+    } else if (cube.x < 0 + cube.size/2) {
+       cube.x = 0 + cube.size/2
+    }
 
 }
 
@@ -150,64 +155,65 @@ function cubeJump() {
             cube.jump.speed = 9;
             cube.jump.state = "no"
             cube.jump.direction = "none"
+            cube.deceleration.y = 0.3
             console.log("end");
         }       
     } 
 }
 
-function cubJump() {
-    // console.log(cube.jump.state, cube.jump.direction, cube.jump.speed, cube.jump)
-    // console.log("cube.y " + cube.y)
-    if (cube.jump.state === "active") {
+// function cubJump() {
+//     // console.log(cube.jump.state, cube.jump.direction, cube.jump.speed, cube.jump)
+//     // console.log("cube.y " + cube.y)
+//     if (cube.jump.state === "active") {
 
         
         
-        // console.log(cube.jump.speed)
-        // console.log(cube.y)
+//         // console.log(cube.jump.speed)
+//         // console.log(cube.y)
         
         
-        if (cube.jump.y < cube.jump.maxY && cube.jump.direction === "none" || cube.jump.y < cube.jump.maxY && cube.jump.direction === "up") {
+//         if (cube.jump.y < cube.jump.maxY && cube.jump.direction === "none" || cube.jump.y < cube.jump.maxY && cube.jump.direction === "up") {
             
-            //moves the hero upwards
+//             //moves the hero upwards
 
-            cube.jump.y += 1
-            cube.jump.direction = "up"
-            cube.jump.speed -= cube.deceleration.y 
-            cube.y -= cube.jump.speed;
+//             cube.jump.y += 1
+//             cube.jump.direction = "up"
+//             cube.jump.speed -= cube.deceleration.y 
+//             cube.y -= cube.jump.speed;
             
     
-        } else if (cube.jump.y === cube.jump.maxY) {
+//         } else if (cube.jump.y === cube.jump.maxY) {
             
-            //stops the hero at the apex of his jump
+//             //stops the hero at the apex of his jump
 
-            cube.jump.y -= 1
-            cube.jump.direction = "down"
+//             cube.jump.y -= 1
+//             cube.jump.direction = "down"
             
-        } else if (cube.jump.direction === "down" && cube.y < (rect1.y - cube.size/2)) {
+//         } else if (cube.jump.direction === "down" && cube.y < (rect1.y - cube.size/2)) {
 
-            //moves the hero downwards
+//             //moves the hero downwards
 
             
-            cube.jump.speed += cube.deceleration.y 
-            cube.y += cube.jump.speed;
+//             cube.jump.speed += cube.deceleration.y 
+//             cube.y += cube.jump.speed;
 
-            console.log(cube.y)
+//             console.log(cube.y)
 
-        }  else if (cube.y >= (rect1.y - cube.size/2) && cube.jump.direction === "down") {
+//         }  else if (cube.y >= (rect1.y - cube.size/2) && cube.jump.direction === "down") {
             
             
-            cube.jump.speed = 9;
-            cube.jump.y = 0;
-            // rect1.b = 255;
-            cube.y = (curentGround.y - cube.size/2);
-            cube.jump.direction = "none";
-            cube.jump.state = "no";
-        }       
-    // } else if (cube.jump.state === "no") {
-    //     // cube.y = (ground.y - cube.size)
+//             cube.jump.speed = 9;
+//             cube.jump.y = 0;
+//             // rect1.b = 255;
+//             cube.y = (curentGround.y - cube.size/2);
+//             cube.jump.direction = "none";
+//             cube.jump.state = "no";
+//         }       
+//     // } else if (cube.jump.state === "no") {
+//     //     // cube.y = (ground.y - cube.size)
         
-    }     
-    } 
+//     }     
+//     } 
 
 /**
 //  * draws the ground
@@ -246,7 +252,7 @@ function keyReleased() {
     cube.direction = "none"
     } 
     
-    if (keycode === 16) {
+    if (keyCode === 16) {
         cube.speed.state = "normal"
     }
 }

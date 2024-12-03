@@ -1,3 +1,36 @@
+
+let walls = [ 
+    {
+        x: 697,
+        y: 740,
+        g: 50,
+        width: 8,
+        height: 118
+    },
+    {
+     x: 600,
+     y: 600,
+     g: 50,
+     width: 8,
+     height: 59
+    },
+    {
+     x: 200,
+     y: 520,
+     g: 50,
+     width: 8,
+     height: 99 
+    },
+    {
+        x: 510,
+        y: 390,
+        g: 50,
+        width: 8,
+        height: 29 
+    }
+   
+]
+
 //Creates an array for the rectangles (grounds)
 let rectangles = [
 
@@ -26,13 +59,20 @@ let rectangles = [
         height: 60 
     },
     {
-        x: 600,
-        y: 475,
+        x: 100,
+        y: 520,
         b: 0,
         r: 0,
-        width: 800,
-        height: 30 
+        width: 200,
+        height: 100 
     },
+    {   
+        x: 860,
+        y: 390,
+        b: 0,
+        r: 0,
+        width: 700,
+        height: 30 }
 ];
 
 //Creates the rectangles
@@ -43,8 +83,15 @@ for(let rect1 of rectangles) {
 }
 }
 
+function createWalls() {
+    for( let wall of walls) {
+        checkOverlapWallHero(wall)
+        drawWall(wall)
+    }
+}
+
 /**
- * chack if the hero overlaps with the second ground (rectangle 1)
+ * check if the hero overlaps with the second ground (rectangle 1)
 */
 function checkOverlapGroundHero(rect1) {
     // checking if each side of the rectangles overlap/touch
@@ -64,10 +111,12 @@ function checkOverlapGroundHero(rect1) {
            cube.jump.speed = 9;
            cube.y = rect1.y - rect1.height/2 - cube.size/2;
        } 
-   else if (cube.y === rect1.y - rect1.height/2 - cube.size/2 && cube.jump.state === "active"){
+       //if the cube jumps off the platform
+       else if (cube.y === rect1.y - rect1.height/2 - cube.size/2 && cube.jump.state === "active"){
       jumpingOff();
        rect1.b = 0;
        rect1.r = 255;
+       //if the cube falls off the platform
    } else if (cube.y === rect1.y - rect1.height/2 - cube.size/2 && cube.jump.state !== "active"){
         fallingOff();
        rect1.b = 255;
@@ -76,6 +125,51 @@ function checkOverlapGroundHero(rect1) {
     rect1.b = 0;
     rect1.r = 0;
    }
+   }
+
+   function checkOverlapWallHero(wall) {
+    // checking if each side of the rectangles overlap/touch
+    console.log(cube.x, cube.y)
+    
+    if (cube.x > wall.x) {
+
+    if (
+       wall.y + wall.height / 2 >= cube.y - cube.h / 2 && // rect1 bottom and cube top
+       wall.y - wall.height / 2 <= cube.y + cube.h / 2 &&   // rect1 top and cube bottom
+       wall.x + wall.width / 2 >= cube.x - cube.w / 2 && // rect1 right and cube left
+       wall.x - wall.width / 2 <= cube.x + cube.w / 2 // rect1 left and cube right 
+       ){
+           wall.g = 200;
+           cube.x = wall.x + wall.width/2 + cube.size/2;
+           
+           if (cube.jump.state === "active"){
+            jumpingOff();
+        }
+
+       }  else {
+        wall.g = 50
+       }
+
+    } else if (cube.x < wall.x){
+
+        if (
+            wall.y + wall.height / 2 >= cube.y - cube.h / 2 && // rect1 bottom and cube top
+            wall.y - wall.height / 2 <= cube.y + cube.h / 2 &&   // rect1 top and cube bottom
+            wall.x + wall.width / 2 >= cube.x - cube.w / 2 && // rect1 right and cube left
+            wall.x - wall.width / 2 <= cube.x + cube.w / 2 // rect1 left and cube right 
+            ){
+                wall.g = 200;
+                cube.x = wall.x - wall.width/2 - cube.size/2;
+
+                if (cube.jump.state === "active"){
+                    jumpingOff();
+                }
+               
+            }  else {
+             wall.g = 50
+            }
+
+    }
    }
 
     /**
@@ -92,8 +186,8 @@ function jumpingOff() {
     */
 function fallingOff() {
     cube.jump.state = "active";
-    cube.jump.y = cube.jump.maxY - 1
-    cube.jump.direction = "down"
+    cube.deceleration.y = 0.55
+    cube.jump.y = cube.jump.maxY
     cube.jump.speed = 0.3
    
 }
@@ -107,3 +201,10 @@ function drawRectangle(rect1) {
     rect(rect1.x, rect1.y, rect1.width, rect1.height);
     pop();
 };
+
+function drawWall(wall) {
+    push();
+    fill(0, wall.g, 0);
+    rect(wall.x, wall.y, wall.width, wall.height);
+    pop()
+}
