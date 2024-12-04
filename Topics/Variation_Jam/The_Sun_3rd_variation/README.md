@@ -2,7 +2,7 @@
 
 Simon Duchaine Morneau
 
-[View this project online](URL_FOR_THE_RUNNING_PROJECT)
+[View this project online](https://simon-cod.github.io/Cart-253/Topics/Variation_Jam/The_Sun_3rd_variation)
 
 ## Description
 

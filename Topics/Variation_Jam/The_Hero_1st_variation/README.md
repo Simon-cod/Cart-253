@@ -2,7 +2,7 @@
 
 Simon Duchaine Morneau
 
-[View this project online](https://simon-cod.github.io/Cart-253/Topics/Variation_Jam/)
+[View this project online](https://simon-cod.github.io/Cart-253/Topics/Variation_Jam/The_Hero_1st_variation)
 
 ## Description
 
