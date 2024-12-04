@@ -1,12 +1,11 @@
 # Template p5 Project
 
-Author Name
-
+Simon Duchaine Morneau
 [View this project online](URL_FOR_THE_RUNNING_PROJECT)
 
 ## Description
 
-This description should help the reader understand what the program is, what any controls do, and perhaps what the desired experience it.
+It's now time to be the villain! Fly across the room as a fireball to kill the hero, but be careful of the deadly platforms and your dangerously increasing speed.
 
 ## Credits
 

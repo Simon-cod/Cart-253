@@ -32,57 +32,57 @@ function title() {
 
     background(100, 0, 0);
     push();
-    textSize(200);
+    textSize(180);
     textAlign(CENTER, TOP);
     fill(0);
-    text("The Hero", width/2, 150);
+    text("The Fireball", width/2, 150);
     pop();
 
     push();
     textSize(30);
     textAlign(CENTER, TOP);
     fill(0);
-    text("1st variation", width/2, 350);
+    text("2nd variation", width/2, 330);
     pop();
 
     push();
-    textSize(35);
+    textSize(28);
     textAlign(CENTER, TOP);
     fill(255, 200, 200);
-    text("Try to reach the white platform, but don't touch the lava!", width/2, 425);
+    text("Try to kill the hero, but avoid the platforms and be mindful of your speed! ", width/2, 400);
+    pop();
+
+    push();
+    textSize(20);
+    textAlign(CENTER, TOP);
+    fill(255, 200, 200);
+    text("(the hero is the cube at the bottom left)", width/2, 438);
     pop();
     
     push();
     textSize(50);
     textAlign(CENTER, TOP);
     fill(0);
-    text("Controls:", width/2, 500);
+    text("Controls:", width/2, 520);
     pop();
 
     push();
-    textSize(30);
+    textSize(28);
     textAlign(CENTER, TOP);
     fill(255, 200, 200);
-    text("Left & Right Arrow to move the hero", width/2, 600);
+    text("Left & Right Arrow to move the fireBall", width/2, 625);
     pop();
 
     push();
-    textSize(30);
+    textSize(28);
     textAlign(CENTER, TOP);
     fill(255, 200, 200);
-    text("Up Arrow to jump", width/2, 675
+    text("Up & Down Arrow to move the fireBall", width/2, 700
     );
     pop();
 
     push();
-    textSize(30);
-    textAlign(CENTER, TOP);
-    fill(255, 200, 200);
-    text("Shift for a speed boost", width/2, 750);
-    pop();
-
-    push();
-    textSize(30);
+    textSize(28);
     textAlign(CENTER, TOP);
     fill(255, 200, 200);
     text("PRESS SPACE-BAR TO START", width/2, 920);
@@ -92,7 +92,7 @@ function title() {
     textSize(40);
     textAlign(CENTER, TOP);
     fill(0);
-    text("Created by Simon Duchaine Morneau", width/2, 830);
+    text("Created by Simon Duchaine Morneau", width/2, 815);
     pop();
 
 }
@@ -109,5 +109,13 @@ function gameWon() {
     fill(255, 200, 200);
     text("Game Won!", width/2, height/2 - 200);
     pop();
+
+    push();
+    textSize(28);
+    textAlign(CENTER, TOP);
+    fill(255, 200, 200);
+    text("You are a true villain", width/2, 475);
+    pop();
+
 
 }

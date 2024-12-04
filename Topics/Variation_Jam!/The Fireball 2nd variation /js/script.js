@@ -1,16 +1,12 @@
 /**
- * fireBall
- * Author Name
+ * The Fireball
+ * Simon Duchaine Morneau
  * 
- * HOW EMBARRASSING! I HAVE NO DESCRIPTION OF MY PROJECT!
- * PLEASE REMOVE A GRADE FROM MY WORK IF IT'S GRADED!
+ * It's now time to be the villain! Fly across the room as a fireball to kill the hero, but be careful of the deadly platforms and your dangerously increasing speed.
  */
 
 "use strict";
 
-/**
- * OH LOOK I DIDN'T DESCRIBE SETUP!!
-*/
 
 //creates a variable for the state of the game
 let gameState = "titleScreen" //can be "titleScreen", "start" or "gameWon"
