@@ -1,6 +1,6 @@
 /**
- * Cowboy cube
- * Author Name
+ * The Sun
+ * Simon Duchaine Morneau
  * 
  * HOW EMBARRASSING! I HAVE NO DESCRIPTION OF MY PROJECT!
  * PLEASE REMOVE A GRADE FROM MY WORK IF IT'S GRADED!
@@ -8,145 +8,112 @@
 
 "use strict";
 
-/**
- * OH LOOK I DIDN'T DESCRIBE SETUP!!
-*/
+//creates a variable for the state of the game
+let gameState = "titleScreen" //can be "titleScreen", "start" or "gameWon"
 
-let cube = {
-    x: 20,
-    y: 150,
-    size: 50,
-    speed: {
-        x: 5,
-        y: 1,
-    },
+//Our main character
+let hero = {
+    x: 40,
+    y: 785,
+    w: 30,
+    h: 30,
+    size: 30,
+    //the hero's speed
     jump: {
         state: "no",
         direction: "none",
-        speed: 4,
+        speed: 9,
+        //variable to calculate the jump's height
         y: 0,
-        maxY: 40
+        //the maximum height of the jump
+        maxY: 30 
     },
-    deceleration: {
-        x: 0.1,
-        y: 0.1
+    deceleration: { //gravity
+        y: 0.3
     },
-    direction: "none",
-    action: "walking",
+    direction: "none", //which way is the cube going
+    action: "walking", //can be walking, jumping or slashing
 }
 
+/**
+ * creates the canvas and sets the rectangle mode to center
+*/
 function setup() {
 
-    createCanvas(1000, 300)
+    createCanvas(1000, 1000)
+
+    //sets that all the x and y coordinates for rectangles and cubes determine the position of the center of the shape
+    rectMode(CENTER)
+
 }
 
 
 /**
- * OOPS I DIDN'T DESCRIBE WHAT MY DRAW DOES!
+ * either shows the title, runs the game or show the ending title depending on the state of the game
 */
 function draw() {
-background(0, 50, 100)
-drawCube();
-drawGround();
-moveCube();
-cubeJump();
-console.log(cube.state)
-}
 
-function drawCube() {
-
-    push();
-    fill(0, 100, 200);
-    noStroke();
-    square (cube.x, cube.y, cube.size);
-    pop();
-
-}
-
-function moveCube() {
-
-    
-    if (cube.direction === "none") {
-        
-        cube.x = cube.x //nothing
-
-    } else if (cube.direction === "right") {
-
-        cube.x += cube.speed.x;
-
-    } else if (cube.direction === "left") {
-
-        cube.x -= cube.speed.x;
+    if (gameState === "titleScreen") {
+        //loads the title screen
+        title();
+    }else if (gameState === "start") {
+        //loads the game
+        runGame();
+    } else if (gameState === "gameWon") {
+        //loads the game over screen
+        gameWon();
     }
 
+
+}
+/**
+ * Runs the game
+*/
+function runGame() {
+
+    background(100, 0, 0)
+    drawSun();
+    createPlatforms();
+    createLava();
+    gameMechanics();
+    drawHero();
 }
 
-function cubeJump() {
-    if (cube.jump.state === "active") {
-
-        
-        console.log(cube.jump.y)
-        console.log(cube.jump.speed)
-        
-        if (cube.jump.y < cube.jump.maxY && cube.jump.direction === "none" || cube.jump.y < cube.jump.maxY && cube.jump.direction === "up") {
+/**
+ * Draws the hero
+*/
+function drawHero() {
     
-            cube.jump.y += 1
-            cube.jump.direction = "up"
-            cube.jump.speed -= cube.deceleration.y 
-            cube.y -= cube.jump.speed;
-            
-    
-        } else if (cube.jump.y === cube.jump.maxY) {
-            
-            cube.jump.y -= 1
-            cube.jump.direction = "down"
-            
-            
-    
-        } else if (cube.jump.y < cube.jump.maxY && cube.jump.direction === "down" && cube.jump.y !== 0) {
 
-            cube.jump.y -= 1
-            cube.jump.speed += cube.deceleration.y 
-            cube.y += cube.jump.speed;
-            
-        } else if (cube.jump.y === 0 &&  cube.jump.direction === "down") {
-            
-            cube.jump.state = "no"
-            cube.jump.direction = "none"
-            cube.jump.speed = 4
-        }       
-    } 
-}
-
-
-function drawGround(){
     push();
-    // strokeWeight(3);
-    line(0, 200, 1000, 200);
+    fill(0, 0, 0);
+    noStroke();
+    square (hero.x, hero.y, hero.size);
     pop();
+
 }
 
+//when the keys are pressed
 function keyPressed() {
     
     if (keyCode === 39) { //right arrow
-        cube.direction = "right";
+        fireBall.state = "shooting"
+        fireBall.shooting.direction = "right";
     } else if (keyCode === 37) { //left arrow
-        cube.direction = "left";
-    } else if (keyCode === 38 && keyCode === 39) { //up & right
-        cube.jump.state = "active";
-        cube.direction = "right";
-    } else if (keyCode === 38 && keyCode === 37) { //up & left
-        cube.jump.state = "active";
-        cube.direction = "left";
+        fireBall.state = "shooting"
+        fireBall.shooting.direction = "left";
     } else if (keyCode === 38) { //up arrow
-        cube.jump.state = "active";
-    }
-}
-
-function keyReleased() {
-    if (keyCode == 37 && keyCode !== 39) {
-    cube.direction = "none"
-    } else if (keyCode == 39 && keyCode !== 37) {
-    cube.direction = "none"
-    }
+        fireBall.state = "shooting"
+        fireBall.shooting.direction = "up";
+    } else if (keyCode === 40) { //down arrow
+        fireBall.state = "shooting"
+        fireBall.shooting.direction = "down"
+    } else if 
+    //Starts the game when spacebar is pressed
+     (keyCode === 32 && gameState === "titleScreen") { //Spacebar
+        gameState = "start"
+    } //Starts the game when the game is won
+    else if (keyCode === 32 && gameState === "titleScreen") { //Spacebar
+        gameState = "titleScreen"
+    } 
 }
