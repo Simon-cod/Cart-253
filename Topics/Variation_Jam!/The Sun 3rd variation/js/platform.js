@@ -69,30 +69,9 @@ let platforms = [
 function createPlatforms() {
 //creates a loop with the variable platform (that changes vallues depending on the array)
     for(let platform of platforms) {
-    checkOverlapPlatformFireBall(platform);
     drawPlatform(platform);
 }
 }
-
-/**
- * Check if the fireBall overlaps with the platforms
-*/
-function checkOverlapPlatformFireBall(platform) {
-    
-    if(fireBall.state === "shooting"){
-
-    // if each side of the platform overlap/touch the fireball, resets it to it's origin position
-    if (
-       platform.y + platform.height / 2 >= fireBall.y - fireBall.size/2  && // platform bottom and fireBall top
-       platform.y - platform.height / 2 <= fireBall.y + fireBall.size/2 &&   // platform top and fireBall bottom
-       platform.x + platform.width / 2 >= fireBall.x - fireBall.size/2 && // platform right and fireBall left
-       platform.x - platform.width / 2 <= fireBall.x + fireBall.size/2 // platform1 left and fireBall right 
-       ){
-        fireBallDeath();
-       }
-   }
-}
-
 /**
  * draws the platforns
 */

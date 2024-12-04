@@ -36,9 +36,6 @@ function createLava() {
     drawPoolofLava();
     drawFireBall();
     fireBallBounce();
-    deadlyFireBall();
-    moveShootingFireBall();
-    constrainFireBallInsideCanvas();
 }
 
 
@@ -68,34 +65,6 @@ function drawFireBall() {
 }
 
 /**
- * Makes the fire ball that got shot move depending on the keyboard and increase speed overtime
- */
-function moveShootingFireBall() {
-
-    if (fireBall.state === "shooting"){
-
-        //makes the fireBall accelerate over time, making it harder to control
-        fireBall.shooting.speed += fireBall.shooting.acceleration;
-
-        if (fireBall.shooting.direction === "none"){
-        //do nothing
-        } else if (fireBall.shooting.direction === "right"){
-
-        fireBall.x += fireBall.shooting.speed
-
-        } else if (fireBall.shooting.direction === "left"){
-        fireBall.x -= fireBall.shooting.speed
-
-        } else if (fireBall.shooting.direction === "up"){
-        fireBall.y -= fireBall.shooting.speed
-
-        } else if ( fireBall.shooting.direction === "down"){
-        fireBall.y += fireBall.shooting.speed
-        }
-    }
-}
-
-/**
  * Makes the initial fire ball bounce
  */
 function fireBallBounce() {
@@ -112,45 +81,6 @@ function fireBallBounce() {
         
     }
 }
-}
-
-/**
- * kills the hero and wins the game if the fire ball touches him
- */
-function deadlyFireBall() {
-    
-    // Get the distance from the cube to the firefly and apply it to a new variable
-    const distance = dist(hero.x, hero.y, fireBall.x, fireBall.y);
-    
-    // Creates a variable that is only true if the hero touches the fireBall
-    const eaten = (distance < hero.size/2 + fireBall.size/2);
-   
-    //kills the hero if it overlaps the fireBall
-    if (eaten) {
-        heroDeath();
-    }
-}
-
-/**
- * Makes the fireBall resets if it goes too far outside the canvas
- */
-function constrainFireBallInsideCanvas() {
-    if(fireBall.x < -100 || fireBall.x > 1100) { //if it goes outside the canvas to the right or the left
-        fireBallDeath();
-    } else if (fireBall.y < -100 || fireBall.y > 1100) { //if it goes outside the canvas up or down
-        fireBallDeath();
-    }
-}
-
-/**
- * makes the fireBall resets and restart bouncing
- */
-function fireBallDeath() {
-    //resets everything to it's initial state
-    fireBall.state = "bouncing"
-    fireBall.y = fireBall.minY + 1;
-    fireBall.x = 800;
-    fireBall.shooting.speed = 2
 }
 
 /**
