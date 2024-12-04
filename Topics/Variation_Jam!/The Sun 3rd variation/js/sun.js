@@ -11,6 +11,10 @@ let sun = {
     speed: 1
 }
 
+let a = undefined;
+
+
+
 /**
  * Draws the Sun
  */
@@ -34,5 +38,29 @@ function moveSun() {
     } else if (sun.direction === "right"){ //moves the sun to the right
         sun.x += sun.speed;
     }
+
+}
+
+
+
+function drawLightingScenario() {
+    
+    if (sun.x <= 500){
+    a = map(sun.x, 0 + sun.size/2, -sun.size/2, 0, 255)
+    } 
+    else  if (sun.x >= 500) {
+    
+    a = map(sun.x, 1000 - sun.size/2, 1000 + sun.size/2, 0, 255)
+    }
+    
+    let opacity = color(0)
+
+    opacity.setAlpha(a);
+    
+    push();
+    noStroke();
+    fill(opacity);
+    square(width/2, height/2, 1000)
+    pop();
 
 }

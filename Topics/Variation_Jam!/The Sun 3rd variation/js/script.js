@@ -78,6 +78,7 @@ function runGame() {
     gameMechanics();
     drawHero();
     moveSun();
+    drawLightingScenario();
 }
 
 /**
