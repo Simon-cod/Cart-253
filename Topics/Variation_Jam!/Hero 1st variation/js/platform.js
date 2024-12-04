@@ -7,28 +7,28 @@ let walls = [
         //the amount of green of the walls
         g: 0,
         width: 8,
-        height: 118
+        height: 119.7
     },
     {
      x: 600,
      y: 600,
      g: 0,
      width: 8,
-     height: 59
+     height: 59.5
     },
     {
      x: 200,
      y: 520,
      g: 0,
      width: 8,
-     height: 99 
+     height: 99.5 
     },
     {
         x: 475,
         y: 392,
         g: 0,
         width: 8,
-        height: 34
+        height: 34.5
     }
    
 ]
@@ -124,8 +124,8 @@ function checkOverlapPlatformHero(platform) {
        ){
 
         //colors of the platform change (it becomes blue)
-        platform.b = 255;
-        platform.r = 0;
+        // platform.b = 255;
+        // platform.r = 0;
 
         //resets to the noraml values
         hero.jump.y = 0;
@@ -137,15 +137,15 @@ function checkOverlapPlatformHero(platform) {
        else if (hero.y === platform.y - platform.height/2 - hero.size/2 && hero.jump.state === "active"){
       jumpingOff();
       //the color of the platform becomes red
-      platform.b = 0;
-      platform.r = 255;
+    //   platform.b = 0;
+    //   platform.r = 255;
       
       //if the hero falls off the platform
    } else if (hero.y === platform.y - platform.height/2 - hero.size/2 && hero.jump.state !== "active"){
         fallingOff();
         //the color of the platforms becomes pink
-        platform.b = 255;
-        platform.r = 255;
+        // platform.b = 255;
+        // platform.r = 255;
    } else { //if the hero is not on the platform
     //the platform becomes black
     platform.b = 0;
@@ -169,7 +169,7 @@ function checkOverlapPlatformHero(platform) {
        wall.x - wall.width / 2 <= hero.x + hero.w / 2 // rect1 left and hero right 
        ){
         // changes the color of the wall to green
-           wall.g = 200;
+        //    wall.g = 200;
            //sets the hero outside of the wall 
            hero.x = wall.x + wall.width/2 + hero.size/2;
            
@@ -195,7 +195,7 @@ function checkOverlapPlatformHero(platform) {
             ){
 
                 //changes the color of the wall to green
-                wall.g = 200;
+                // wall.g = 200;
                 //sets the hero outside of the wall
                 hero.x = wall.x - wall.width/2 - hero.size/2;
 

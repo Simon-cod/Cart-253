@@ -1,17 +1,16 @@
 /**
- * Cowboy cube
- * Author Name
+ * The Hero (1st variation)
+ * Simon Duchainde Morneau
  * 
- * HOW EMBARRASSING! I HAVE NO DESCRIPTION OF MY PROJECT!
- * PLEASE REMOVE A GRADE FROM MY WORK IF IT'S GRADED!
+ * Control a cubve and move accross the room by jumping from one platform to another. But don't forget to avoid the deadly lava!
  */
 
 "use strict";
 
-/**
- * OH LOOK I DIDN'T DESCRIBE SETUP!!
-*/
 
+
+//creates a variable for the state of the game
+let gameState = "titleScreen" //can be "titleScreen", "start" or "gameWon"
 
 //Our main character
 let hero = {
@@ -41,7 +40,9 @@ let hero = {
     action: "walking", //can be walking, jumping or slashing
 }
 
-
+/**
+ * creates the canvas and sets the rectangle mode to center
+*/
 function setup() {
 
     createCanvas(1000, 1000)
@@ -53,18 +54,38 @@ function setup() {
 
 
 /**
- * OOPS I DIDN'T DESCRIBE WHAT MY DRAW DOES!
+ * either shows the title, runs the game or show the ending title depending on the state of the game
 */
 function draw() {
-background(100, 0, 0)
-createWalls();
-createPlatforms();
-createLava();
-drawHero();
-moveHero();
-heroJump();
-}
 
+    if (gameState === "titleScreen") {
+        //loads the title screen
+        title();
+    }else if (gameState === "start") {
+        //loads the game
+        runGame();
+    } else if (gameState === "gameWon") {
+        //loads the game over screen
+        gameWon();
+    }
+
+
+}
+/**
+ * Runs the game
+*/
+function runGame() {
+
+    background(100, 0, 0)
+    drawSun();
+    createWalls();
+    createPlatforms();
+    createLava();
+    gameMechanics();
+    drawHero();
+    moveHero();
+    heroJump();
+}
 
 /**
  * Draws the hero
@@ -177,7 +198,14 @@ function keyPressed() {
         hero.jump.state = "active";
     } else if (keyCode === 16) { //shift key
         hero.speed.state = "fast"
-    }
+    } else if 
+    //Starts the game when spacebar is pressed
+     (keyCode === 32 && gameState === "titleScreen") { //Spacebar
+        gameState = "start"
+    } //Starts the game when the game is won
+    else if (keyCode === 32 && gameState === "titleScreen") { //Spacebar
+        gameState = "titleScreen"
+    } 
 }
 
 //when the keys are released

@@ -1,14 +1,14 @@
 # Template p5 Project
 
-Author Name
+Simon Duchaine Morneau
 
 [View this project online](URL_FOR_THE_RUNNING_PROJECT)
 
 ## Description
 
-This description should help the reader understand what the program is, what any controls do, and perhaps what the desired experience it.
+Control a cube and moves across the room by jumping from one platform to another. Don't forget to avoid the deadly lava. 
 
-Rough idea
+Brainstorm:
 
 All variations happen in the same room.
 
