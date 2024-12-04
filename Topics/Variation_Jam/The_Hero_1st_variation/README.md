@@ -6,7 +6,7 @@ Simon Duchaine Morneau
 
 ## Description
 
-Control a hero and moves across the room by jumping from one platform to another. Don't forget to avoid the deadly lava. 
+Control a hero and move across the room by jumping from one platform to another, but avoid the deadly lava!
 
 ## Brainstorm:
 
