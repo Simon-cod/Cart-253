@@ -2,13 +2,13 @@
 
 Simon Duchaine Morneau
 
-[View this project online](URL_FOR_THE_RUNNING_PROJECT)
+[View this project online](https://simon-cod.github.io/Cart-253/Topics/Variation_Jam/)
 
 ## Description
 
 Control a cube and moves across the room by jumping from one platform to another. Don't forget to avoid the deadly lava. 
 
-Brainstorm:
+## Brainstorm:
 
 All variations happen in the same room.
 

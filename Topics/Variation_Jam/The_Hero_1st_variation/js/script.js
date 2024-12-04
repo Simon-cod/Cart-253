@@ -1,8 +1,8 @@
 /**
  * The Hero (1st variation)
- * Simon Duchainde Morneau
+ * Simon Duchaine Morneau
  * 
- * Control a cubve and move accross the room by jumping from one platform to another. But don't forget to avoid the deadly lava!
+ * Control a hero and move accross the room by jumping from one platform to another. But don't forget to avoid the deadly lava!
  */
 
 "use strict";

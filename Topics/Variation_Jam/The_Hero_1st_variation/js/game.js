@@ -7,12 +7,17 @@ endplatform = {
     height: 10,
 }
 
-
+/**
+ * regroups all the functions about the game
+*/
 function gameMechanics() {
     drawEndPlatform();
     checkOverlapHeroEndPlatform();
 }
 
+/**
+ * draws the ending platforn
+*/
 function drawEndPlatform() {
     push;
     noStroke();
@@ -21,6 +26,9 @@ function drawEndPlatform() {
 
 }
 
+/**
+ * makes you win the game if the hero touches the end platform
+*/
 function checkOverlapHeroEndPlatform(){
 
 
@@ -37,6 +45,9 @@ function checkOverlapHeroEndPlatform(){
     }
 }
 
+/**
+ * draws the titleScreen
+*/
 function title() {
 
     background(100, 0, 0);
@@ -116,4 +127,10 @@ function gameWon() {
     text("Game Won!", width/2, height/2 - 200);
     pop();
 
+    push();
+    textSize(28);
+    textAlign(CENTER, TOP);
+    fill(255, 200, 200);
+    text("You are a true Hero", width/2, 475);
+    pop();
 }
