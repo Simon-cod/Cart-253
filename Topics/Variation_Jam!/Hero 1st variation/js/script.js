@@ -20,7 +20,7 @@ let hero = {
     w: 30,
     h: 30,
     size: 30,
-    //the cube's speed
+    //the hero's speed
     speed: {
         state: "normal",
         x: 5,
@@ -57,14 +57,12 @@ function setup() {
 */
 function draw() {
 background(100, 0, 0)
-drawHero();
 createWalls();
 createPlatforms();
-drawPoolofLava();
-deadlyLava();
+createLava();
+drawHero();
 moveHero();
 heroJump();
-
 }
 
 

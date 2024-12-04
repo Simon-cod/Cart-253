@@ -5,30 +5,30 @@ let walls = [
         x: 697,
         y: 740,
         //the amount of green of the walls
-        g: 50,
+        g: 0,
         width: 8,
         height: 118
     },
     {
      x: 600,
      y: 600,
-     g: 50,
+     g: 0,
      width: 8,
      height: 59
     },
     {
      x: 200,
      y: 520,
-     g: 50,
+     g: 0,
      width: 8,
      height: 99 
     },
     {
-        x: 510,
-        y: 390,
-        g: 50,
+        x: 475,
+        y: 392,
+        g: 0,
         width: 8,
-        height: 29
+        height: 34
     }
    
 ]
@@ -71,12 +71,21 @@ let platforms = [
         height: 100 
     },
     {   
-        x: 860,
-        y: 390,
+        x: 600,
+        y: 392,
         b: 0,
         r: 0,
-        width: 700,
-        height: 30 }
+        width: 250,
+        height: 35 
+    },
+    {
+        x: 1000,
+        y: 391.9,
+        b: 0,
+        r: 0,
+        width: 247,
+        height: 35
+    }
 ];
 
 /**
@@ -170,8 +179,8 @@ function checkOverlapPlatformHero(platform) {
         }
 
        }  else { //if the hero does not touch the wall
-        //the wall colors becomes a dark green
-        wall.g = 50
+        //the wall colors becomes black
+        wall.g = 0
        }
 
     //if the hero is at the left of the wall
@@ -196,8 +205,8 @@ function checkOverlapPlatformHero(platform) {
                 }
                
             }  else {  //if the hero does not touch the wall
-                //the wall colors becomes a dark green
-             wall.g = 50
+                //the wall colors becomes black
+             wall.g = 0
             }
 
     }
