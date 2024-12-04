@@ -20,7 +20,13 @@ let fireBall = {
     size: 15,
     minY: 385,
     speed: 7,
-    gravity: 0.2
+    gravity: 0.2,
+    shooting: {
+        speed: 5,
+        direction: "none",
+        acceleration: 0.1,
+    },
+    state: "bouncing"
 }
 
 /**
@@ -28,10 +34,10 @@ let fireBall = {
  */
 function createLava() {
     drawPoolofLava();
-    deadlyLava();
     drawFireBall();
     fireBallBounce();
     deadlyFireBall();
+    moveShootingFireBall();
 }
 
 
@@ -66,12 +72,40 @@ function drawFireBall() {
 
 }
 
+/**
+ * Makes the fire ball that got shot move depending on the keyboard and increase speed overtime
+ */
+function moveShootingFireBall() {
 
+    if (fireBall.state === "shooting"){
+
+        //makes the fireBall accelerate over time, making it harder to control
+        fireBall.shooting.speed += fireBall.shooting.acceleration;
+
+        if (fireBall.shooting.direction === "none"){
+        //do nothing
+        } else if (fireBall.shooting.direction === "right"){
+
+        fireBall.x += fireBall.shooting.speed
+
+        } else if (fireBall.shooting.direction === "left"){
+        fireBall.x -= fireBall.shooting.speed
+
+        } else if (fireBall.shooting.direction === "up"){
+        fireBall.y -= fireBall.shooting.speed
+
+        } else if ( fireBall.shooting.direction === "down"){
+        fireBall.y += fireBall.shooting.speed
+        }
+    }
+}
 
 /**
- * Makes the fire ball bounce
+ * Makes the initial fire ball bounce
  */
 function fireBallBounce() {
+    
+    if (fireBall.state === "bouncing"){
     
     if (fireBall.y <= fireBall.minY) {
     
@@ -83,27 +117,10 @@ function fireBallBounce() {
         
     }
 }
-
-
-
-
-/**
- * kills the hero if he touches the lava
- */
-function deadlyLava() {
-    if (
-        lava.y + lava.height / 2 >= hero.y - hero.h / 2 && // lava bottom and hero top
-        lava.y - lava.height / 2 <= hero.y + hero.h / 2 &&   // lava top and hero bottom
-        lava.x + lava.width / 2 >= hero.x - hero.w / 2 && // lava right and hero left
-        lava.x - lava.width / 2 <= hero.x + hero.w / 2 // lava left and hero right 
-        ){
-            
-    heroDeath()
-}
 }
 
 /**
- * kills the hero if he touches the fire ball
+ * kills the hero if the fire ball touches him
  */
 function deadlyFireBall() {
     
@@ -120,10 +137,8 @@ function deadlyFireBall() {
 }
 
 /**
- * resets the cube to it's starting position when it dies
+ * makes you win the game if you kill the hero!
  */
 function heroDeath() {
-    hero.x = 40;
-    hero.y = 785;
-    hero.jump.state = "no"
+    gameWon();
 }

@@ -102,15 +102,17 @@ function drawHero() {
 function keyPressed() {
     
     if (keyCode === 39) { //right arrow
-        lava.direction = "right";
+        fireBall.state = "shooting"
+        fireBall.shooting.direction = "right";
     } else if (keyCode === 37) { //left arrow
-        lava.direction = "left";
-    } else if (keyCode === 38 && keyCode === 39) { //up & right
-        lava.direction = "right";
-    } else if (keyCode === 38 && keyCode === 37) { //up & left
-        lava.direction = "left";
-    } else if (keyCode === 16) { //shift key
-        lava.speed.state = "fast"
+        fireBall.state = "shooting"
+        fireBall.shooting.direction = "left";
+    } else if (keyCode === 38) { //up arrow
+        fireBall.state = "shooting"
+        fireBall.shooting.direction = "up";
+    } else if (keyCode === 40) { //down arrow
+        fireBall.state = "shooting"
+        fireBall.shooting.direction = "down"
     } else if 
     //Starts the game when spacebar is pressed
      (keyCode === 32 && gameState === "titleScreen") { //Spacebar
@@ -119,12 +121,4 @@ function keyPressed() {
     else if (keyCode === 32 && gameState === "titleScreen") { //Spacebar
         gameState = "titleScreen"
     } 
-}
-
-//when the keys are released
-function keyReleased() {
-
-    if (keyCode === 16) { //shift key
-        lava.speed.state = "normal"
-    }
 }
