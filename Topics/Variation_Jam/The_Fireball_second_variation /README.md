@@ -2,7 +2,7 @@
 
 Simon Duchaine Morneau
 
-[View this project online](https://simon-cod.github.io/Cart-253/Topics/Variation_Jam/The_Fireball_second_variation)
+[View this project online](https://simon-cod.github.io/Cart-253/Topics/Variation_Jam/The_Fireball_second_variation%20)
 
 ## Description
 
