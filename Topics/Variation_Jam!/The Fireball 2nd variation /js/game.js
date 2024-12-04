@@ -7,12 +7,16 @@ endplatform = {
     height: 10,
 }
 
-
+/**
+ * regroups all the functions about the game
+*/
 function gameMechanics() {
     drawEndPlatform();
-    checkOverlapHeroEndPlatform();
 }
 
+/**
+ * draws the ending platforn
+*/
 function drawEndPlatform() {
     push;
     noStroke();
@@ -21,22 +25,9 @@ function drawEndPlatform() {
 
 }
 
-function checkOverlapHeroEndPlatform(){
-
-
- // checking if each side of the platforms overlap with the hero
- if (
-    endplatform.y + endplatform.height / 2 >= hero.y - hero.h / 2 && // rect1 bottom and hero top
-    endplatform.y - endplatform.height / 2 <= hero.y + hero.h / 2 &&   // rect1 top and hero bottom
-    endplatform.x + endplatform.width / 2 >= hero.x - hero.w / 2 && // rect1 right and hero left
-    endplatform.x - endplatform.width / 2 <= hero.x + hero.w / 2 // rect1 left and hero right 
-    ){
-
-     gameState = "gameWon"   
-
-    }
-}
-
+/**
+ * draws the titleScreen
+*/
 function title() {
 
     background(100, 0, 0);
@@ -106,6 +97,9 @@ function title() {
 
 }
 
+/**
+ * draws the Winning Screen
+*/
 function gameWon() {
     
     background(100, 0, 0);

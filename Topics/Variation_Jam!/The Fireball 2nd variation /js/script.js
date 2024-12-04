@@ -77,7 +77,6 @@ function runGame() {
 
     background(100, 0, 0)
     drawSun();
-    createWalls();
     createPlatforms();
     createLava();
     gameMechanics();

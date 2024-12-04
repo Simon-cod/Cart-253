@@ -22,9 +22,9 @@ let fireBall = {
     speed: 7,
     gravity: 0.2,
     shooting: {
-        speed: 5,
+        speed: 2,
         direction: "none",
-        acceleration: 0.1,
+        acceleration: 0.14,
     },
     state: "bouncing"
 }
@@ -38,6 +38,7 @@ function createLava() {
     fireBallBounce();
     deadlyFireBall();
     moveShootingFireBall();
+    constrainFireBallInsideCanvas();
 }
 
 
@@ -46,12 +47,6 @@ function createLava() {
  */
 function drawPoolofLava() {
     
-    //draws a black rectangle to connect the platforms
-    push();
-    fill(0);
-    rect(800, 399, 160, 21)
-    pop();
-
     //draws an orange pool of lava
     push();
     noStroke();
@@ -106,12 +101,12 @@ function moveShootingFireBall() {
 function fireBallBounce() {
     
     if (fireBall.state === "bouncing"){
-    
+    //if fire Ball is in it's initial position, it goes up
     if (fireBall.y <= fireBall.minY) {
     
         fireBall.speed -= fireBall.gravity
         fireBall.y -= fireBall.speed
-    } else {
+    } else { //whem the fire Ball drops lower than it's initial position, it sets back to it's initial position
         fireBall.y = fireBall.minY
         fireBall.speed = random(6, 9)
         
@@ -120,7 +115,7 @@ function fireBallBounce() {
 }
 
 /**
- * kills the hero if the fire ball touches him
+ * kills the hero and wins the game if the fire ball touches him
  */
 function deadlyFireBall() {
     
@@ -137,8 +132,30 @@ function deadlyFireBall() {
 }
 
 /**
+ * Makes the fireBall resets if it goes too far outside the canvas
+ */
+function constrainFireBallInsideCanvas() {
+    if(fireBall.x < -100 || fireBall.x > 1100) { //if it goes outside the canvas to the right or the left
+        fireBallDeath();
+    } else if (fireBall.y < -100 || fireBall.y > 1100) { //if it goes outside the canvas up or down
+        fireBallDeath();
+    }
+}
+
+/**
+ * makes the fireBall resets and restart bouncing
+ */
+function fireBallDeath() {
+    //resets everything to it's initial state
+    fireBall.state = "bouncing"
+    fireBall.y = fireBall.minY + 1;
+    fireBall.x = 800;
+    fireBall.shooting.speed = 2
+}
+
+/**
  * makes you win the game if you kill the hero!
  */
 function heroDeath() {
-    gameWon();
+    gameState = "gameWon"
 }
