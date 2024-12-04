@@ -1,12 +1,12 @@
 # Template p5 Project
 
-Author Name
+Simon Duchaine Morneau
 
 [View this project online](URL_FOR_THE_RUNNING_PROJECT)
 
 ## Description
 
-This description should help the reader understand what the program is, what any controls do, and perhaps what the desired experience it.
+You are a god! You control the Sun! How can you impact the agme? Find the way to ruin the day of the hero and the villain by making them unable to achieve their goal
 
 ## Credits
 

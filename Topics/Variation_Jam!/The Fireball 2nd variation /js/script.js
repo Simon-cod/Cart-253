@@ -1,5 +1,5 @@
 /**
- * The Fireball
+ * The Fireball (2nd variation)
  * Simon Duchaine Morneau
  * 
  * It's now time to be the villain! Fly across the room as a fireball to kill the hero, but be careful of the deadly platforms and your dangerously increasing speed.

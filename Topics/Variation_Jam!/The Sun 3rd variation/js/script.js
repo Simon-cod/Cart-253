@@ -1,9 +1,8 @@
 /**
- * The Sun
+ * The Sun (3rd variation)
  * Simon Duchaine Morneau
  * 
- * HOW EMBARRASSING! I HAVE NO DESCRIPTION OF MY PROJECT!
- * PLEASE REMOVE A GRADE FROM MY WORK IF IT'S GRADED!
+ * You are a god and control the Sun! Look around to see hopw you can impact the game and make it impossible for the hero or the villain (the fireball) to achieve their quest
  */
 
 "use strict";

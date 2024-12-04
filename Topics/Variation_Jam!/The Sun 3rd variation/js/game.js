@@ -32,31 +32,31 @@ function title() {
 
     background(100, 0, 0);
     push();
-    textSize(180);
+    textSize(200);
     textAlign(CENTER, TOP);
     fill(0);
-    text("The Fireball", width/2, 150);
+    text("The Sun", width/2, 140);
     pop();
 
     push();
     textSize(30);
     textAlign(CENTER, TOP);
     fill(0);
-    text("2nd variation", width/2, 330);
+    text("3rd variation", width/2, 330);
     pop();
 
     push();
     textSize(28);
     textAlign(CENTER, TOP);
     fill(255, 200, 200);
-    text("Try to kill the hero, but avoid the platforms and be mindful of your speed! ", width/2, 400);
+    text("You are a god and control the sun!  ", width/2, 400);
     pop();
 
     push();
-    textSize(20);
+    textSize(28);
     textAlign(CENTER, TOP);
     fill(255, 200, 200);
-    text("(the hero is the cube at the bottom left)", width/2, 438);
+    text("How can you ruin the journey of the hero and the villain?", width/2, 440);
     pop();
     
     push();
@@ -70,17 +70,10 @@ function title() {
     textSize(28);
     textAlign(CENTER, TOP);
     fill(255, 200, 200);
-    text("Left & Right Arrow to move the fireBall", width/2, 625);
+    text("Left & Right Arrow to move the Sun", width/2, 625);
     pop();
 
-    push();
-    textSize(28);
-    textAlign(CENTER, TOP);
-    fill(255, 200, 200);
-    text("Up & Down Arrow to move the fireBall", width/2, 700
-    );
-    pop();
-
+    
     push();
     textSize(28);
     textAlign(CENTER, TOP);
@@ -102,7 +95,7 @@ function title() {
 */
 function gameWon() {
     
-    background(100, 0, 0);
+    background(0, 0, 0);
     push();
     textSize(150);
     textAlign(CENTER, TOP);
@@ -114,7 +107,14 @@ function gameWon() {
     textSize(28);
     textAlign(CENTER, TOP);
     fill(255, 200, 200);
-    text("You are a true villain", width/2, 475);
+    text("The hero and the villain are plunged into darkness, ", width/2, 475);
+    pop();
+
+    push();
+    textSize(28);
+    textAlign(CENTER, TOP);
+    fill(255, 200, 200);
+    text(" blind and powerless. ", width/2, 515);
     pop();
 
 
