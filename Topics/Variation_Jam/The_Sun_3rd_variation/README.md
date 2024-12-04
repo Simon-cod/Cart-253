@@ -6,7 +6,7 @@ Simon Duchaine Morneau
 
 ## Description
 
-You are a god! You control the Sun! How can you impact the agme? Find the way to ruin the day of the hero and the villain by making them unable to achieve their goal
+You are a god! You control the Sun! How can you impact the game? Find the way to ruin the day of the hero and the villain by making them unable to achieve their goal
 
 ## Credits
 
